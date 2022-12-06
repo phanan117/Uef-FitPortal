@@ -1,0 +1,92 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using FitPortal
+@using FitPortal.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model FitPortal.Areas.Admin.Models.DTO.AdminAccountRegistraion
+@{
+    ViewData["Title"] = "Account";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+                  <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Form Design <small>different form elements</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <form asp-area="Admin" asp-controller="User" asp-action="Registration" enctype="multipart/form-data" class="form-horizontal form-label-left" method="post">
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Họ và Tên <span class="required" asp-validation-for="Name">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" asp-for="Name" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">Email <span class="required" asp-validation-for="Email">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" asp-for="Email" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label asp-for="Username" class="control-label col-md-3 col-sm-3 col-xs-12">Tên đăng nhập</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input class="form-control col-md-7 col-xs-12" type="text" asp-for="Username">
+                        </div>
+                      </div><div class="form-group">
+                        <label asp-for="Password" class="control-label col-md-3 col-sm-3 col-xs-12">Mật khẩu</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input asp-for="Password" class="form-control col-md-7 col-xs-12" type="password" >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label asp-for="PasswordConfirm" class="control-label col-md-3 col-sm-3 col-xs-12">Xác nhận mật khẩu</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input asp-for="PasswordConfirm" class="form-control col-md-7 col-xs-12" type="password" >
+                        </div>
+                      </div><div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Ảnh đại diện<span class="required" asp-validation-for="ProfilePicture">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="custom-file">
+                            <input asp-for="ProfilePicture" class="custom-file-input">
+                            <label class="custom-file-label" for="customeFile">Choose file</label>
+                            </div>      
+                        </div>
+                      </div>
+                      @if (TempData["msg"] != null)
+                         {
+                    <div class="form-group">
+                       <span class="text-info">@TempData["msg"]</span>
+                    </div>
+                         }
+                      <div class="ln_solid"></div>
+                      <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+						  <button class="btn btn-primary" type="reset">Reset</button>
+                          <button type="submit" class="btn btn-info">Submit</button>
+                        </div>
+                      </div>
+
+                    </form>
+                  </div>
+                </div>
+   
