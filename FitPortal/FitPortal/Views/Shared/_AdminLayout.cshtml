@@ -1,7 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model FitPortal.Areas.Admin.Models.AdminUserViewModel
+@inject IHttpContextAccessor coxt
 @{
 }
 
@@ -51,11 +51,11 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="@Model.ProFilePictrure" alt="..." class="img-circle profile_img">
+                <img src="@coxt.HttpContext.Session.GetString("user_picture")" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>@Model.UserName</h2>
+                <h2>@coxt.HttpContext.Session.GetString("user_name")</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -189,7 +189,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="@Model.ProFilePictrure" alt="">@Model.UserName
+                    <img src="@coxt.HttpContext.Session.GetString("user_picture")" alt="">@coxt.HttpContext.Session.GetString("user_name")
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">

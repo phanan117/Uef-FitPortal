@@ -1,6 +1,8 @@
-﻿using FitPortal.Models.DTO;
+﻿using FitPortal.Models.Domain;
+using FitPortal.Models.DTO;
 using FitPortal.Repositories.Abstract;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitPortal.Controllers
@@ -8,12 +10,16 @@ namespace FitPortal.Controllers
     public class UserAuthenticationController : Controller
     {
         private readonly IUserAuthenticationService _authService;
-        public UserAuthenticationController(IUserAuthenticationService authService)
+        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly UserManager<ApplicationUser> userManager;
+        public UserAuthenticationController(IUserAuthenticationService authService, IHttpContextAccessor contextAccessor, UserManager<ApplicationUser> userManager)
         {
             this._authService = authService;
+            this._contextAccessor = contextAccessor;
+            this.userManager = userManager;
         }
 
-        
+
         public IActionResult Login()
         {
             return View();
@@ -28,6 +34,9 @@ namespace FitPortal.Controllers
             var result = await _authService.LoginAsync(model);
             if(result.StatusCode==1)
             {
+                var user = await userManager.FindByNameAsync(model.Username);
+                _contextAccessor.HttpContext.Session.SetString("user_name",user.Name);
+                _contextAccessor.HttpContext.Session.SetString("user_picture",user.ProfilePicture);
                 return RedirectToAction("Index", "Home");
             }
             else

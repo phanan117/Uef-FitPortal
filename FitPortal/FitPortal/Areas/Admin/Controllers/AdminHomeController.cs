@@ -18,18 +18,7 @@ namespace FitPortal.Areas.Admin.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            string? userID = _userManager.GetUserId(HttpContext.User);
-            if(userID != null)
-            {
-                ApplicationUser user = _userManager.FindByIdAsync(userID).Result;
-                AdminUserViewModel userDetail = new AdminUserViewModel
-                {
-                    UserName = user.UserName,
-                    ProFilePictrure = user.ProfilePicture
-                };
-                return View(userDetail);
-            }
-            return RedirectToAction("Login", "UserAuthentication");
+            return View();
         }
     }
 }
