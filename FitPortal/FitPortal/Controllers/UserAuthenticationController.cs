@@ -35,6 +35,7 @@ namespace FitPortal.Controllers
             if(result.StatusCode==1)
             {
                 var user = await userManager.FindByNameAsync(model.Username);
+                _contextAccessor.HttpContext.Session.SetString("user_id",user.Id);
                 _contextAccessor.HttpContext.Session.SetString("user_name",user.Name);
                 _contextAccessor.HttpContext.Session.SetString("user_picture",user.ProfilePicture);
                 return RedirectToAction("Index", "Home");
