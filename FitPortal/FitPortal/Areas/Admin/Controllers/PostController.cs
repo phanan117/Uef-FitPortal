@@ -1,6 +1,10 @@
 ﻿using FitPortal.Areas.Admin.Models;
 using FitPortal.Models.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace FitPortal.Areas.Admin.Controllers
 {
@@ -8,13 +12,49 @@ namespace FitPortal.Areas.Admin.Controllers
     public class PostController : Controller
     {
         private readonly DatabaseContext dbcon;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PostController(DatabaseContext dbcon)
+        private readonly IHttpContextAccessor _contextAccessor;
+        public PostController(DatabaseContext dbcon, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor contextAccessor)
         {
             this.dbcon = dbcon;
+            this._webHostEnvironment = webHostEnvironment;
+            this._contextAccessor = contextAccessor;
         }
-        public IActionResult ManagePost()
+        public async Task<IActionResult> ManagePost()
         {
+            var inforPost  = await (from post in dbcon.PostInformation
+                              join category in dbcon.PostCategories on post.CategoryID equals category.Id
+                              join user in dbcon.Users on post.UserID equals user.Id
+                              select new
+                              {
+                                  Id = post.Id,
+                                  PostName = post.PostName,
+                                  CategoryName = category.CategoryName,
+                                  DateCreate = post.DateCreated,
+                                  IsDisplay = post.IsDisplay,
+                                  UserCreate = user.Name
+                              }).ToListAsync();
+            List<PostInformationViewModel> infor = new List<PostInformationViewModel>();
+            foreach(var item in inforPost)
+            {
+                PostInformationViewModel viewModel = new PostInformationViewModel();
+                viewModel.Id = item.Id;
+                viewModel.PostName = item.PostName;
+                viewModel.CategoryName = item.CategoryName;
+                viewModel.UserCreate = item.UserCreate;
+                viewModel.DateCreated = item.DateCreate;
+                viewModel.IsDisplay=item.IsDisplay;
+                infor.Add(viewModel);
+            }
+            ViewBag.listInfor = infor;
+            return View();
+        }
+        public IActionResult AddPost()
+        {
+            List<PostCategory> listCategory = dbcon.PostCategories.ToList();
+            SelectList selectListItems = new SelectList(listCategory, "Id", "CategoryName");
+            ViewBag.CategoryList = selectListItems;
             return View();
         }
         public IActionResult ManageCategory() 
@@ -38,6 +78,39 @@ namespace FitPortal.Areas.Admin.Controllers
                 await dbcon.SaveChangesAsync();
             }
             return RedirectToAction("ManageCategory", "Post");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> AddPost(PostViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var post = new PostInfor();
+                if(model.Picture != null)
+                {
+                    string folder = "post/cover";
+                    folder += Guid.NewGuid().ToString() + "_" + model.Picture.FileName;
+                    post.Picture = "/" + folder;
+                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+                    await model.Picture.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                }
+                else
+                {
+                    return RedirectToAction("AddPost", "Post");
+                }
+                string userID = _contextAccessor.HttpContext.Session.GetString("user_id");
+                post.UserID = userID;
+                post.PostName = model.PostName;
+                post.DateCreated = model.DateCreated;
+                post.CategoryID = model.CategoryID;
+                post.Content = model.Content;
+                post.IsDisplay = false;
+                post.Describe = model.Describe;
+                await dbcon.PostInformation.AddAsync(post);
+                await dbcon.SaveChangesAsync();
+            }
+            return RedirectToAction("ManagePost","Post");
         }
     }
 }

@@ -36,6 +36,9 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="wwwroot\Image\" />
+    <Folder Include="wwwroot\Data\" />
+    <Folder Include="wwwroot\post\cover\" />
   </ItemGroup>
 
   <ItemGroup>
