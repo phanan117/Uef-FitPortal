@@ -9,6 +9,9 @@
     Layout = "/Views/Shared/_AdminLayout.cshtml";
     List<FitPortal.Areas.Admin.Models.PostInformationViewModel> list = (List<FitPortal.Areas.Admin.Models.PostInformationViewModel>)ViewBag.listInfor;
 }
+@section DoanScript{
+    <script src="/js//ListPost.js"></script>
+}
 <h1>Quản lý bài viết</h1>
 <button type="button" class="btn btn-info">
 <a type="button" asp-area="Admin" asp-controller="Post" asp-action="AddPost">Thêm mới</a></button>
@@ -28,17 +31,44 @@
                             @{
                                 foreach(var item in list)
                                 {
-                                    <tr>
-                                      <td>@item.PostName</td>
-                                      <td>@item.CategoryName</td>
-                                      <td>@item.DateCreated</td>
-                                      <td>@item.UserCreate</td>
-                                      <td>@item.IsDisplay</td>
-                                      <td>Action</td>
-                                    </tr>
+                                            <tr>
+                                                <td>@item.PostName</td>
+                                                <td>@item.CategoryName</td>
+                                                <td>@item.DateCreated</td>
+                                                <td>@item.UserCreate</td>
+                                                <td>
+                                                    @*<input onchange="SomeMethod(this)" id="@item.Id" type="checkbox" class="js-switch" @Html.Raw(@item.IsDisplay == true ? "checked":"")/>*@
+                                                    <a href="#" class="btn-active" data-id="@item.Id">@(item.IsDisplay?"Show":"Hide")</a>                                      
+                                                </td>
+                                                <td>
+                                                    @Html.ActionLink("Xóa","DeletePost","Post",new{id = item.Id});
+                                                </td>
+                                            </tr>
                                 }
                             }
                         
                       </tbody>
                     </table>
                   </div>
+                 @*  @section DoanScript{
+                      <script type="text/javascript">
+                          function SomeMethod(xthis) {
+                                var xid =parseInt( xthis.id);
+                                $.ajax({
+                                    url: '/Admin/Post/changeDisplay',
+                                    dataType: "json",
+                                    type: "POST",
+                                    data: {inputID: xid},
+                                    contentType: "application/json; charset=utf-8",
+                                    success: function (recData) {
+                                        var notify = $.notify('<strong>Thành công</strong><br/>' + recData.Message + '<br />', {
+                                            type: 'pastel-info',
+                                            allow_dismiss: false,
+                                            timer: 1000,
+                                        });
+                                    },
+                                    error: function () { alert('An error occured'); }
+                                });
+                            }
+                      </script>
+                  }*@

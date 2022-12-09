@@ -574,3 +574,6 @@ D:\TaiLieu\KLTN\Uef-FitPortal\FitPortal\FitPortal\obj\Debug\net6.0\refint\FitPor
 D:\TaiLieu\KLTN\Uef-FitPortal\FitPortal\FitPortal\obj\Debug\net6.0\FitPortal.pdb
 D:\TaiLieu\KLTN\Uef-FitPortal\FitPortal\FitPortal\obj\Debug\net6.0\FitPortal.genruntimeconfig.cache
 D:\TaiLieu\KLTN\Uef-FitPortal\FitPortal\FitPortal\obj\Debug\net6.0\ref\FitPortal.dll
+D:\TaiLieu\KLTN\Uef-FitPortal\FitPortal\FitPortal\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\TaiLieu\KLTN\Uef-FitPortal\FitPortal\FitPortal\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\TaiLieu\KLTN\Uef-FitPortal\FitPortal\FitPortal\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

@@ -89,7 +89,7 @@ namespace FitPortal.Areas.Admin.Controllers
                 var post = new PostInfor();
                 if(model.Picture != null)
                 {
-                    string folder = "post/cover";
+                    string folder = "post/cover/";
                     folder += Guid.NewGuid().ToString() + "_" + model.Picture.FileName;
                     post.Picture = "/" + folder;
                     string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
@@ -111,6 +111,27 @@ namespace FitPortal.Areas.Admin.Controllers
                 await dbcon.SaveChangesAsync();
             }
             return RedirectToAction("ManagePost","Post");
+        }
+        public bool ChangeStatus(int input)
+        {
+            var post = dbcon.PostInformation.Find(input);
+            post.IsDisplay = !post.IsDisplay;
+            dbcon.SaveChanges();
+            return post.IsDisplay;
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeletePost(int id)
+        {
+            var post = await dbcon.PostInformation.FindAsync(id);
+            dbcon.PostInformation.Remove(post);
+            await dbcon.SaveChangesAsync();
+            return RedirectToAction("ManagePost", "Post");
+        }
+        [HttpPost]
+        public JsonResult changeDisplay(int id)
+        {
+            var result = this.ChangeStatus(id);
+            return Json(new {status= result});
         }
     }
 }

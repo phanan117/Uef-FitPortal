@@ -29,7 +29,7 @@ namespace FitPortal.Areas.Admin.Controllers
             if (!ModelState.IsValid) { return RedirectToAction(nameof(Account)); }
             if (model.ProfilePicture != null)
             {
-                string folder = "adminAccount/cover";
+                string folder = "adminAccount/cover/";
                 folder+=Guid.NewGuid().ToString()+"_"+ model.ProfilePicture.FileName;
                 model.PictureUrl = "/"+folder;
                 string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
