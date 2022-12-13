@@ -9,8 +9,10 @@
     Layout = "/Views/Shared/_AdminLayout.cshtml";
     List<FitPortal.Areas.Admin.Models.PostInformationViewModel> list = (List<FitPortal.Areas.Admin.Models.PostInformationViewModel>)ViewBag.listInfor;
 }
+
 @section DoanScript{
-    <script src="/js//ListPost.js"></script>
+    <script src="/js/ListCRUD.js"></script>
+    <script src="/js//notify.min.js"></script>
 }
 <h1>Quản lý bài viết</h1>
 <button type="button" class="btn btn-info">
@@ -31,19 +33,19 @@
                             @{
                                 foreach(var item in list)
                                 {
-                                            <tr>
-                                                <td>@item.PostName</td>
-                                                <td>@item.CategoryName</td>
-                                                <td>@item.DateCreated</td>
-                                                <td>@item.UserCreate</td>
-                                                <td>
-                                                    @*<input onchange="SomeMethod(this)" id="@item.Id" type="checkbox" class="js-switch" @Html.Raw(@item.IsDisplay == true ? "checked":"")/>*@
-                                                    <a href="#" class="btn-active" data-id="@item.Id">@(item.IsDisplay?"Show":"Hide")</a>                                      
-                                                </td>
-                                                <td>
-                                                    @Html.ActionLink("Xóa","DeletePost","Post",new{id = item.Id});
-                                                </td>
-                                            </tr>
+                                                    <tr>
+                                                        <td>@item.PostName</td>
+                                                        <td>@item.CategoryName</td>
+                                                        <td>@item.DateCreated</td>
+                                                        <td>@item.UserCreate</td>
+                                                        <td>
+                                                            <input data-id="@item.Id" type="checkbox" class="js-switch" @Html.Raw(@item.IsDisplay == true ? "checked":"")/>
+                                                            @*<a href="#" class="btn-active" data-id="@item.Id">@(item.IsDisplay?"Show":"Hide")</a> *@  
+                                                        </td>
+                                                        <td>
+                                                            @Html.ActionLink("Xóa","DeletePost","Post",new{id = item.Id});
+                                                        </td>
+                                                    </tr>
                                 }
                             }
                         

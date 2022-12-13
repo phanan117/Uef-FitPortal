@@ -39,7 +39,6 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="wwwroot\Data\" />
     <Folder Include="wwwroot\Images\post\" />
-    <Folder Include="wwwroot\post\cover\" />
   </ItemGroup>
 
   <ItemGroup>

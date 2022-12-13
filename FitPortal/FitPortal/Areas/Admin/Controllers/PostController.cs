@@ -113,13 +113,7 @@ namespace FitPortal.Areas.Admin.Controllers
             }
             return RedirectToAction("ManagePost","Post");
         }
-        public bool ChangeStatus(int input)
-        {
-            var post = dbcon.PostInformation.Find(input);
-            post.IsDisplay = !post.IsDisplay;
-            dbcon.SaveChanges();
-            return post.IsDisplay;
-        }
+        
         [HttpGet]
         public async Task<IActionResult> DeletePost(int id)
         {
@@ -128,11 +122,35 @@ namespace FitPortal.Areas.Admin.Controllers
             await dbcon.SaveChangesAsync();
             return RedirectToAction("ManagePost", "Post");
         }
+        public bool ChangeStatus(int input)
+        {
+            var post = dbcon.PostInformation.Find(input);
+            post.IsDisplay = !post.IsDisplay;
+            dbcon.SaveChanges();
+            return post.IsDisplay;
+        }
         [HttpPost]
         public JsonResult changeDisplay(int id)
         {
-            var result = this.ChangeStatus(id);
-            return Json(new {status= result});
+            /*
+             * string title = Tbl_POST.post_title;
+            Tbl_POST.status = state;
+            string prefix = state == true ? "Đăng" : "Hủy đăng";
+            db.Commit();
+            return Json(new { Message = prefix + " \"" + title + "\" thành công" }, JsonRequestBehavior.AllowGet)
+             */
+            var post = dbcon.PostInformation.Find(id);
+            post.IsDisplay = !post.IsDisplay;
+            string title = post.PostName;
+            string prefix;
+            if (post.IsDisplay == true)
+            {
+                prefix = "Đăng";
+            }
+            else { prefix = "Hủy đăng"; }
+            dbcon.SaveChanges();
+            //var result = this.ChangeStatus(id);
+            return Json((new { rpMessage = prefix + " \"" + title + "\" thành công" }));
         }
         [HttpPost]
         public async Task<JsonResult> UploadImage([FromForm] IFormFile upload)
