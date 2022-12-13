@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FitPortal.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class AdminHomeController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -15,7 +16,6 @@ namespace FitPortal.Areas.Admin.Controllers
         {
             this._userManager = userManager;
         }
-        [Authorize]
         public IActionResult Index()
         {
             return View();

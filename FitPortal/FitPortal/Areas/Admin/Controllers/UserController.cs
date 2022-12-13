@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FitPortal.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserAuthenticationService _authService;
@@ -41,7 +42,6 @@ namespace FitPortal.Areas.Admin.Controllers
             return RedirectToAction(nameof(Account));
 
         }
-        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await this._authService.LogoutAsync();

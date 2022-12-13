@@ -10,6 +10,7 @@ using System.Collections.Generic;
 namespace FitPortal.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class PostController : Controller
     {
         private readonly DatabaseContext dbcon;
