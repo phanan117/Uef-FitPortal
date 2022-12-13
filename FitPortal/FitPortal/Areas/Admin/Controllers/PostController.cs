@@ -1,4 +1,5 @@
-﻿using FitPortal.Areas.Admin.Models;
+﻿using Dotnet6MvcLogin.Models;
+using FitPortal.Areas.Admin.Models;
 using FitPortal.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -132,6 +133,41 @@ namespace FitPortal.Areas.Admin.Controllers
         {
             var result = this.ChangeStatus(id);
             return Json(new {status= result});
+        }
+        [HttpPost]
+        public async Task<JsonResult> UploadImage([FromForm] IFormFile upload)
+        {
+            if (upload.Length <= 0) return null;
+
+            //1)check if the file is image
+
+            //2)check if the file is too large
+
+            //etc
+
+            var fileName = Guid.NewGuid() + Path.GetExtension(upload.FileName).ToLower();
+
+            //save file under wwwroot/CKEditorImages folder
+
+            var filePath = Path.Combine(
+                Directory.GetCurrentDirectory(), "wwwroot/Images/post",
+                fileName);
+
+            using (var stream = System.IO.File.Create(filePath))
+            {
+                await upload.CopyToAsync(stream);
+            }
+
+            var url = $"{"/Images/post/"}{fileName}";
+
+            var success = new uploadImage
+            {
+                Uploaded = 1,
+                FileName = fileName,
+                Url = url
+            };
+
+            return new JsonResult(success);
         }
     }
 }

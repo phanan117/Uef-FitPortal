@@ -50,25 +50,3 @@
                       </tbody>
                     </table>
                   </div>
-                 @*  @section DoanScript{
-                      <script type="text/javascript">
-                          function SomeMethod(xthis) {
-                                var xid =parseInt( xthis.id);
-                                $.ajax({
-                                    url: '/Admin/Post/changeDisplay',
-                                    dataType: "json",
-                                    type: "POST",
-                                    data: {inputID: xid},
-                                    contentType: "application/json; charset=utf-8",
-                                    success: function (recData) {
-                                        var notify = $.notify('<strong>Thành công</strong><br/>' + recData.Message + '<br />', {
-                                            type: 'pastel-info',
-                                            allow_dismiss: false,
-                                            timer: 1000,
-                                        });
-                                    },
-                                    error: function () { alert('An error occured'); }
-                                });
-                            }
-                      </script>
-                  }*@
