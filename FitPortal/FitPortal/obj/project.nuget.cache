@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "QzFvVFeSZU8IOTJYfV41xrC00UpZgWsmYZ55AK2LPxny+AkNMls3MKMMI17oTDT72V7kcIXode4M08sQwzAm8Q==",
+  "dgSpecHash": "AaRShh8dcA+bNMFpuNsOxsWOQXr6Ft07O/LePZ33Fz1B+NsioyQSMeM6hHH/OaXPpFV6W+zDmCPNk0aGov0W3A==",
   "success": true,
   "projectFilePath": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\FitPortal.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\Win 10\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\Win 10\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\Win 10\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",
+    "C:\\Users\\Win 10\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\6.0.12\\microsoft.aspnetcore.authentication.google.6.0.12.nupkg.sha512",
     "C:\\Users\\Win 10\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.11\\microsoft.aspnetcore.cryptography.internal.6.0.11.nupkg.sha512",
     "C:\\Users\\Win 10\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\6.0.11\\microsoft.aspnetcore.cryptography.keyderivation.6.0.11.nupkg.sha512",
     "C:\\Users\\Win 10\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\6.0.11\\microsoft.aspnetcore.identity.entityframeworkcore.6.0.11.nupkg.sha512",

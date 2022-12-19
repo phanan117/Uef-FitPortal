@@ -108,7 +108,7 @@ namespace FitPortal.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PostCategories");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("FitPortal.Models.Domain.PostInfor", b =>
@@ -157,7 +157,150 @@ namespace FitPortal.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("PostInformation");
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("FitPortal.Models.Domain.Specialization", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SpecializationID")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("SpecializationName")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Specializations");
+                });
+
+            modelBuilder.Entity("FitPortal.Models.Domain.TeacherPosition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("SpecializationID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeacherID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SpecializationID");
+
+                    b.HasIndex("TeacherID");
+
+                    b.ToTable("TeacherPositions");
+                });
+
+            modelBuilder.Entity("FitPortal.Models.Domain.TeacherUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("TeacherID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeacherID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("TeacherUser");
+                });
+
+            modelBuilder.Entity("FitPortal.Models.Domain.Teachers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Avatar")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DayOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Identification")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("TeacherCode")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -312,6 +455,44 @@ namespace FitPortal.Migrations
                     b.Navigation("PostCategory");
                 });
 
+            modelBuilder.Entity("FitPortal.Models.Domain.TeacherPosition", b =>
+                {
+                    b.HasOne("FitPortal.Models.Domain.Specialization", "Specialization")
+                        .WithMany("teacherPositions")
+                        .HasForeignKey("SpecializationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FitPortal.Models.Domain.Teachers", "Teachers")
+                        .WithMany("teacherPositions")
+                        .HasForeignKey("TeacherID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Specialization");
+
+                    b.Navigation("Teachers");
+                });
+
+            modelBuilder.Entity("FitPortal.Models.Domain.TeacherUser", b =>
+                {
+                    b.HasOne("FitPortal.Models.Domain.Teachers", "teacher")
+                        .WithMany("teacherUser")
+                        .HasForeignKey("TeacherID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FitPortal.Models.Domain.ApplicationUser", "FitPortalUser")
+                        .WithMany("teacherUser")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FitPortalUser");
+
+                    b.Navigation("teacher");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -366,11 +547,25 @@ namespace FitPortal.Migrations
             modelBuilder.Entity("FitPortal.Models.Domain.ApplicationUser", b =>
                 {
                     b.Navigation("posstInfors");
+
+                    b.Navigation("teacherUser");
                 });
 
             modelBuilder.Entity("FitPortal.Models.Domain.PostCategory", b =>
                 {
                     b.Navigation("posstInfors");
+                });
+
+            modelBuilder.Entity("FitPortal.Models.Domain.Specialization", b =>
+                {
+                    b.Navigation("teacherPositions");
+                });
+
+            modelBuilder.Entity("FitPortal.Models.Domain.Teachers", b =>
+                {
+                    b.Navigation("teacherPositions");
+
+                    b.Navigation("teacherUser");
                 });
 #pragma warning restore 612, 618
         }

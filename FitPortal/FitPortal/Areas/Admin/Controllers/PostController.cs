@@ -25,8 +25,8 @@ namespace FitPortal.Areas.Admin.Controllers
         }
         public async Task<IActionResult> ManagePost()
         {
-            var inforPost  = await (from post in dbcon.PostInformation
-                              join category in dbcon.PostCategories on post.CategoryID equals category.Id
+            var inforPost  = await (from post in dbcon.Posts
+                              join category in dbcon.Categories on post.CategoryID equals category.Id
                               join user in dbcon.Users on post.UserID equals user.Id
                               select new
                               {
@@ -54,14 +54,14 @@ namespace FitPortal.Areas.Admin.Controllers
         }
         public IActionResult AddPost()
         {
-            List<PostCategory> listCategory = dbcon.PostCategories.ToList();
+            List<PostCategory> listCategory = dbcon.Categories.ToList();
             SelectList selectListItems = new SelectList(listCategory, "Id", "CategoryName");
             ViewBag.CategoryList = selectListItems;
             return View();
         }
         public IActionResult ManageCategory() 
         { 
-            List<PostCategory> listCategory = dbcon.PostCategories.ToList();
+            List<PostCategory> listCategory = dbcon.Categories.ToList();
             ViewBag.Category = listCategory;
             return View();
         }
@@ -76,7 +76,7 @@ namespace FitPortal.Areas.Admin.Controllers
             {
                 var input = new PostCategory();
                 input.CategoryName = model.CategoryName;
-                await dbcon.PostCategories.AddAsync(input);
+                await dbcon.Categories.AddAsync(input);
                 await dbcon.SaveChangesAsync();
             }
             return RedirectToAction("ManageCategory", "Post");
@@ -109,7 +109,7 @@ namespace FitPortal.Areas.Admin.Controllers
                 post.Content = model.Content;
                 post.IsDisplay = false;
                 post.Describe = model.Describe;
-                await dbcon.PostInformation.AddAsync(post);
+                await dbcon.Posts.AddAsync(post);
                 await dbcon.SaveChangesAsync();
             }
             return RedirectToAction("ManagePost","Post");
@@ -118,14 +118,14 @@ namespace FitPortal.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> DeletePost(int id)
         {
-            var post = await dbcon.PostInformation.FindAsync(id);
-            dbcon.PostInformation.Remove(post);
+            var post = await dbcon.Posts.FindAsync(id);
+            dbcon.Posts.Remove(post);
             await dbcon.SaveChangesAsync();
             return RedirectToAction("ManagePost", "Post");
         }
         public bool ChangeStatus(int input)
         {
-            var post = dbcon.PostInformation.Find(input);
+            var post = dbcon.Posts.Find(input);
             post.IsDisplay = !post.IsDisplay;
             dbcon.SaveChanges();
             return post.IsDisplay;
@@ -140,7 +140,7 @@ namespace FitPortal.Areas.Admin.Controllers
             db.Commit();
             return Json(new { Message = prefix + " \"" + title + "\" thành công" }, JsonRequestBehavior.AllowGet)
              */
-            var post = dbcon.PostInformation.Find(id);
+            var post = dbcon.Posts.Find(id);
             post.IsDisplay = !post.IsDisplay;
             string title = post.PostName;
             string prefix;

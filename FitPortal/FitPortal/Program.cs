@@ -15,10 +15,21 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>()
         .AddEntityFrameworkStores<DatabaseContext>()
         .AddDefaultTokenProviders();
 builder.Services.ConfigureApplicationCookie(options => options.LoginPath = "/UserAuthentication/Login");
+//Authentication
+builder.Services.AddAuthentication()
+    .AddGoogle(googleOptions =>
+    {
+        IConfigurationSection googleAuthNSection = builder.Configuration.GetSection("Authentication:Google");
+        googleOptions.ClientId = googleAuthNSection["ClientId"];
+        googleOptions.ClientSecret = googleAuthNSection["ClientSecret"];
+        googleOptions.CallbackPath = "/sign-in-google";
+
+    });
 //Session for login
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(30));
 //Inject
+builder.Services.AddTransient<ITeacherRepository, TeacherRepository>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 var app = builder.Build();
 

@@ -19,8 +19,8 @@ namespace FitPortal.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var events = await (from posts in _dbcon.PostInformation
-                          join category in _dbcon.PostCategories on posts.CategoryID equals category.Id
+            var events = await (from posts in _dbcon.Posts
+                          join category in _dbcon.Categories on posts.CategoryID equals category.Id
                           where category.CategoryName == "Sự kiện" && posts.IsDisplay == true
                           select new
                           {

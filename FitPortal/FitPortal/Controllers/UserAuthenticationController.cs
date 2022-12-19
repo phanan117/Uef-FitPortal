@@ -1,9 +1,11 @@
-﻿using FitPortal.Models.Domain;
+﻿using FitPortal.Models;
+using FitPortal.Models.Domain;
 using FitPortal.Models.DTO;
 using FitPortal.Repositories.Abstract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FitPortal.Controllers
 {
@@ -12,11 +14,15 @@ namespace FitPortal.Controllers
         private readonly IUserAuthenticationService _authService;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly UserManager<ApplicationUser> userManager;
-        public UserAuthenticationController(IUserAuthenticationService authService, IHttpContextAccessor contextAccessor, UserManager<ApplicationUser> userManager)
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
+        public UserAuthenticationController(IUserAuthenticationService authService, IHttpContextAccessor contextAccessor, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             this._authService = authService;
             this._contextAccessor = contextAccessor;
             this.userManager = userManager;
+            this._signInManager = signInManager;
+            this.roleManager = roleManager;
         }
 
 
@@ -46,7 +52,83 @@ namespace FitPortal.Controllers
                 return RedirectToAction(nameof(Login));
             }
         }
-       
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginViewModel model, string? returnUrl = null)
+        {
+            returnUrl = returnUrl ?? Url.Action("~/");
+            if (ModelState.IsValid)
+            {
+                var info = await _signInManager.GetExternalLoginInfoAsync();
+                if (info == null)
+                {
+                    return View("Erorr");
+                }
+                var user = new ApplicationUser { Name = model.FullName, Email = model.Email };
+                var result = await userManager.CreateAsync(user);
+                if (result.Succeeded)
+                {
+                    if (!await roleManager.RoleExistsAsync("student"))
+                        await roleManager.CreateAsync(new IdentityRole("student"));
+                    if (await roleManager.RoleExistsAsync("student"))
+                    {
+                        await userManager.AddToRoleAsync(user, "student");
+                    }
+                    result = await userManager.AddLoginAsync(user, info);
+                    if (result.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+                        return LocalRedirect(returnUrl);
+                    }
+                }
+                ModelState.AddModelError("Email", "đã tồn tại!");
+            }
+            ViewData["ReturnUrl"] = returnUrl;
+            return View(model);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public IActionResult ExternalLogin(string provider, string returnUrl = null)
+        {
+            var redirect = Url.Action("ExternalLoginCallBack","UserAuthentication", new {ReturnUrl=returnUrl});
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirect);
+            return Challenge(properties,provider);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ExternalLoginCallBack(string returnurl=null, string remoteError = null)
+        {
+            returnurl = returnurl ?? Url.Content("~/");
+            if (remoteError != null)
+            {
+                ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
+                return View(nameof(Login));
+            }
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+            //Sign in the user with this external login provider, if the user already has a login.
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
+            if (result.Succeeded)
+            {
+                //update any authentication tokens
+                await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+                return LocalRedirect(returnurl);
+            }
+            else
+            {
+                ViewData["ReturnUrl"] = returnurl;
+                ViewData["ProviderDisplayName"] = info.ProviderDisplayName;
+                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+                return View("ExternalLoginConfirmation", new ExternalLoginViewModel { Email = email });
+            }
+        }
+        
         public IActionResult Registration()
         {
             return View();

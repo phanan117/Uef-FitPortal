@@ -1,6 +1,11 @@
 ﻿@model FitPortal.Models.DTO.LoginModel
+@using FitPortal.Models.Domain
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> signInManager
 @{
     Layout = null;
+    var schemes = await signInManager.GetExternalAuthenticationSchemesAsync();
+    var loginProviders = schemes.ToList();
 }
 <!DOCTYPE html>
 <html lang="vi">
@@ -51,14 +56,20 @@
                                 <a href="index.html"><img src="/login/images/devforum.png" width="200" alt="brand-logo"></a>
                             </div>
                             <!-- ./brand-logo -->
-                            <p>Login using social media to get quick access</p>
+                            <p>Đăng nhập với mail UEF</p>
                             <!-- social login buttons start -->
                             <div class="row social-buttons">
+                                <form asp-controller="UserAuthentication" asp-action="ExternalLogin" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" role="form">
                                 <div class="col-xs-4 col-sm-4 col-md-12">
-                                    <a href="#" class="btn btn-block btn-google">
-                                        <i class="fa fa-google-plus"></i> <span class="hidden-xs hidden-sm">Signin with google</span>
-                                    </a>
+                                        @{
+                                            foreach(var provider in loginProviders)
+                                            {
+                                                <button type="submit" class="btn btn-block btn-google" name="provider"
+                                                 value="@provider.Name">@provider.Name</button>
+                                            }
+                                        }
                                 </div>
+                                </form>
                             </div>
                             <!-- ./social-buttons -->
                         </div>
@@ -74,7 +85,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12">
-                                    <form name="loginForm" class="loginForm" asp-action="Login" method="POST">
+                                    <form name="loginForm" class="loginForm" asp-controller="UserAuthentication" asp-action="Login" method="POST">
                                         <div class="form-group">
                                             <input type="text" class="form-control email" asp-for="Username" placeholder="Tên đăng nhập">
                                         </div>
