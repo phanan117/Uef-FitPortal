@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "paf6eD4Fl2cMORNns/6CzZB3/3gV7v9jjBAqhmKOXfM=",
+  "Hash": "YfcJ76O0AXDxYyk67rlfloP0t87tkAnTM1vA8H7PAnI=",
   "Source": "FitPortal",
   "BasePath": "_content/FitPortal",
   "Mode": "Default",
@@ -73302,6 +73302,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\Teacher\\ed177028-7f2c-4fb6-ba61-5f93049febc8_807ea17045473b3c6e55ca689d9adbf6.jpg"
+    },
+    {
+      "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\Images\\Teacher\\fb6c5f1e-0c3e-48aa-a1a2-cfe87d9246bc_807ea17045473b3c6e55ca689d9adbf6.jpg",
+      "SourceId": "FitPortal",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\",
+      "BasePath": "_content/FitPortal",
+      "RelativePath": "Images/Teacher/fb6c5f1e-0c3e-48aa-a1a2-cfe87d9246bc_807ea17045473b3c6e55ca689d9adbf6.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\Teacher\\fb6c5f1e-0c3e-48aa-a1a2-cfe87d9246bc_807ea17045473b3c6e55ca689d9adbf6.jpg"
     },
     {
       "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\Images\\Teacher\\ff04c9c9-4d18-4d8e-ac17-88afe0676453_807ea17045473b3c6e55ca689d9adbf6.jpg",

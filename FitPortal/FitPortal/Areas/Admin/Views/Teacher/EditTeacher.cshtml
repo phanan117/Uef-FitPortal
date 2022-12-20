@@ -1,13 +1,13 @@
 ﻿@using FitPortal
 @using FitPortal.Models
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model FitPortal.Models.Domain.Teachers
+@model FitPortal.Areas.Admin.Models.TeacherViewModel
 @{
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
 <form asp-area="Admin" asp-controller="Teacher" asp-action="EditTeacher" enctype="multipart/form-data" class="form-horizontal form-label-left" method="post">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.ID)
     <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12" >Mã giảng viên
     </label>
@@ -81,7 +81,7 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Chân dung<span class="required">*</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="custom-file">
-        <input asp-for="@Model.Avatar"  class="custom-file-input">
+        <input type="file" name="avatar" id="avatar" class="custom-file-input">
         <img src="@ViewBag.Avatar" style="height: 100px; width: 100px; margin:10px;/>
         @Html.ValidationMessageFor(model => model.Avatar, "", new { @class = "text-danger" })
         </div>      

@@ -28,6 +28,7 @@ namespace FitPortal.Models.Domain
         [StringLength(50)]
         public string Identification { get; set; }
         public bool IsDeleted { get; set; }
+        public List<Specialization> Specializations { get; set; }
         public List<TeacherPosition> teacherPositions { get; set; }
         public List<TeacherUser> teacherUser { get; set; }
     }

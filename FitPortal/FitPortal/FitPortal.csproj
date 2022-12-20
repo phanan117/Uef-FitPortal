@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\Spacialization\" />
     <Folder Include="wwwroot\Data\" />
     <Folder Include="wwwroot\Images\post\" />
   </ItemGroup>

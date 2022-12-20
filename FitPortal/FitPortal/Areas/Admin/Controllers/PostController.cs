@@ -83,7 +83,6 @@ namespace FitPortal.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
         public async Task<IActionResult> AddPost(PostViewModel model)
         {
             if (ModelState.IsValid)

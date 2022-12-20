@@ -1,0 +1,72 @@
+﻿@using FitPortal
+@using FitPortal.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model FitPortal.Areas.Admin.Models.SpecializationViewModel
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>Thêm mới chuyên ngành</h1>
+<form asp-area="Admin" asp-controller="Specialization" asp-action="EditSpecialization" class="form-horizontal form-label-left" method="post">
+    <div class="x_content">
+    @if (TempData["msg"] != null)
+    {
+        <div class="form-group">
+        <span class="text-info">@TempData["msg"]</span>
+        </div>
+    }
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ID)
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Mã chuyên ngành
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="@Model.SpecializationID" class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.SpecializationID, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Tên chuyên ngành
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="@Model.SpecializationName" class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.SpecializationName, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Ngày thành lập<span class="required" >*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <div class='input-group date' id='myDatepicker2'>
+                <input asp-for="@Model.DateCreate" type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">Thể loại<span class="required" >*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(m => m.ManagerID, (IEnumerable<SelectListItem>) ViewBag.Teacher, new { @class = "col-md-6 col-sm-6 col-xs-12" })
+    </div>
+    </div>
+    <div class="ln_solid"></div>
+    <div class="form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+        <button type="submit" class="btn btn-info">Chỉnh sửa thông tin</button>
+        <a type="button" class="btn btn-info" asp-area="Admin" asp-controller="Specialization" asp-action="ViewAll">Trở về
+        </a>
+    </div>
+    </div>
+    </div>
+</form>
+@section DoanScript{
+    <script>
+    $('#myDatepicker2').datetimepicker({
+        format: 'DD.MM.YYYY'
+    });
+</script>
+}

@@ -40,7 +40,8 @@
     <link href="/adminCustome/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="/adminCustome/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-
+    <!-- bootstrap-datetimepicker -->
+    <link href="/adminCustome/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="/adminCustome/build/css/custom.min.css" rel="stylesheet">
   </head>
@@ -100,13 +101,13 @@
                   </li>
                   <li><a><i class="fa fa-desktop"></i>Giảng viên<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a asp-area="Admin" asp-controller="Teacher" asp-action="ViewAll">Thông tin giảng viên</a></li>
-                      <li><a href="media_gallery.html">Media Gallery</a></li>
+                      <li><a asp-area="Admin" asp-controller="Teacher" asp-action="ViewAll">Thông tin cơ bản</a></li>
+                      <li><a asp-area="Admin" asp-controller="Teacher" asp-action="ViewResign">Về hưu hoặc nghỉ</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-table"></i> Chuyên ngành <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="tables.html">Tables</a></li>
+                      <li><a asp-area="Admin" asp-controller="Specialization" asp-action="ViewAll">Thông tin chuyên ngành</a></li>
                       <li><a href="tables_dynamic.html">Table Dynamic</a></li>
                     </ul>
                   </li>
@@ -360,6 +361,8 @@
     <!-- bootstrap-daterangepicker -->
     <script src="/adminCustome/vendors/moment/min/moment.min.js"></script>
     <script src="/adminCustome/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap-datetimepicker -->    
+    <script src="/adminCustome/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <!--Ckeditor-->
     <script src="/Plugin/ckeditor5/ckeditor.js"></script>
     <!-- Custom Theme Scripts -->

@@ -11,9 +11,6 @@ namespace FitPortal.Models.Domain
         public int TeacherID { get; set; }
         [Required]
         public int SpecializationID { get; set; }
-        [Required]
-        [StringLength(150)]
-        public string Position { get; set; }
         [ForeignKey("TeacherID")]
         public Teachers Teachers { get; set; }
         [ForeignKey("SpecializationID")]

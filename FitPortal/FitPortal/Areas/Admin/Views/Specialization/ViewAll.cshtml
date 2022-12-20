@@ -1,0 +1,48 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using FitPortal
+@using FitPortal.Models
+@using FitPortal.Areas.Admin.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<FitPortal.Areas.Admin.Models.SpecializationViewModel>
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>Quản lý chuyên ngành</h1>
+<a asp-action="AddSpecialization" asp-controller="Specialization" asp-area="Admin" class="btn btn-info">Thêm mới</a>
+    <div class="x_content">
+    <table id="datatable" class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Mã chuyên ngành</th>
+            <th>Tên chuyên ngành</th>
+            <th>Ngày thành lập</th>
+            <th>Trưởng ngành</th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+            @{
+                if(Model != null)
+                {
+                    foreach(var item in Model)
+                    {
+                        <tr>
+                            <td>@item.SpecializationID</td>
+                            <td>@item.SpecializationName</td>
+                            <td>@item.DateCreate</td>
+                            <td>@item.ManagerName</td>
+                            <td>
+                                <a  class="btn btn-round btn-info" href="/admin/specialization/editspecialization?IDSpecialization=@item.ID">Sửa</a>
+                                <span>|</span>
+                                <a  class="btn btn-round btn-danger" href="/admin/teacher/deleteteacher?IDTeacher=@item.ID">Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                
+            }
+        </tbody>
+    </table>
+    </div>

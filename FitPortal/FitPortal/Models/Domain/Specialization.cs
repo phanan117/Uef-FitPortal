@@ -14,6 +14,9 @@ namespace FitPortal.Models.Domain
         [StringLength(250)]
         public string SpecializationName { get; set; }
         public DateTime DateCreate { get; set; }
+        public int? ManagerID { get; set; }
+        [ForeignKey("ManagerID")]
+        public Teachers Teachers { get; set; }
         public List<TeacherPosition> teacherPositions { get; set; }
     }
 }

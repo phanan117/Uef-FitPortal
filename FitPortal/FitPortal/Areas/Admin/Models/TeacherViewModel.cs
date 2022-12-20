@@ -18,8 +18,7 @@ namespace FitPortal.Areas.Admin.Models
         public string PhoneNumber { get; set; }
         [Required(ErrorMessage ="Vui lòng nhập Email")]
         public string Email { get; set; }
-        [Required(ErrorMessage ="Vui lòng thêm ảnh chân dung")]
-        public IFormFile Avatar { get; set; }
+        public IFormFile? Avatar { get; set; }
         [Required(ErrorMessage ="Vui lòng nhập số chứng minh nhân dân")]
         public string Identification { get; set; }
     }

@@ -171,6 +171,9 @@ namespace FitPortal.Migrations
                     b.Property<DateTime>("DateCreate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ManagerID")
+                        .HasColumnType("int");
+
                     b.Property<string>("SpecializationID")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -183,6 +186,8 @@ namespace FitPortal.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ManagerID");
+
                     b.ToTable("Specializations");
                 });
 
@@ -193,11 +198,6 @@ namespace FitPortal.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Position")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
 
                     b.Property<int>("SpecializationID")
                         .HasColumnType("int");
@@ -455,6 +455,15 @@ namespace FitPortal.Migrations
                     b.Navigation("PostCategory");
                 });
 
+            modelBuilder.Entity("FitPortal.Models.Domain.Specialization", b =>
+                {
+                    b.HasOne("FitPortal.Models.Domain.Teachers", "Teachers")
+                        .WithMany("Specializations")
+                        .HasForeignKey("ManagerID");
+
+                    b.Navigation("Teachers");
+                });
+
             modelBuilder.Entity("FitPortal.Models.Domain.TeacherPosition", b =>
                 {
                     b.HasOne("FitPortal.Models.Domain.Specialization", "Specialization")
@@ -563,6 +572,8 @@ namespace FitPortal.Migrations
 
             modelBuilder.Entity("FitPortal.Models.Domain.Teachers", b =>
                 {
+                    b.Navigation("Specializations");
+
                     b.Navigation("teacherPositions");
 
                     b.Navigation("teacherUser");

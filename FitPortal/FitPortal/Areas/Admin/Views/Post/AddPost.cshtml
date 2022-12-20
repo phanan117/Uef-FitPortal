@@ -51,13 +51,13 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                               <div class="col-md-11 xdisplay_inputx form-group has-feedback">
-                                <input type="text" asp-for="@Model.DateCreated" class="form-control has-feedback-left" id="single_cal1" placeholder="First Name" aria-describedby="inputSuccess2Status">
+                                <input type="text" asp-for="@Model.DateCreated" class="form-control has-feedback-left" id="single_cal1" aria-describedby="inputSuccess2Status">
                                 <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                 <span id="inputSuccess2Status" class="sr-only">(success)</span>
                               </div>
                         </div>
                       </div>
-                      @if (TempData["msg"] != null)
+                    @if (TempData["msg"] != null)
                          {
                     <div class="form-group">
                        <span class="text-info">@TempData["msg"]</span>
@@ -67,8 +67,8 @@
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                           <button type="submit" class="btn btn-info">Thêm mới</button>
-                          <a type="button" asp-area="Admin" asp-controller="Post" asp-action="ManageCategory">
-                          <button type="button" class="btn btn-info">Trở về</button>
+                          <a type="button" class="btn btn-info" asp-area="Admin" asp-controller="Post" asp-action="ManageCategory">
+                          Trở về
                           </a>
                         </div>
                       </div>
