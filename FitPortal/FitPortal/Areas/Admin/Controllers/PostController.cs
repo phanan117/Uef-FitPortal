@@ -132,13 +132,6 @@ namespace FitPortal.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult changeDisplay(int id)
         {
-            /*
-             * string title = Tbl_POST.post_title;
-            Tbl_POST.status = state;
-            string prefix = state == true ? "Đăng" : "Hủy đăng";
-            db.Commit();
-            return Json(new { Message = prefix + " \"" + title + "\" thành công" }, JsonRequestBehavior.AllowGet)
-             */
             var post = dbcon.Posts.Find(id);
             post.IsDisplay = !post.IsDisplay;
             string title = post.PostName;
@@ -149,7 +142,6 @@ namespace FitPortal.Areas.Admin.Controllers
             }
             else { prefix = "Hủy đăng"; }
             dbcon.SaveChanges();
-            //var result = this.ChangeStatus(id);
             return Json((new { rpMessage = prefix + " \"" + title + "\" thành công" }));
         }
         [HttpPost]

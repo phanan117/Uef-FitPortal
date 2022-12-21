@@ -16,13 +16,17 @@ namespace FitPortal.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
-        public UserAuthenticationController(IUserAuthenticationService authService, IHttpContextAccessor contextAccessor, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
+        private readonly ITeacherRepository _teacherRepository;
+        private readonly ITeacherUserRepository _teacherUserRepository;
+        public UserAuthenticationController(IUserAuthenticationService authService, IHttpContextAccessor contextAccessor, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, ITeacherRepository teacherRepository,ITeacherUserRepository teacherUserRepository)
         {
             this._authService = authService;
             this._contextAccessor = contextAccessor;
             this.userManager = userManager;
             this._signInManager = signInManager;
             this.roleManager = roleManager;
+            this._teacherRepository = teacherRepository;
+            this._teacherUserRepository = teacherUserRepository;
         }
 
 
@@ -65,15 +69,33 @@ namespace FitPortal.Controllers
                 {
                     return View("Erorr");
                 }
-                var user = new ApplicationUser { Name = model.FullName, Email = model.Email };
+                var user = new ApplicationUser {
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    Name = model.FullName, 
+                    Email = model.Email,
+                    UserName = model.Email,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true
+                };
                 var result = await userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    if (!await roleManager.RoleExistsAsync("student"))
-                        await roleManager.CreateAsync(new IdentityRole("student"));
-                    if (await roleManager.RoleExistsAsync("student"))
+                    var teacher = _teacherRepository.GetAll().Where(t => t.TeacherCode == model.AuthenCode).FirstOrDefault();
+                    if(teacher != null)
                     {
-                        await userManager.AddToRoleAsync(user, "student");
+                        var infoUser = await userManager.FindByNameAsync(model.Email);
+                        TeacherUser teacherUser = new TeacherUser { TeacherID = teacher.Id, UserID = infoUser.Id };
+                        var resultCreate = _teacherUserRepository.Create(teacherUser);
+                        if(resultCreate == true)
+                        {
+                            if (!await roleManager.RoleExistsAsync("Teacher"))
+                                await roleManager.CreateAsync(new IdentityRole("Teacher"));
+                            if (await roleManager.RoleExistsAsync("Teacher"))
+                            {
+                                await userManager.AddToRoleAsync(user, "Teacher");
+                            }
+                        }
+                        
                     }
                     result = await userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
@@ -116,7 +138,6 @@ namespace FitPortal.Controllers
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
             if (result.Succeeded)
             {
-                //update any authentication tokens
                 await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
                 return LocalRedirect(returnurl);
             }

@@ -13,7 +13,6 @@
                 dataType: "json",
                 type: "POST",
                 success: function (recData) {
-                    debugger;
                     var notify = $.notify(recData.rpMessage, {globalPosition: 'top-center',className: 'success'});
                 },
                 error: function () { alert('An error occured'); }

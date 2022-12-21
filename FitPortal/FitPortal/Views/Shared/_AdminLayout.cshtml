@@ -81,14 +81,19 @@
                       <li><a asp-area="Admin" asp-controller="AdminHome" asp-action="Index">Trang chủ</a></li>
                     </ul>
                   </li>
+                  <li><a><i class="fa fa-edit"></i> Quản lý vai trò <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a asp-area="Admin" asp-controller="Role" asp-action="ViewAll">Danh sách role</a></li>
+                    </ul>
+                  </li>
                   <li><a><i class="fa fa-edit"></i> Quản lý user <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a asp-area="Admin" asp-controller="User" asp-action="Account">Quản lý User</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-desktop"></i>Hành chính văn phòng <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-desktop"></i>Bài viết<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a asp-area="Admin" asp-controller="Post" asp-action="ManagePost">Bài viết</a></li>
+                      <li><a asp-area="Admin" asp-controller="Post" asp-action="ManagePost">Danh sách</a></li>
                       <li><a href="media_gallery.html">Media Gallery</a></li>
                       <li><a href="typography.html">Typography</a></li>
                       <li><a href="icons.html">Icons</a></li>
@@ -101,13 +106,13 @@
                   </li>
                   <li><a><i class="fa fa-desktop"></i>Giảng viên<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a asp-area="Admin" asp-controller="Teacher" asp-action="ViewAll">Thông tin cơ bản</a></li>
-                      <li><a asp-area="Admin" asp-controller="Teacher" asp-action="ViewResign">Về hưu hoặc nghỉ</a></li>
+                      <li><a asp-area="Admin" asp-controller="Teacher" asp-action="ViewAll">Danh sách</a></li>
+                      <li><a asp-area="Admin" asp-controller="Teacher" asp-action="ViewResign">Danh sách về hưu</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-table"></i> Chuyên ngành <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a asp-area="Admin" asp-controller="Specialization" asp-action="ViewAll">Thông tin chuyên ngành</a></li>
+                      <li><a asp-area="Admin" asp-controller="Specialization" asp-action="ViewAll">Danh sách</a></li>
                       <li><a href="tables_dynamic.html">Table Dynamic</a></li>
                     </ul>
                   </li>
