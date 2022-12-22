@@ -84,11 +84,13 @@
                   <li><a><i class="fa fa-edit"></i> Quản lý vai trò <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a asp-area="Admin" asp-controller="Role" asp-action="ViewAll">Danh sách role</a></li>
+                      <li><a asp-area="Admin" asp-controller="Role" asp-action="UserRole">Vai trò người dùng</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-edit"></i> Quản lý user <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-edit"></i>Quản lý user <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a asp-area="Admin" asp-controller="User" asp-action="Account">Quản lý User</a></li>
+                      <li><a asp-area="Admin" asp-controller="User" asp-action="Account">Danh sách user</a></li>
+                      <li><a asp-area="Admin" asp-controller="User" asp-action="Registration">Đăng ký mới</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i>Bài viết<span class="fa fa-chevron-down"></span></a>

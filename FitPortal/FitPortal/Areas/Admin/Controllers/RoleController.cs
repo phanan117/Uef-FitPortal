@@ -1,26 +1,106 @@
 ﻿using FitPortal.Areas.Admin.Models;
 using FitPortal.Models.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitPortal.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly DatabaseContext _dbcon;
-        public RoleController(RoleManager<IdentityRole> roleManager, DatabaseContext dbcon)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public RoleController(RoleManager<IdentityRole> roleManager, DatabaseContext dbcon, UserManager<ApplicationUser> userManager)
         {
             this._roleManager = roleManager;
             this._dbcon = dbcon;
+            this._userManager = userManager;
         }
         [HttpGet]
         public async Task<IActionResult> ViewAll()
         {
             var model = await _roleManager.Roles.ToListAsync();
             return View(model);
+        }
+        [HttpGet]
+        public async Task<IActionResult> UserRole()
+        {
+            var user = await _userManager.Users.ToListAsync();
+            List<UserRoleViewModel> model = new List<UserRoleViewModel>();
+            if(user != null)
+            {
+                foreach(var item in user)
+                {
+                    UserRoleViewModel itemModel = new UserRoleViewModel()
+                    {
+                        UserID = item.Id,
+                        UserName = item.UserName,
+                        Email = item.Email
+                    };
+                    model.Add(itemModel);
+                }
+            }
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ManagerRole(string IDUser)
+        {
+            var userRole = await (from ur in _dbcon.UserRoles
+                                  where ur.UserId == IDUser
+                                  select ur).ToListAsync();
+            List<ManagerRoleViewModel> model = new List<ManagerRoleViewModel>();
+            if(userRole != null)
+            {
+                foreach(var item in userRole)
+                {
+                    var role = await _roleManager.FindByIdAsync(item.RoleId);
+                    ManagerRoleViewModel itemModel = new ManagerRoleViewModel()
+                    {
+                        RoleID = role.Id,
+                        RoleName = role.Name
+                    };
+                    model.Add(itemModel);
+                }
+                ViewBag.UserID = IDUser;
+                var userName = await _userManager.FindByIdAsync(IDUser);
+                ViewBag.UserName = userName.UserName;
+                return View(model);
+            }
+            return View(nameof(UserRole));
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddRoleToUser(string ID)
+        {
+            ViewBag.UserID = ID;
+            var role = await _roleManager.Roles.ToListAsync();
+            SelectList selectListItems = new SelectList(role, "Name", "Name");
+            ViewBag.Role = selectListItems;
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddRoleToUser(AddRoleToUserViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserID);
+            if (user != null)
+            {
+                await _userManager.AddToRoleAsync(user, model.RoleName);
+            }
+            return RedirectToAction("ManagerRole", "Role", new {IDUser = model.UserID});
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeleteRoleFromUser(string IDUser,string RoleName)
+        {
+            var user = await _userManager.FindByIdAsync(IDUser);
+            if (user != null)
+            {
+                await _userManager.RemoveFromRoleAsync(user, RoleName);
+            }
+            return RedirectToAction("ManagerRole","Role",new {IDUser = IDUser});
         }
         [HttpGet]
         public IActionResult AddRole()

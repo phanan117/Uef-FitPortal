@@ -18,14 +18,8 @@ updateJQuery = form => {
             data: new FormData(form),
             contentType: false,
             processData: false,
-            success: function (res) {
-                if (res.isValue == false) {
-                    $('#form-modal').modal('hide');
-                    $.notify(res.Message, { globalPosition: 'top-center', className: 'error' });
-                } else {
-                    $('#form-modal').modal('hide');
-                    $.notify("Cập nhật thành công", { globalPosition: 'top-center', className: 'success' });
-                }     
+            success: function () {
+                    $('#form-modal').modal('hide');    
             },
             error: function (err) {
                 console.log(err)

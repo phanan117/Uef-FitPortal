@@ -17,7 +17,13 @@ namespace FitPortal.Areas.Admin.Controllers
             this._authService = auhtService;
             this._webHostEnvironment = webHostEnvironment;
         }
+        [HttpGet]
         public IActionResult Account()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult Registration()
         {
             return View();
         }
