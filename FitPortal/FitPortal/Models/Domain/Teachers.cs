@@ -31,5 +31,6 @@ namespace FitPortal.Models.Domain
         public List<Specialization> Specializations { get; set; }
         public List<TeacherPosition> teacherPositions { get; set; }
         public List<TeacherUser> teacherUser { get; set; }
+        public virtual ICollection<Works> Works { get; set; }
     }
 }

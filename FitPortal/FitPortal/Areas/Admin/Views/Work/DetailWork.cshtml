@@ -1,0 +1,19 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using FitPortal
+@using FitPortal.Models
+@using FitPortal.Areas.Admin.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model FitPortal.Models.Domain.Works
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>Thông tin chi tiết công việc</h1>
+    <div class="x_content">
+        <h3>Công việc: @(Model.Name)</h3>
+        <h3>Mô tả</h3>
+        <div class="container">
+            @Html.Raw(@Model.Description)
+        </div>
+    </div>

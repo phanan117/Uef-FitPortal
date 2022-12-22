@@ -29,10 +29,15 @@ builder.Services.AddAuthentication()
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(30));
 //Inject
+builder.Services.AddTransient<IWorkRepository, WorkRepository>();
+builder.Services.AddTransient<ITeacherPositionRepository, TeacherPositionRepository>();
 builder.Services.AddTransient<ITeacherUserRepository, TeacherUserRepository>();
 builder.Services.AddTransient<ITeacherRepository, TeacherRepository>();
 builder.Services.AddTransient<ISpecializationRepository, SpecializationRepository>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
+
+
+//Build
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

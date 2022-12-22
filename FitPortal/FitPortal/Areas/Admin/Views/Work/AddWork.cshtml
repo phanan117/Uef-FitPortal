@@ -1,0 +1,85 @@
+﻿@using FitPortal
+@using FitPortal.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model FitPortal.Areas.Admin.Models.AddWorkViewModel
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<form asp-area="Admin" asp-controller="Work" asp-action="AddWork" enctype="multipart/form-data" class="form-horizontal form-label-left" method="post">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Tên công việc
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="@Model.Name" class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">Mô tả công việc<span class="required" asp-validation-for="@Model.Description">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <textarea class="form-control col-md-7 col-xs-12" asp-for="@Model.Description" id="inputOfContent"></textarea>
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+        </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Ngày bắt đầu<span class="required" >*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <div class='input-group date' id='myDatepicker2'>
+                <input asp-for="@Model.DateStart" type='text' class="form-control" />
+                @Html.ValidationMessageFor(model => model.DateStart, "", new { @class = "text-danger" })
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Ngày kết thúc<span class="required" >*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <div class='input-group date' id='myDatepicker3'>
+                <input asp-for="@Model.DateEnd" type='text' class="form-control" />
+                @Html.ValidationMessageFor(model => model.DateEnd, "", new { @class = "text-danger" })
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="ln_solid"></div>
+    <div class="form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+        <button type="submit" class="btn btn-info">Thêm mới</button>
+        <a type="button" class="btn btn-info" asp-area="Admin" asp-controller="Teacher" asp-action="ViewAll">Trở về
+        </a>
+    </div>
+    </div>   
+</form>
+ @section DoanScript{
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#inputOfContent'),
+            {ckfinder: {uploadUrl: '/Admin/Post/UploadImage'}}
+            )
+            .then(editor => { window.editor = editor;})
+            .catch(error => { console.error(error);});
+    </script>
+    <script>
+        $('#myDatepicker2').datetimepicker({
+            format: 'DD.MM.YYYY'
+        });
+    </script>
+    <script>
+        $('#myDatepicker3').datetimepicker({
+            format: 'DD.MM.YYYY'
+        });
+    </script>
+}      
+

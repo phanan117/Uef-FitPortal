@@ -10,8 +10,8 @@
     string userID = (string)ViewBag.UserID;
 }
 <form asp-area="Admin" asp-controller="Role" asp-action="AddRoleToUser" onsubmit="jQueryAjaxPost(this)" class="form-horizontal form-label-left" method="post">
-    <input asp-for="UserID" value="@userID" />
     <div class="col-md-6 col-sm-6 col-xs-12">
+        <input asp-for="UserID" value="@userID" readonly/>
         @Html.DropDownListFor(m => m.RoleName, (IEnumerable<SelectListItem>) ViewBag.Role, new { @class = "col-md-6 col-sm-6 col-xs-12" })
     </div>
     <div class="ln_solid"></div>

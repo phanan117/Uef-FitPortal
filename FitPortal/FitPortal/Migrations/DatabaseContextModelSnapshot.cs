@@ -202,10 +202,11 @@ namespace FitPortal.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("SpecializationID")
+                    b.Property<int?>("SpecializationID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("TeacherID")
+                    b.Property<int?>("TeacherID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -304,6 +305,46 @@ namespace FitPortal.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Teachers");
+                });
+
+            modelBuilder.Entity("FitPortal.Models.Domain.Works", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsTaked")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastMofify")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Works");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -439,6 +480,21 @@ namespace FitPortal.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("TeachersWorks", b =>
+                {
+                    b.Property<int>("TeachersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorksId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TeachersId", "WorksId");
+
+                    b.HasIndex("WorksId");
+
+                    b.ToTable("TeachersWorks");
+                });
+
             modelBuilder.Entity("FitPortal.Models.Domain.PostInfor", b =>
                 {
                     b.HasOne("FitPortal.Models.Domain.PostCategory", "PostCategory")
@@ -477,9 +533,7 @@ namespace FitPortal.Migrations
 
                     b.HasOne("FitPortal.Models.Domain.Teachers", "Teachers")
                         .WithMany("teacherPositions")
-                        .HasForeignKey("TeacherID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TeacherID");
 
                     b.Navigation("Specialization");
 
@@ -552,6 +606,21 @@ namespace FitPortal.Migrations
                     b.HasOne("FitPortal.Models.Domain.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TeachersWorks", b =>
+                {
+                    b.HasOne("FitPortal.Models.Domain.Teachers", null)
+                        .WithMany()
+                        .HasForeignKey("TeachersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FitPortal.Models.Domain.Works", null)
+                        .WithMany()
+                        .HasForeignKey("WorksId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

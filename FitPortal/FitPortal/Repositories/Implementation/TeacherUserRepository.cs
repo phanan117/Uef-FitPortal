@@ -5,7 +5,7 @@ namespace FitPortal.Repositories.Implementation
 {
     public class TeacherUserRepository : BaseRepository<TeacherUser>, ITeacherUserRepository
     {
-        public TeacherUserRepository(DatabaseContext ctx):base(ctx)
+        public TeacherUserRepository(DatabaseContext ctx) : base(ctx)
         {
 
         }

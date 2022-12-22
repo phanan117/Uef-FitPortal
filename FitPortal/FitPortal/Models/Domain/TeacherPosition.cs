@@ -7,10 +7,8 @@ namespace FitPortal.Models.Domain
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        public int TeacherID { get; set; }
-        [Required]
-        public int SpecializationID { get; set; }
+        public int? TeacherID { get; set; }
+        public int? SpecializationID { get; set; }
         [ForeignKey("TeacherID")]
         public Teachers Teachers { get; set; }
         [ForeignKey("SpecializationID")]
