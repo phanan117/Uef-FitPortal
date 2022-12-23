@@ -16,6 +16,14 @@
     </div>
     </div>
     <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Địa chỉ thực hiện
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="@Model.Name" class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">Mô tả công việc<span class="required" asp-validation-for="@Model.Description">*</span>
         </label>
         <div class="col-md-6 col-sm-6 col-xs-12">

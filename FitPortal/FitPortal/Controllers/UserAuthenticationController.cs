@@ -18,7 +18,10 @@ namespace FitPortal.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly ITeacherRepository _teacherRepository;
         private readonly ITeacherUserRepository _teacherUserRepository;
-        public UserAuthenticationController(IUserAuthenticationService authService, IHttpContextAccessor contextAccessor, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, ITeacherRepository teacherRepository,ITeacherUserRepository teacherUserRepository)
+        private readonly IStudentRepository _studentRepository;
+        private readonly IStudentUserRepository _studentUserRepository;
+
+        public UserAuthenticationController(IUserAuthenticationService authService, IHttpContextAccessor contextAccessor, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, ITeacherRepository teacherRepository,ITeacherUserRepository teacherUserRepository,IStudentRepository studentRepository,IStudentUserRepository studentUserRepository)
         {
             this._authService = authService;
             this._contextAccessor = contextAccessor;
@@ -27,9 +30,9 @@ namespace FitPortal.Controllers
             this.roleManager = roleManager;
             this._teacherRepository = teacherRepository;
             this._teacherUserRepository = teacherUserRepository;
+            this._studentRepository = studentRepository;
+            this._studentUserRepository = studentUserRepository;
         }
-
-
         public IActionResult Login()
         {
             return View();
@@ -56,6 +59,7 @@ namespace FitPortal.Controllers
                 return RedirectToAction(nameof(Login));
             }
         }
+        //Check studen or teacher code (first login with google)
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -81,6 +85,22 @@ namespace FitPortal.Controllers
                 if (result.Succeeded)
                 {
                     var teacher = _teacherRepository.GetAll().Where(t => t.TeacherCode == model.AuthenCode).FirstOrDefault();
+                    var student = _studentRepository.GetAll().Where(s => s.StudentCode == model.AuthenCode).FirstOrDefault();
+                    if(student != null)
+                    {
+                        var infoUser = await userManager.FindByNameAsync(model.Email);
+                        StudentUser studentUser = new StudentUser { StudentID=student.Id, UserID=infoUser.Id};
+                        var resultCreate = _studentUserRepository.Create(studentUser);
+                        if(resultCreate == true)
+                        {
+                            if (!await roleManager.RoleExistsAsync("Student"))
+                                await roleManager.CreateAsync(new IdentityRole("Student"));
+                            if (await roleManager.RoleExistsAsync("Student"))
+                            {
+                                await userManager.AddToRoleAsync(user, "Student");
+                            }
+                        }
+                    }
                     if(teacher != null)
                     {
                         var infoUser = await userManager.FindByNameAsync(model.Email);

@@ -17,12 +17,14 @@ namespace FitPortal.Models.Domain
         public DateTime DateEnd { get; set; }
         [Required]
         public bool IsTaked { get; set; }
+        [StringLength(300)]
+        public string? Address { get; set; }
         [Required]
         public DateTime DateCreate { get; set; }
         [Required]
         public DateTime LastMofify { get; set; }
         [Required]
         public bool Status { get; set; }
-        public virtual ICollection<Teachers> Teachers { get; set; }
+        public List<TeachersWorks> TeachersWorks { get; set; }
     }
 }

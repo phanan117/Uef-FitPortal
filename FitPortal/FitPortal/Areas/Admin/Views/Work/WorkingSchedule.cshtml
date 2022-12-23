@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using FitPortal
+@using FitPortal.Models
+@using FitPortal.Areas.Admin.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<FitPortal.Areas.Admin.Models.WorkingScheduleViewModel>
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+    string name = (string)ViewBag.TeacherName;
+}
+<h1>Lịch công tác của giảng viên @(name)</h1>
+<!--Popup start-->
+<div class="modal" tabindex="-1" id="form-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<!--Popup end-->
+    <div class="x_content">
+    <table id="datatable" class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Tên công việc</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
+            <th>Địa điểm</th>
+        </tr>
+        </thead>
+        <tbody>
+            @{
+                if(Model != null)
+                {
+                    foreach(var item in Model)
+                    {
+                            <tr>
+                                <td>@item.WorkName</td>
+                                <td>@item.StartDate.ToShortDateString()</td>
+                                <td>@item.EndDate.ToShortDateString()</td>
+                                <td>@item.Address</td>
+                            </tr>
+                    }
+                }
+                    
+            }
+            </tbody>
+        </table>
+        </div>
+        @section DoanScript{
+            <script src="/js/popupCRUD.js"></script>
+        }
+

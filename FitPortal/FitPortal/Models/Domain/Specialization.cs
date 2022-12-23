@@ -18,5 +18,6 @@ namespace FitPortal.Models.Domain
         [ForeignKey("ManagerID")]
         public Teachers Teachers { get; set; }
         public List<TeacherPosition> teacherPositions { get; set; }
+        public List<Class> Classes { get; set; }
     }
 }

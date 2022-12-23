@@ -11,6 +11,10 @@ namespace FitPortal.Models.Domain
         public DbSet<Teachers> Teachers { get; set; }
         public DbSet<TeacherUser> TeacherUser { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<TeachersWorks> TeachersWorks { get; set; }
+        public DbSet<StudentUser> StudentUsers { get; set; }
+        public DbSet<Students> Students { get; set; }
+        public DbSet<Class> Classes { get; set; }
         public DatabaseContext(DbContextOptions<DatabaseContext> options):base(options)
         {
 

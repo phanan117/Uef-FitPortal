@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using FitPortal
+@using FitPortal.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model FitPortal.Areas.Admin.Models.AssignmentViewModel
+@{
+    Layout = null;
+    int IDWork = (int)ViewBag.IDWork;
+}
+<form asp-area="Admin" asp-controller="Work" asp-action="Assignment" onsubmit="jQueryAjaxPost(this)" class="form-horizontal form-label-left" method="post">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input asp-for="IdWork" value="@IDWork" readonly/>
+        @Html.DropDownListFor(m => m.IDTeacher, (IEnumerable<SelectListItem>) ViewBag.Teacher, new { @class = "col-md-6 col-sm-6 col-xs-12" })
+    </div>
+    <div class="ln_solid"></div>
+    <div class="form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+        <button type="submit" class="btn btn-info">Cập nhật</button>
+    </div>
+    </div>
+</form>

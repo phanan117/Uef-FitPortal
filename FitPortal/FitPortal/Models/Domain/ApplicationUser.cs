@@ -9,5 +9,6 @@ namespace FitPortal.Models.Domain
         public string? ProfilePicture { get; set; }
         public List<PostInfor> posstInfors { get; set; }
         public List<TeacherUser> teacherUser { get; set; }
+        public List<StudentUser> studentUser { get; set; }
     }
 }
