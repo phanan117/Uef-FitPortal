@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using FitPortal.Models.Domain
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var user = UserManager.FindByNameAsync(User.Identity.Name);
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
    <meta charset="UTF-8">
@@ -78,10 +86,17 @@
                     </div>
                 </div>
                 <div class="col-md-8 text-md-right text-center">
-                    <a href="#" class="adbar-right">
-                        <img src="/img/ad/1.png" alt="img">
-                    </a>
-                </div>
+                        @if(SignInManager.IsSignedIn(User))
+                        {
+                            <label>Xin chào @user.Result.Name</label>
+                            <a href="/userauthentication/logout" class="btn btn-main">Đăng xuất</a>
+                        }else
+                        {
+                            <a href="/userauthentication/login" class="btn btn-main">
+                                Đăng nhập
+                            </a>
+                        }
+                    </div>
             </div>
         </div>
     </div>
@@ -138,7 +153,7 @@
         </nav>
     </div>
     </header>
-    <div class="container">
+    <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

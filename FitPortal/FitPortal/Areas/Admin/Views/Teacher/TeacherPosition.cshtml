@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using FitPortal
+@using FitPortal.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model List<FitPortal.Areas.Admin.Models.TeacherPositionViewModel>
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<!--Popup start-->
+<div class="modal" tabindex="-1" id="form-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<!--Popup end-->
+<h1>Quản lý giảng viên của các chuyên ngành</h1>
+    <div class="x_content">
+    <table id="datatable" class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Tên giảng viên</th>
+            <th>Chuyên ngành</th>
+            <th>Trưởng ngành</th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+            @{
+                if(Model != null)
+                {
+                    foreach(var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.SpecializationName</td>
+                            <td>@item.Manager</td>
+                            <td>
+                                <a onclick="showInPopup('@Url.Action("AddTeacherToPosition","Teacher",new{IDTeacher=item.ID},Context.Request.Scheme)','Chuyên ngành giảng viên')" class="btn btn-round btn-info">Thêm sửa chuyên ngành</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                
+            }
+        </tbody>
+    </table>
+    </div>
+    @section DoanScript{
+    <script src="/js/popupCRUD.js"></script>
+    }

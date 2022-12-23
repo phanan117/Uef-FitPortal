@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using FitPortal
+@using FitPortal.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model FitPortal.Models.Domain.PostCategory
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+    List<FitPortal.Models.Domain.PostCategory> listCategory = (List<FitPortal.Models.Domain.PostCategory>)ViewBag.Category;
+}     
+<h1>Quản lý thể loại</h1>
+<a type="button" asp-area="Admin" asp-controller="Post" asp-action="AddCategory">
+    <button type="button" class="btn btn-info">Thêm mới</button>
+</a>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Tên thể loại</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 0;
+            foreach(var item in listCategory)
+                {
+                    i++;
+                    <tr>
+                    <th scope="row">@i</th>
+                    <td>@item.CategoryName</td>
+                    <td>#</td>
+                    </tr>
+            }
+        }
+    </tbody>
+</table>
+                  

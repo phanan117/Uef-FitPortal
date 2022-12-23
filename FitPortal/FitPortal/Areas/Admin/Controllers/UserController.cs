@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FitPortal.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserAuthenticationService _authService;
@@ -16,10 +17,13 @@ namespace FitPortal.Areas.Admin.Controllers
             this._authService = auhtService;
             this._webHostEnvironment = webHostEnvironment;
         }
-
-      
-
+        [HttpGet]
         public IActionResult Account()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult Registration()
         {
             return View();
         }
@@ -29,7 +33,7 @@ namespace FitPortal.Areas.Admin.Controllers
             if (!ModelState.IsValid) { return RedirectToAction(nameof(Account)); }
             if (model.ProfilePicture != null)
             {
-                string folder = "adminAccount/cover";
+                string folder = "adminAccount/cover/";
                 folder+=Guid.NewGuid().ToString()+"_"+ model.ProfilePicture.FileName;
                 model.PictureUrl = "/"+folder;
                 string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
@@ -41,7 +45,6 @@ namespace FitPortal.Areas.Admin.Controllers
             return RedirectToAction(nameof(Account));
 
         }
-        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await this._authService.LogoutAsync();

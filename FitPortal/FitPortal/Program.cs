@@ -15,9 +15,34 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>()
         .AddEntityFrameworkStores<DatabaseContext>()
         .AddDefaultTokenProviders();
 builder.Services.ConfigureApplicationCookie(options => options.LoginPath = "/UserAuthentication/Login");
+//Authentication
+builder.Services.AddAuthentication()
+    .AddGoogle(googleOptions =>
+    {
+        IConfigurationSection googleAuthNSection = builder.Configuration.GetSection("Authentication:Google");
+        googleOptions.ClientId = googleAuthNSection["ClientId"];
+        googleOptions.ClientSecret = googleAuthNSection["ClientSecret"];
+        googleOptions.CallbackPath = "/sign-in-google";
 
+    });
+//Session for login
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(30));
 //Inject
+builder.Services.AddTransient<IPostRepository, PostRepository>();
+builder.Services.AddTransient<IClassRepository, ClassRepository>();
+builder.Services.AddTransient<IStudentUserRepository, StudentUserRepository>();
+builder.Services.AddTransient<IStudentRepository, StudentRepository>();
+builder.Services.AddTransient<ITeacherWorkRepository, TeacherWorkRepository>();
+builder.Services.AddTransient<IWorkRepository, WorkRepository>();
+builder.Services.AddTransient<ITeacherPositionRepository, TeacherPositionRepository>();
+builder.Services.AddTransient<ITeacherUserRepository, TeacherUserRepository>();
+builder.Services.AddTransient<ITeacherRepository, TeacherRepository>();
+builder.Services.AddTransient<ISpecializationRepository, SpecializationRepository>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
+
+
+//Build
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,7 +55,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

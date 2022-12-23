@@ -1,0 +1,92 @@
+﻿@using FitPortal
+@using FitPortal.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model FitPortal.Areas.Admin.Models.AddStudentViewModel
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<form asp-area="Admin" asp-controller="Student" asp-action="AddStudent" enctype="multipart/form-data" class="form-horizontal form-label-left" method="post">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Họ và tên
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="@Model.Name" class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Mã số sinh viên
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="@Model.StudentCode" class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.StudentCode, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Giới tính<span class="required">*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <select asp-for="@Model.Gender" class="form-control">
+            <option value="Nam">Nam</option>
+            <option value="Nữ">Nữ</option>
+        </select>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Ngày sinh<span class="required" >*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <div class='input-group date' id='myDatepicker2'>
+                <input asp-for="@Model.DayOfBirth" type='text' class="form-control" />
+                @Html.ValidationMessageFor(model => model.DayOfBirth, "", new { @class = "text-danger" })
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Địa chỉ
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="@Model.Address" class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Số điện thoại
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="@Model.PhoneNumber" class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Email
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="email" asp-for="@Model.Email" class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="ln_solid"></div>
+    <div class="form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+        <button type="submit" class="btn btn-info">Thêm mới</button>
+        <a type="button" class="btn btn-info" asp-area="Admin" asp-controller="Teacher" asp-action="ViewAll">Trở về
+        </a>
+    </div>
+    </div>   
+</form>
+ @section DoanScript{
+    <script>
+        $('#myDatepicker2').datetimepicker({
+            format: 'DD.MM.YYYY'
+        });
+    </script>
+}      
+

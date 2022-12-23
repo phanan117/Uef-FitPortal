@@ -1,0 +1,17 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model FitPortal.Models.Domain.PostInfor
+@{
+    
+}
+
+<h1 class="section-title" style="margin-top: 50px">
+    <strong class="post_tt">@Model.PostName</strong>
+</h1>
+
+<div class="container">
+    <div class="item">
+        @Html.Raw(Model.Content)
+    </div>
+</div>

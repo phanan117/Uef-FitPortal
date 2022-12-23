@@ -1,87 +1,138 @@
 ﻿@model FitPortal.Models.DTO.LoginModel
+@using FitPortal.Models.Domain
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> signInManager
 @{
     Layout = null;
+    var schemes = await signInManager.GetExternalAuthenticationSchemesAsync();
+    var loginProviders = schemes.ToList();
 }
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>login</title>
-        
-<style>
+<html lang="vi">
 
-form {
-  border: 3px solid #f1f1f1;
-  width:60%;
-  margin:auto;
-  margin-top:10%;
-}
+<head>
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-input[type=text], input[type=password] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
+    <!-- For Search Engine Meta Data  -->
+    <meta name="description" content="Login Form design by DevForum">
+    <meta name="keywords" content="Login Form">
+    <meta name="author" content="devforum.info">
 
-button {
-  background-color: #aa048b;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-}
+    <title>Đăng nhập - Fit-UEF</title>
 
-.container {
-  padding: 16px;
-}
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/icon" href="/login/images/android-icon-36x36.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/login/images/android-icon-36x36.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/login/images/android-icon-48x48.png">
+    <link rel="icon" type="image/png" sizes="72x72" href="/login/images/android-icon-72x72.png">
 
-.msg{
-  padding: 0px;
-}
+    <!-- Main structure css file -->
+    <link rel="stylesheet" href="/login/css/login-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
 
-
-.err{
-    color:red;
-}
-</style>
- 
 </head>
+
 <body>
-	
-<form asp-action="Login" method="post">
-  
-  <div class="container">
-    <label asp-for="Username"><b>Username</b></label>
-    <input type="text" asp-for="Username" placeholder="Enter Username">
-            <div class="msg">
-            <span class="err" asp-validation-for="Username"></span>
+    <!-- Start Preloader -->
+    <div id="preload-block">
+        <div class="square-block"></div>
+    </div>
+    <!-- Preloader End -->
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="authfy-container col-xs-12 col-sm-10 col-md-8 col-lg-6 col-sm-offset-1 col-md-offset-2 col-lg-offset-3">
+                <div class="col-sm-5 authfy-panel-left">
+                    <div class="brand-col">
+                        <div class="headline">
+                            <!-- brand-logo start -->
+                            <div class="brand-logo">
+                                <a href="index.html"><img src="/login/images/devforum.png" width="200" alt="brand-logo"></a>
+                            </div>
+                            <!-- ./brand-logo -->
+                            <p>Đăng nhập với mail UEF</p>
+                            <!-- social login buttons start -->
+                            <div class="row social-buttons">
+                                <form asp-controller="UserAuthentication" asp-action="ExternalLogin" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" role="form">
+                                <div class="col-xs-4 col-sm-4 col-md-12">
+                                        @{
+                                            foreach(var provider in loginProviders)
+                                            {
+                                                <button type="submit" class="btn btn-block btn-google" name="provider"
+                                                 value="@provider.Name">@provider.Name</button>
+                                            }
+                                        }
+                                </div>
+                                </form>
+                            </div>
+                            <!-- ./social-buttons -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-7 authfy-panel-right">
+                    <!-- authfy-login start -->
+                    <div class="authfy-login">
+                        <!-- panel-login start -->
+                        <div class="authfy-panel panel-login text-center active">
+                            <div class="authfy-heading">
+                                <h3 class="auth-title">Login to your account</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12">
+                                    <form name="loginForm" class="loginForm" asp-controller="UserAuthentication" asp-action="Login" method="POST">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control email" asp-for="Username" placeholder="Tên đăng nhập">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="pwdMask">
+                                                <input type="password" class="form-control password" asp-for="Password" placeholder="Mật khẩu">
+                                                <span asp-validation-for="Password" class="fa fa-eye-slash pwd-toggle"></span>
+                                            </div>
+                                        </div>
+                                        <!-- start remember-row -->
+                                        <div class="row remember-row">
+                                            <div class="col-xs-6 col-sm-6">
+                                                <label class="checkbox text-left">
+                                                    <input type="checkbox" value="remember-me">
+                                                    <span class="label-text">Remember me</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <!-- ./remember-row -->
+                                        <div class="form-group">
+                                            <button class="btn btn-lg btn-primary btn-block" type="submit">Đăng nhập</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ./panel-login -->
+                    </div>
+                    <!-- ./authfy-login -->
+                </div>
             </div>
+        </div>
+        <!-- ./row -->
+    </div>
+    <!-- ./container -->
 
-            
+    <!-- Javascript Files -->
 
-    <label asp-for="Password"><b>Password</b></label>
-   <input  type="password" asp-for="Password" placeholder="Enter Password">
-            <div class="msg">
-            <span asp-validation-for="Password" class="err"></span>
-            </div>
+    <!-- initialize jQuery Library -->
+    <script src="/login/js/jquery-2.2.4.min.js"></script>
 
+    <!-- for Bootstrap js -->
+    <script src="/login/js/bootstrap.min.js"></script>
 
-    @if(TempData["msg"]!=null){
-                <div class="msg">@TempData["msg"]</div>
-    }
-
-    <button type="submit">Login</button>
-    <a class="text-alert" href="/UserAuthentication/Registration">Not a user? Signup</a>
-  </div>
-</form>
+    <!-- Custom js-->
+    <script src="/login/js/custom.js"></script>
 
 </body>
-</html>
 
+</html>

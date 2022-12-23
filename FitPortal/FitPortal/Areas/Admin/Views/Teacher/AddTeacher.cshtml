@@ -1,0 +1,99 @@
+﻿@using FitPortal
+@using FitPortal.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model FitPortal.Areas.Admin.Models.TeacherViewModel
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<form asp-area="Admin" asp-controller="Teacher" asp-action="AddTeacher" enctype="multipart/form-data" class="form-horizontal form-label-left" method="post">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Mã giảng viên
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="@Model.TeacherCode" class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.TeacherCode, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Họ và tên<span class="required" asp-validation-for="@Model.Name">*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="@Model.Name" class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Ngày sinh<span class="required" >*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="col-md-11 xdisplay_inputx form-group has-feedback">
+    <input type="text" asp-for="@Model.DayOfBirth" class="form-control has-feedback-left" id="single_cal1" placeholder="First Name" aria-describedby="inputSuccess2Status">
+    <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+    <span id="inputSuccess2Status" class="sr-only">(success)</span>
+    </div>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Giới tính<span class="required">*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <select asp-for="@Model.Gender" class="form-control">
+            <option value="Nam">Nam</option>
+            <option value="Nữ">Nữ</option>
+        </select>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Địa chỉ<span class="required">*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="@Model.Address" class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Số điện thoại<span class="required">*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="@Model.PhoneNumber" class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Email<span class="required">*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="@Model.Email" class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Số CMND<span class="required">*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="@Model.Identification" class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.Identification, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Chân dung<span class="required">*</span></label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="custom-file">
+        <input asp-for="@Model.Avatar"  class="custom-file-input">
+        <img src="/Images/Teacher/dafaultavatar.png" style="height: 100px; width: 100px; margin:10px;"/>
+        @Html.ValidationMessageFor(model => model.Avatar, "", new { @class = "text-danger" })
+        </div>      
+    </div>
+    </div>
+    <div class="ln_solid"></div>
+    <div class="form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+        <button type="submit" class="btn btn-info">Thêm mới</button>
+        <a type="button" class="btn btn-info" asp-area="Admin" asp-controller="Teacher" asp-action="ViewAll">Trở về
+        </a>
+    </div>
+    </div>   
+</form>
+        
+

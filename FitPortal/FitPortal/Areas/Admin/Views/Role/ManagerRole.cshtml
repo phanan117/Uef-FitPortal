@@ -1,0 +1,62 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using FitPortal
+@using FitPortal.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@using Microsoft.AspNetCore.Identity;
+@model List<FitPortal.Areas.Admin.Models.ManagerRoleViewModel>
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+    string userID = (string)ViewBag.UserID;
+    string userName = (string)ViewBag.UserName;
+}
+<h1>Vai trò của @(userName) trên trang</h1>
+<a onclick="showInPopup('@Url.Action("AddRoleToUser","Role",new{ID=userID},Context.Request.Scheme)','Thêm vai trò cho người dùng')" class="btn btn-info">Thêm vai trò</a>
+<!--Popup start-->
+<div class="modal" tabindex="-1" id="form-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<!--Popup end-->
+    <div class="x_content">
+        <table id="datatable" class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Mã vai trò</th>
+                <th>Tên vai trò</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+                @{
+                    if(Model != null)
+                    {
+                        foreach(var item in Model)
+                        {
+                            <tr>
+                            <td>@item.RoleID</td>
+                            <td>@item.RoleName</td>
+                            <td>
+                                <a  class="btn btn-round btn-danger" href="/admin/role/deleterolefromuser?IDUser=@(userID)&RoleName=@item.RoleName">Xóa</a>
+                            </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+@section DoanScript{
+    <script src="/js/popupCRUD.js"></script>
+}

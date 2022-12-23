@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FitPortal.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class AdminHomeController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -15,21 +16,9 @@ namespace FitPortal.Areas.Admin.Controllers
         {
             this._userManager = userManager;
         }
-        [Authorize]
         public IActionResult Index()
         {
-            string? userID = _userManager.GetUserId(HttpContext.User);
-            if(userID != null)
-            {
-                ApplicationUser user = _userManager.FindByIdAsync(userID).Result;
-                AdminUserViewModel userDetail = new AdminUserViewModel
-                {
-                    UserName = user.UserName,
-                    ProFilePictrure = user.ProfilePicture
-                };
-                return View(userDetail);
-            }
-            return RedirectToAction("Login", "UserAuthentication");
+            return View();
         }
     }
 }

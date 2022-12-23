@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using FitPortal
+@using FitPortal.Models
+@using FitPortal.Areas.Admin.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<FitPortal.Areas.Admin.Models.WorkViewModel>
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>Quản lý chuyên ngành</h1>
+    <div class="x_content">
+    <table id="datatable" class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Tên công việc</th>
+            <th>Ngày tạo</th>
+            <th>Lần sửa cuối</th>
+            <th><a asp-action="AddWork" asp-controller="Work" asp-area="Admin" class="btn btn-info">Thêm mới công việc</a></th>
+        </tr>
+        </thead>
+        <tbody>
+            @{
+                if(Model != null)
+                {
+                    foreach(var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.DateCreate</td>
+                            <td>@item.LastModify</td>
+                            <td>
+                                <a  class="btn btn-round btn-info" href="/admin/work/detailwork?IDWork=@item.Id">chi tiết</a>      
+                                <a  class="btn btn-round btn-info" href="/admin/work/detailwork?IDWork=@item.Id">Sửa</a>      
+                            </td>
+                        </tr>
+                    }
+                }
+                
+            }
+        </tbody>
+    </table>
+    </div>
