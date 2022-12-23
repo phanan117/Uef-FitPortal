@@ -27,8 +27,14 @@ namespace FitPortal.Models.Domain
         [Required]
         [StringLength(100)]
         public string Email { get; set; }
+        [Required]
+        public DateTime CreateDate { get; set; }
+        [Required]
+        public DateTime LastModify { get; set; }
+        [Required]
+        public bool IsDeleted { get; set; }
         public int? ClassID { get; set; }
         [ForeignKey("ClassID")]
-        public Class Class { get; set; }
+        public Class? Class { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace FitPortal.Controllers
             this._logger = logger;
             this._dbcon = dbcon;
         }
-
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var events = await (from posts in _dbcon.Posts

@@ -1,0 +1,70 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using FitPortal
+@using FitPortal.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model List<FitPortal.Models.Domain.Students>
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>Quản lý sinh viên</h1>
+<!--Popup start-->
+<div class="modal" tabindex="-1" id="form-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<!--Popup end-->
+<a href="/admin/student/addstudent" class="btn btn-info">Thêm mới sinh viên</a>
+    <div class="x_content">
+        <table id="datatable" class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Họ và tên</th>
+                <th>MSSV</th>
+                <th>Ngày sinh</th>
+                <th>Giới tính</th>
+                <th>Địa chỉ</th>
+                <th>SĐT</th>
+                <th>Email</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+                @{
+                    if(Model != null)
+                    {
+                        foreach(var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.StudentCode</td>
+                                <td>@item.DayOfBirth</td>
+                                <td>@item.Gender</td>
+                                <td>@item.Address</td>
+                                <td>@item.PhoneNumber</td>
+                                <td>@item.Email</td>
+                                <td>
+                                    <a href="/admin/student/editstudent?IDStudent=@item.Id" class="btn btn-round btn-info"><i class="fa fa-edit"></i></a>
+                                    <a href="/admin/student/deletestudent?IDStudent=@item.Id" class="btn btn-round btn-danger"><i class="fa fa-circle-o-notch"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+@section DoanScript{
+    <script src="/js/popupCRUD.js"></script>
+}

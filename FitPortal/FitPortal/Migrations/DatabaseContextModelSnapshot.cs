@@ -115,7 +115,7 @@ namespace FitPortal.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SpeID")
+                    b.Property<int>("SpeID")
                         .HasColumnType("int");
 
                     b.Property<int>("TeacherID")
@@ -249,7 +249,7 @@ namespace FitPortal.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("StudentUser");
+                    b.ToTable("StudentUsers");
                 });
 
             modelBuilder.Entity("FitPortal.Models.Domain.Students", b =>
@@ -268,6 +268,9 @@ namespace FitPortal.Migrations
                     b.Property<int?>("ClassID")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DayOfBirth")
                         .HasColumnType("datetime2");
 
@@ -280,6 +283,12 @@ namespace FitPortal.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastModify")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -620,7 +629,9 @@ namespace FitPortal.Migrations
                 {
                     b.HasOne("FitPortal.Models.Domain.Specialization", "Specialization")
                         .WithMany("Classes")
-                        .HasForeignKey("SpeID");
+                        .HasForeignKey("SpeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FitPortal.Models.Domain.Teachers", "Teachers")
                         .WithMany("Class")

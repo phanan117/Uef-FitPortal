@@ -105,9 +105,21 @@
                       <li><a asp-area="Admin" asp-controller="Teacher" asp-action="TeacherPosition">Giảng viên&chuyên ngành</a></li>
                     </ul>
                   </li>
+                  <li><a><i class="fa fa-clone"></i>Sinh viên <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a asp-area="Admin" asp-controller="Student" asp-action="ViewAll">Danh sách</a></li>
+                      <li><a asp-area="Admin" asp-controller="Student" asp-action="Graduating">Đã tốt nghiệp</a></li>
+                    </ul>
+                  </li>
                   <li><a><i class="fa fa-table"></i> Chuyên ngành <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a asp-area="Admin" asp-controller="Specialization" asp-action="ViewAll">Danh sách</a></li>
+                      <li><a href="tables_dynamic.html">Table Dynamic</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-table"></i> Lớp học <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a asp-area="Admin" asp-controller="Class" asp-action="ViewAll">Danh sách</a></li>
                       <li><a href="tables_dynamic.html">Table Dynamic</a></li>
                     </ul>
                   </li>
@@ -116,12 +128,6 @@
                       <li><a asp-area="Admin" asp-controller="Work" asp-action="ViewAll">Danh sách</a></li>
                       <li><a asp-area="Admin" asp-controller="Work" asp-action="WorkStatus">Trạng thái</a></li>
                       <li><a asp-area="Admin" asp-controller="Work" asp-action="TeacherAssign">Lịch giảng viên</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
-                      <li><a href="fixed_footer.html">Fixed Footer</a></li>
                     </ul>
                   </li>
                 </ul>

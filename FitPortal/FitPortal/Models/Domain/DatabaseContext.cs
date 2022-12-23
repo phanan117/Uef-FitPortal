@@ -14,7 +14,7 @@ namespace FitPortal.Models.Domain
         public DbSet<TeachersWorks> TeachersWorks { get; set; }
         public DbSet<StudentUser> StudentUsers { get; set; }
         public DbSet<Students> Students { get; set; }
-        public DbSet<Class> Classes { get; set; }
+        public DbSet<Class> Class{ get; set; }
         public DatabaseContext(DbContextOptions<DatabaseContext> options):base(options)
         {
 
