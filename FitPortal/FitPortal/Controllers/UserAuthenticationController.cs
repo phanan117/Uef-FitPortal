@@ -158,8 +158,17 @@ namespace FitPortal.Controllers
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
             if (result.Succeeded)
             {
-                await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
-                return LocalRedirect(returnurl);
+                var checkEmail = info.Principal.FindFirstValue(ClaimTypes.Email);
+                if(checkEmail.EndsWith("@uef.edu.vn") != true)
+                {
+                    TempData["msg"] = "Bạn chỉ có thể sử dụng mail UEF";
+                    return RedirectToAction(nameof(Login));
+                }
+                else
+                {
+                    await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+                    return LocalRedirect(returnurl);
+                }
             }
             else
             {

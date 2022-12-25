@@ -43,16 +43,17 @@
                     {
                         foreach(var item in Model)
                         {
-                            <tr>
-                                <td>@item.ClassCode</td>
-                                <td>@item.Quantity</td>
-                                <td>@item.Current</td>
-                                <td>@item.Teacher</td>
-                                <td>@item.SpecializationName</td>
-                                <td>
-                                    <a href="/admin/class/editclass?IDClass=@item.Id" class="btn btn-info">Sửa</a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>@item.ClassCode</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.Current</td>
+                                    <td>@item.Teacher</td>
+                                    <td>@item.SpecializationName</td>
+                                    <td>
+                                        <a href="/admin/class/editclass?IDClass=@item.Id" class="btn btn-round btn-info"><i class="fa fa-edit"></i></a>
+                                        <a href="/admin/class/seelist?IDClass=@item.Id" class="btn btn-round btn-primary"><i class="fa fa-th-list"></i></a>
+                                    </td>
+                                </tr>
                         }
                     }
                 }

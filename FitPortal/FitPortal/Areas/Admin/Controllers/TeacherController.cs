@@ -12,9 +12,10 @@ namespace FitPortal.Areas.Admin.Controllers
     [Authorize]
     public class TeacherController : Controller
     {
+        //Dung repositoty custom de crud du lieu
         private readonly ITeacherRepository _teacherRepository;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly ITeacherPositionRepository _positionRepository;
+        private readonly IWebHostEnvironment _webHostEnvironment; 
+        private readonly ITeacherPositionRepository _positionRepository; //trung gian ket noi khoa chinh cua giang vien & chuyen nganh
         private readonly ISpecializationRepository _SpecializationRepository;
         private readonly DatabaseContext _dbcon;
         public TeacherController(ITeacherRepository teacherRepository, IWebHostEnvironment webHostEnvironment, ITeacherPositionRepository positionRepository, ISpecializationRepository specializationRepository, DatabaseContext databaseContext)
@@ -25,23 +26,23 @@ namespace FitPortal.Areas.Admin.Controllers
             this._SpecializationRepository = specializationRepository;
             this._dbcon = databaseContext;
         }
+        
+        //Lay danh sach giang vien chua ve huu
         [HttpGet]
         public IActionResult ViewAll()
         {
-            List<Teachers> list = _teacherRepository.GetAll().Where(T => T.IsDeleted == false).ToList();
+            List<Teachers> list = _teacherRepository.GetAll().ToList();
             return View(list);
         }
-        [HttpGet]
-        public IActionResult ViewResign()
-        {
-            List<Teachers> list = _teacherRepository.GetAll().Where(T => T.IsDeleted == true).ToList();
-            return View(list);
-        }
+
+
         [HttpGet]
         public IActionResult AddTeacher()
         {
             return View();
         }
+
+        //lay chuyen nganh cho giang vien
         [HttpGet]
         public async Task<IActionResult> TeacherPosition()
         {
@@ -50,9 +51,11 @@ namespace FitPortal.Areas.Admin.Controllers
             List<TeacherPositionViewModel> model = new List<TeacherPositionViewModel>();
             foreach (var teacher in teachers)
             {
+                //duyet id cua giang vien trong bang vi tri xem giang vien da co chuyen nganh chua?
                 var havePosition = (from p in position
                                     where p.TeacherID == teacher.Id
                                     select new{ID = p.SpecializationID}).FirstOrDefault();
+                //co chuyen nganh
                 if(havePosition != null)
                 {
                     var specialization = _SpecializationRepository.GetAll().Where(s => s.Id == havePosition.ID).FirstOrDefault();
@@ -72,6 +75,7 @@ namespace FitPortal.Areas.Admin.Controllers
                         }
                     }
                 }
+                // chua co chuyen nganh
                 else
                 {
                     TeacherPositionViewModel itemModel = new TeacherPositionViewModel()
@@ -87,6 +91,8 @@ namespace FitPortal.Areas.Admin.Controllers
             }
             return View(model);
         }
+
+
         [HttpGet] 
         public async Task<IActionResult> AddTeacherToPosition(int IDTeacher)
         {
@@ -112,6 +118,7 @@ namespace FitPortal.Areas.Admin.Controllers
                 Email=teacher.Email,
                 Identification=teacher.Identification
             };
+            //luu hinh anh bang cach lay duong dan
             ViewBag.Avatar=teacher.Avatar;
             return View(model);
         }
@@ -231,7 +238,9 @@ namespace FitPortal.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //kiem tra giang vien co chuyen nganh chua
                 var teacherP = _positionRepository.GetAll().Where(p => p.TeacherID == model.TeacherId).FirstOrDefault();
+                //neu co chuyen nganh roi thi update
                 if (teacherP != null)
                 {
                     var position = _positionRepository.GetAll().Where(p => p.TeacherID == teacherP.TeacherID).FirstOrDefault();
@@ -246,10 +255,12 @@ namespace FitPortal.Areas.Admin.Controllers
                         }
                     }
                 }
+                //nếu chưa có chuyên ngành thì create
                 else
                 {
                     var position = _positionRepository.Create(new TeacherPosition { SpecializationID = model.SpecializationId, TeacherID = model.TeacherId });
                     var duplicateFix =await _positionRepository.GetAll().Where(p => p.TeacherID == model.TeacherId).ToListAsync();
+                    //nếu có >1 mã số giảng viên bị trùng thì delete & break để chỉ xóa 1.
                     if(duplicateFix.Count > 1)
                     {
                         foreach (var item in duplicateFix)

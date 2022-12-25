@@ -80,6 +80,10 @@
                     <div class="authfy-login">
                         <!-- panel-login start -->
                         <div class="authfy-panel panel-login text-center active">
+                            @if(TempData["msg"]!=null)
+                            {
+                                <div class="text-danger">@TempData["msg"]</div>
+                            }
                             <div class="authfy-heading">
                                 <h3 class="auth-title">Login to your account</h3>
                             </div>

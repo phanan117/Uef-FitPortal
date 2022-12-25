@@ -27,6 +27,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ2xhc3NcRWRpdENsYXNzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Class/SeeList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ2xhc3NcU2VlTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Class/ViewAll.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ2xhc3NcVmlld0FsbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -95,6 +99,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU3R1ZGVudFxHcmFkdWF0aW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Student/SetClass.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU3R1ZGVudFxTZXRDbGFzcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Student/ViewAll.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU3R1ZGVudFxWaWV3QWxsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -117,10 +125,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Teacher/ViewAll.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGVhY2hlclxWaWV3QWxsLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Teacher/ViewResign.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGVhY2hlclxWaWV3UmVzaWduLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/User/Account.cshtml]

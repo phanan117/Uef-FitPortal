@@ -3,6 +3,7 @@ using FitPortal.Models.Domain;
 using FitPortal.Repositories.Abstract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FitPortal.Areas.Admin.Controllers
 {
@@ -11,15 +12,61 @@ namespace FitPortal.Areas.Admin.Controllers
     public class StudentController : Controller
     {
         private readonly IStudentRepository studentRepository;
-        public StudentController(IStudentRepository studentRepository)
+        private readonly IClassRepository classRepository;
+        public StudentController(IStudentRepository studentRepository, IClassRepository classRepository)
         {
             this.studentRepository = studentRepository;
+            this.classRepository = classRepository;
         }
         //Get
         [HttpGet]
         public IActionResult ViewAll()
         {
-            var model = studentRepository.GetAll().Where(t=>t.IsDeleted==false).ToList();
+            
+            List<StudentViewModel> model = new List<StudentViewModel>();
+            try
+            {
+                
+                var students = studentRepository.GetAll().Where(t => t.IsDeleted == false).ToList();
+                foreach(var student in students)
+                {
+                    StudentViewModel itemModel = new StudentViewModel();
+                    if (student.ClassID != null)
+                    {
+                        var classInfo = classRepository.GetAll().Where(c => c.Id == student.ClassID).FirstOrDefault();
+                        if(classInfo != null)
+                        {
+                            itemModel.ClassName = classInfo.ClassCode;
+                            itemModel.StudentCode = student.StudentCode;
+                            itemModel.StudentName = student.Name;
+                            itemModel.Address = student.Address;
+                            itemModel.Gender = student.Gender;
+                            itemModel.DayOfBirth = student.DayOfBirth;
+                            itemModel.PhoneNumber = student.PhoneNumber;
+                            itemModel.Email = student.Email;
+                            itemModel.StudentId = student.Id;
+                            model.Add(itemModel);
+                        }
+                    }
+                    else
+                    {
+                        itemModel.ClassName = "Not Have Class";
+                        itemModel.StudentCode = student.StudentCode;
+                        itemModel.StudentName = student.Name;
+                        itemModel.Address = student.Address;
+                        itemModel.Gender = student.Gender;
+                        itemModel.DayOfBirth = student.DayOfBirth;
+                        itemModel.PhoneNumber = student.PhoneNumber;
+                        itemModel.Email = student.Email;
+                        itemModel.StudentId = student.Id;
+                        model.Add(itemModel);
+                    }
+                    
+                }
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             return View(model);
         }
         [HttpGet]
@@ -68,6 +115,23 @@ namespace FitPortal.Areas.Admin.Controllers
                 }
             }
             return RedirectToAction("ViewAll", "Student");
+        }
+        [HttpGet]
+        public IActionResult SetClass(int IDStudent)
+        {
+            var student = studentRepository.GetAll().Where(t => t.Id == IDStudent).FirstOrDefault();
+            if(student != null)
+            {
+                var Clases = classRepository.GetAll().ToList();
+                SelectList selectListItems = new SelectList(Clases,"Id","ClassCode");
+                ViewBag.StudentId = IDStudent;
+                ViewBag.Clases = selectListItems;
+                return View();
+            }
+            else
+            {
+                return View(nameof(ViewAll));
+            }
         }
         //Post
         [HttpPost]
@@ -129,6 +193,57 @@ namespace FitPortal.Areas.Admin.Controllers
                 else return RedirectToAction("ViewAll", "Student");
             }
             return RedirectToAction("ViewAll", "Student");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SetClass(SetClassViewModel model)
+        {
+            var student = studentRepository.GetAll().Where(t => t.Id == model.StudentID).FirstOrDefault();
+            if(student != null)
+            {
+                var addToClass = classRepository.GetAll().Where(c => c.Id == model.ClassID).FirstOrDefault();
+                if(addToClass != null)
+                {
+                    if(addToClass.Quantity <= addToClass.Current)
+                    {
+                        TempData["msg"] = "Lớp đã đủ chỉ số hãy chọn lớp khác hoặc thay đổi danh sách lớp";
+                        return RedirectToAction("ViewAll", "Student");
+                    }
+                    else
+                    {
+                        student.ClassID = addToClass.Id;
+                        var result = false;
+                        try
+                        {
+                            addToClass.Current += 1;
+                            classRepository.Update(addToClass);
+                            result = studentRepository.Update(student);
+                        }catch(Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        if (result)
+                        {
+                            return RedirectToAction("ViewAll", "Student");
+                        }
+                        else
+                        {
+                            TempData["msg"] = "Thêm "+ student.Name +" vào lớp thất bại!";
+                            return RedirectToAction("ViewAll", "Student");
+                        }
+                    }
+                }
+                else
+                {
+                    TempData["msg"] = "Không tìm thấy lớp học!";
+                    return RedirectToAction("ViewAll", "Student");
+                }
+            }
+            else
+            {
+                TempData["msg"] = "Lỗi không tìm sinh viên!";
+                return RedirectToAction("ViewAll", "Student");
+            }
         }
     }
 }
