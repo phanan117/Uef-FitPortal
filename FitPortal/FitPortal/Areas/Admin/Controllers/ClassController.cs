@@ -117,6 +117,12 @@ namespace FitPortal.Areas.Admin.Controllers
                 var student = studentRepository.GetAll().Where(t => t.Id == IDStudent).FirstOrDefault();
                 if(student != null)
                 {
+                    var classInfo = classRepository.GetAll().Where(c => c.Id == student.ClassID).FirstOrDefault();
+                    if(classInfo != null)
+                    {
+                        classInfo.Current -= 1;
+                        classRepository.Update(classInfo);
+                    }
                     student.ClassID = null;
                     studentRepository.Update(student);
                 }
@@ -125,7 +131,7 @@ namespace FitPortal.Areas.Admin.Controllers
             {
                 Console.WriteLine(ex.Message);
             }
-            return RedirectToAction("SeeList", "Class");
+            return RedirectToAction("ViewAll", "Class");
         }
         //Update code
         [HttpGet]
