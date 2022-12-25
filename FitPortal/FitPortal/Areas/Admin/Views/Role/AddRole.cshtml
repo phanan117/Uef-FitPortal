@@ -16,6 +16,7 @@
     </label>
     <div class="col-md-6 col-sm-6 col-xs-12">
         <input type="text" asp-for="RoleName"class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.RoleName,"",new { @class = "text-danger" })
     </div>
     </div>
     <div class="ln_solid"></div>

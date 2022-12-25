@@ -29,6 +29,8 @@ builder.Services.AddAuthentication()
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(30));
 //Inject
+builder.Services.AddTransient<ISubjectMajorsRepository, SubjectMajorsRepository>();
+builder.Services.AddTransient<ISubjectRepository, SubjectRepository>();
 builder.Services.AddTransient<IPostRepository, PostRepository>();
 builder.Services.AddTransient<IClassRepository, ClassRepository>();
 builder.Services.AddTransient<IStudentUserRepository, StudentUserRepository>();

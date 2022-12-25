@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitPortal.Areas.Admin.Controllers
@@ -32,9 +33,9 @@ namespace FitPortal.Areas.Admin.Controllers
         {
             var user = await _userManager.Users.ToListAsync();
             List<UserRoleViewModel> model = new List<UserRoleViewModel>();
-            if(user != null)
+            if (user != null)
             {
-                foreach(var item in user)
+                foreach (var item in user)
                 {
                     UserRoleViewModel itemModel = new UserRoleViewModel()
                     {
@@ -54,9 +55,9 @@ namespace FitPortal.Areas.Admin.Controllers
                                   where ur.UserId == IDUser
                                   select ur).ToListAsync();
             List<ManagerRoleViewModel> model = new List<ManagerRoleViewModel>();
-            if(userRole != null)
+            if (userRole != null)
             {
-                foreach(var item in userRole)
+                foreach (var item in userRole)
                 {
                     var role = await _roleManager.FindByIdAsync(item.RoleId);
                     ManagerRoleViewModel itemModel = new ManagerRoleViewModel()
@@ -88,19 +89,41 @@ namespace FitPortal.Areas.Admin.Controllers
             var user = await _userManager.FindByIdAsync(model.UserID);
             if (user != null)
             {
-                await _userManager.AddToRoleAsync(user, model.RoleName);
+                try
+                {
+                    
+                    var roleInfo =await _roleManager.FindByNameAsync(model.RoleName);
+                    var check =await (from ur in _dbcon.UserRoles
+                                 where ur.UserId == model.UserID && ur.RoleId == roleInfo.Id
+                                 select ur).FirstOrDefaultAsync();
+                    if(check != null)
+                    {
+                        _dbcon.UserRoles.Remove(check);
+                        _dbcon.SaveChanges();
+                    }
+                    var result = await _userManager.AddToRoleAsync(user, model.RoleName);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("UserRole", "Role");
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
             }
-            return RedirectToAction("ManagerRole", "Role", new {IDUser = model.UserID});
+            return RedirectToAction("ManagerRole", "Role", new { IDUser = model.UserID });
         }
         [HttpGet]
-        public async Task<IActionResult> DeleteRoleFromUser(string IDUser,string RoleName)
+        public async Task<IActionResult> DeleteRoleFromUser(string IDUser, string RoleName)
         {
             var user = await _userManager.FindByIdAsync(IDUser);
             if (user != null)
             {
                 await _userManager.RemoveFromRoleAsync(user, RoleName);
             }
-            return RedirectToAction("ManagerRole","Role",new {IDUser = IDUser});
+            return RedirectToAction("ManagerRole", "Role", new { IDUser = IDUser });
         }
         [HttpGet]
         public IActionResult AddRole()
@@ -120,7 +143,7 @@ namespace FitPortal.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteRole(string IDRole)
         {
             var userRoleForThisRole = await _dbcon.UserRoles.Where(x => x.RoleId == IDRole).CountAsync();
-            if(userRoleForThisRole > 0)
+            if (userRoleForThisRole > 0)
             {
                 return RedirectToAction("ViewAll", "Role");
             }
@@ -137,7 +160,7 @@ namespace FitPortal.Areas.Admin.Controllers
                 var result = await _roleManager.CreateAsync(new IdentityRole() { Name = model.RoleName });
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("ViewAll","Role");
+                    return RedirectToAction("ViewAll", "Role");
                 }
             }
             return RedirectToAction("ViewAll", "Role");
@@ -149,9 +172,9 @@ namespace FitPortal.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var role = await _roleManager.FindByIdAsync(model.Id);
-                if(role == null)
+                if (role == null)
                 {
-                    ModelState.AddModelError("","Không tìm thấy role");
+                    ModelState.AddModelError("", "Không tìm thấy role");
                 }
                 else
                 {
@@ -160,7 +183,7 @@ namespace FitPortal.Areas.Admin.Controllers
                     var result = await _roleManager.UpdateAsync(role);
                     if (result.Succeeded == false)
                     {
-                        return Json(new {isValue = false, Message = "Cập nhật thất bại" });
+                        return Json(new { isValue = false, Message = "Cập nhật thất bại" });
                     }
                 }
             }
