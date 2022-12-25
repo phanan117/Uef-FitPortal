@@ -18,8 +18,14 @@ updateJQuery = form => {
             data: new FormData(form),
             contentType: false,
             processData: false,
-            success: function () {
-                    $('#form-modal').modal('hide');    
+            success: function (res) {
+                if (res.isValid == false) {
+                    $('#form-modal .modal-body').html(res.html);
+                } else {
+                    $('#form-modal .modal-body').html('');
+                    $('#form-modal .modal-title').html('');
+                    $('#form-modal').modal('hide');
+                }   
             },
             error: function (err) {
                 console.log(err)
