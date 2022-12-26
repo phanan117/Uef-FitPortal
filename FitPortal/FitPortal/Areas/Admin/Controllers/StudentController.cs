@@ -215,8 +215,21 @@ namespace FitPortal.Areas.Admin.Controllers
                         var result = false;
                         try
                         {
-                            addToClass.Current += 1;
-                            classRepository.Update(addToClass);
+                            int currnet = addToClass.Current;
+                            currnet += 1;
+                            addToClass.Current = currnet;
+                            if(addToClass.Current == currnet)
+                            {
+                                classRepository.Update(addToClass);
+                            }
+                            else
+                            {
+                                if(addToClass.Current > currnet)
+                                {
+                                    addToClass.Current -= 1;
+                                    classRepository.Update(addToClass);
+                                }    
+                            }
                             result = studentRepository.Update(student);
                         }catch(Exception ex)
                         {
