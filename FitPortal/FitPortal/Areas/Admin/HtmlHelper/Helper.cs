@@ -15,7 +15,6 @@ namespace FitPortal.Areas.Admin.HtmlHelper
             {
                 IViewEngine viewEngine = controller.HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;
                 ViewEngineResult viewResult = viewEngine.FindView(controller.ControllerContext, viewName, false);
-
                 ViewContext viewContext = new ViewContext(
                     controller.ControllerContext,
                     viewResult.View,
@@ -35,7 +34,7 @@ namespace FitPortal.Areas.Admin.HtmlHelper
             public override void OnActionExecuting(ActionExecutingContext filterContext)
             {
                 if (filterContext.HttpContext.Request.GetTypedHeaders().Referer == null ||
-         filterContext.HttpContext.Request.GetTypedHeaders().Host.Host.ToString() != filterContext.HttpContext.Request.GetTypedHeaders().Referer.Host.ToString())
+                filterContext.HttpContext.Request.GetTypedHeaders().Host.Host.ToString() != filterContext.HttpContext.Request.GetTypedHeaders().Referer.Host.ToString())
                 {
                     filterContext.HttpContext.Response.Redirect("/");
                 }

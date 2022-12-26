@@ -1,4 +1,5 @@
-﻿using FitPortal.Areas.Admin.Models;
+﻿using FitPortal.Areas.Admin.HtmlHelper;
+using FitPortal.Areas.Admin.Models;
 using FitPortal.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -201,7 +202,7 @@ namespace FitPortal.Areas.Admin.Controllers
                     
                 }
             }
-            return RedirectToAction("ViewAll", "Role");
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddRole", model) });
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

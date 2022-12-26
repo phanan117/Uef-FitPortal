@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using static FitPortal.Areas.Admin.HtmlHelper.Helper;
 
 namespace FitPortal.Areas.Admin.Controllers
 {
@@ -73,7 +74,7 @@ namespace FitPortal.Areas.Admin.Controllers
             }
             return View(model);
         }
-        [HttpGet]
+        [NoDirectAccess]
         public IActionResult AddSubject()
         {
             var majors = specializationRepository.GetAll().ToList();
@@ -81,12 +82,16 @@ namespace FitPortal.Areas.Admin.Controllers
             ViewBag.Specialization = selectListItems;
             return View();
         }
+        [HttpGet]
+        public IActionResult DeleteSubject(int IDSubject)
+        {
+            return View();
+        }
         //Post
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddSubject(AddSubjectViewModel model)
         {
-            
             if(ModelState.IsValid)
             {
                 var check = subjectRepository.GetAll().Where(s => s.SubjectCode == model.SubjectCode).ToList();
@@ -150,8 +155,13 @@ namespace FitPortal.Areas.Admin.Controllers
                     }
                 }
             }
-            TempData["msg"] = "Bạn chưa nhập tên môn học!";
-            return RedirectToAction("ViewAll", "Subject");
+            //Để render View có sử dụng dropdown list cần phải truyền dữ liệu
+            //của dropdownList cho view trước khi render
+            var temp = specializationRepository.GetAll().ToList();
+            SelectList selectListItemsTemp = new SelectList(temp, "Id", "SpecializationName");
+            ViewBag.Specialization = selectListItemsTemp;
+            var ketqua = Helper.RenderRazorViewToString(this, "AddSubject", model);
+            return Json(new { isValid = false, html = ketqua });
         }
     }
 }

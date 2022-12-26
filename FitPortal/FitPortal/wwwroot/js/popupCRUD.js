@@ -10,7 +10,7 @@
     })
 }
 
-updateJQuery = form => {
+jQueryAjaxPost = form => {
     try {
         $.ajax({
             type: 'POST',
@@ -21,22 +21,26 @@ updateJQuery = form => {
             success: function (res) {
                 if (res.isValid == false) {
                     $('#form-modal .modal-body').html(res.html);
-                } else {
+                }
+                else {
                     $('#form-modal .modal-body').html('');
                     $('#form-modal .modal-title').html('');
                     $('#form-modal').modal('hide');
+                    window.location.reload();
                 }   
             },
             error: function (err) {
                 console.log(err)
             }
         })
+        //to prevent default form submit event
+        return false;
     } catch (ex) {
         console.log(ex)
     }
 }
 
-jQueryAjaxPost = form => {
+jQueryAjaxUpdate = form => {
     try {
         $.ajax({
             type: 'POST',
