@@ -23,6 +23,7 @@
             <th>Ngày sinh</th>
             <th width="8%">Giới tính</th>
             <th>Địa chỉ</th>
+            <th width="8%">Trạng thái</th>
             <th width="12%">Thao tác</th>
         </tr>
         </thead>
@@ -41,10 +42,11 @@
                         <td>@item.DayOfBirth</td>
                         <td>@item.Gender</td>
                         <td>@item.Address</td>
+                        <td>@(item.IsDeleted ? "Hoạt động" : "Dừng")</td>
                         <td>
-                                <a  class="btn btn-round btn-info" href="/admin/teacher/editteacher?IDTeacher=@item.Id">Sửa</a>
+                                <a  class="btn btn-round btn-info" href="/admin/teacher/editteacher?IDTeacher=@item.Id"><i class="fa fa-edit"></a>
                                 <span>|</span>
-                                <a  class="btn btn-round btn-danger" href="/admin/teacher/deleteteacher?IDTeacher=@item.Id">Xóa</a>
+                                <a  class="btn btn-round btn-danger" href="/admin/teacher/deleteteacher?IDTeacher=@item.Id"><i class="fa fa-circle-o-notch"></a>
                         </td>
                         </tr>
                 }

@@ -2,6 +2,7 @@
 using FitPortal.Areas.Admin.Models;
 using FitPortal.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,14 +16,16 @@ namespace FitPortal.Areas.Admin.Controllers
     {
         private readonly DatabaseContext dbcon;
         private readonly IWebHostEnvironment _webHostEnvironment;
-
         private readonly IHttpContextAccessor _contextAccessor;
-        public PostController(DatabaseContext dbcon, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor contextAccessor)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public PostController(DatabaseContext dbcon, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor contextAccessor, UserManager<ApplicationUser> userManager)
         {
             this.dbcon = dbcon;
             this._webHostEnvironment = webHostEnvironment;
             this._contextAccessor = contextAccessor;
+            this._userManager = userManager;
         }
+        [HttpGet]
         public async Task<IActionResult> ManagePost()
         {
             var inforPost  = await (from post in dbcon.Posts
@@ -59,12 +62,14 @@ namespace FitPortal.Areas.Admin.Controllers
             ViewBag.CategoryList = selectListItems;
             return View();
         }
+        [HttpGet]
         public IActionResult ManageCategory() 
         { 
             List<PostCategory> listCategory = dbcon.Categories.ToList();
             ViewBag.Category = listCategory;
             return View();
         }
+        [HttpGet]
         public IActionResult AddCategory()
         {
             return View();
@@ -100,7 +105,8 @@ namespace FitPortal.Areas.Admin.Controllers
                 {
                     return RedirectToAction("AddPost", "Post");
                 }
-                string userID = _contextAccessor.HttpContext.Session.GetString("user_id");
+                var userInfo = await _userManager.FindByNameAsync(User.Identity.Name);
+                string userID = userInfo.Id;
                 post.UserID = userID;
                 post.PostName = model.PostName;
                 post.DateCreated = model.DateCreated;

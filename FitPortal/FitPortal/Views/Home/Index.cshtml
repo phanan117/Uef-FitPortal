@@ -1,12 +1,14 @@
 ﻿@using FitPortal.Models.DTO
+@using FitPortal.Models
+@model HomeViewModel
 @{
-    ViewData["Title"] = "Home Page";
-    List<EventInformation> listEvent = (List<EventInformation>)ViewBag.Events;
+    ViewData["Title"] = "Trang chủ";
+    ViewData["Category"] = Model.categories;
 }
   <style>
       .img-post{
           height: 250px;
-          width: 225;
+          width: 250;
           object-fit: cover;
       }
       .describe{
@@ -20,45 +22,56 @@
     <!-- post-banner start -->
     <div class="post-banner-area pd-bottom-55">
         <div class="container">
-           <div class="recent-news-area pd-top-70">
-                <div class="section-title section-title-3">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h4 class="title">Recent News</h4>
-                        </div>
-                        <div class="col-sm-6 text-sm-right align-self-center">
-                            <a class="see-all-btn" href="#">Recent Posts</a>
-                        </div>
-                    </div>
-                </div>
-                    @{
-                        foreach(var item in listEvent)
-                        {
-                            <div class="media-post-wrap-2 media">
-                            <div class="thumb">
-                                <img class="img-post" src="@item.Picture" alt="img">
-                            </div>
-                            <div class="media-body">
-                                <h6><a href="/viewpost/view?IDPost=@item.Id">@item.Title</a></h6>
-                                <div class="meta">
-                                    <a href="#" class="author">
-                                        Malika Hamira   
-                                    </a>
-                                    <div class="date">
-                                        <i class="fa fa-clock-o"></i>
-                                        @item.CreateTime
-                                    </div>
-                                    <div class="views">
-                                        586 Views
-                                    </div>
+        @{
+            if(Model != null)
+            {
+                    foreach(var category in Model.categories)
+                    {
+                        <div class="recent-news-area pd-top-70">
+                        <div class="section-title section-title-3">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h4 class="title">@category.CategoryName</h4>
                                 </div>
-                                <p class="describe">@item.Describe</p>
+                                <div class="col-sm-6 text-sm-right align-self-center">
+                                    <a class="see-all-btn" href="#">Bài viết hiện tại</a>
+                                </div>
                             </div>
                         </div>
+                        @{
+                            foreach(var post in Model.eventList)
+                            {
+                                if (post.CategoryId == category.Id)
+                                {
+                                <div class="media-post-wrap-2 media">
+                                    <div class="thumb">
+                                        <img class="img-post" src="@post.Picture" alt="img">
+                                    </div>
+                                    <div class="media-body">
+                                        <h6><a href="/viewpost/view?IDPost=@post.Id">@post.Title</a></h6>
+                                        <div class="meta">
+                                            <a href="#" class="author">
+                                                Malika Hamira   
+                                            </a>
+                                            <div class="date">
+                                                <i class="fa fa-clock-o"></i>
+                                                @post.CreateTime
+                                            </div>
+                                            <div class="views">
+                                                586 Views
+                                            </div>
+                                        </div>
+                                        <p class="describe">@post.Describe</p>
+                                    </div>
+                                </div>   
+                                }
+                            }
                         }
+                        <a class="load-more-btn" href="/ViewPost/Category?IDCategory=@(category.Id)">xem thêm</a>
+                        </div>
                     }
-                <a class="load-more-btn" href="#">Load More</a>
-            </div>
+            }
+        }
         </div>
     </div>
 

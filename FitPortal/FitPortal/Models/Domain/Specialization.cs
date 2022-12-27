@@ -19,5 +19,6 @@ namespace FitPortal.Models.Domain
         public Teachers Teachers { get; set; }
         public List<TeacherPosition> teacherPositions { get; set; }
         public List<Class> Classes { get; set; }
+        public List<SubjectMajors> SubjectMajors { get; set; }
     }
 }

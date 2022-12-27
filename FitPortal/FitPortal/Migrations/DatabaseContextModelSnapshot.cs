@@ -312,6 +312,50 @@ namespace FitPortal.Migrations
                     b.ToTable("Students");
                 });
 
+            modelBuilder.Entity("FitPortal.Models.Domain.Subject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LastModify")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SubjectCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("SubjectName")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("FitPortal.Models.Domain.SubjectMajors", b =>
+                {
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MajorsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SubjectId", "MajorsId");
+
+                    b.HasIndex("MajorsId");
+
+                    b.ToTable("SubjectMajors");
+                });
+
             modelBuilder.Entity("FitPortal.Models.Domain.TeacherPosition", b =>
                 {
                     b.Property<int>("Id")
@@ -700,6 +744,25 @@ namespace FitPortal.Migrations
                     b.Navigation("Class");
                 });
 
+            modelBuilder.Entity("FitPortal.Models.Domain.SubjectMajors", b =>
+                {
+                    b.HasOne("FitPortal.Models.Domain.Specialization", "Specialization")
+                        .WithMany("SubjectMajors")
+                        .HasForeignKey("MajorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FitPortal.Models.Domain.Subject", "Subject")
+                        .WithMany("SubjectMajors")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Specialization");
+
+                    b.Navigation("Subject");
+                });
+
             modelBuilder.Entity("FitPortal.Models.Domain.TeacherPosition", b =>
                 {
                     b.HasOne("FitPortal.Models.Domain.Specialization", "Specialization")
@@ -829,7 +892,14 @@ namespace FitPortal.Migrations
                 {
                     b.Navigation("Classes");
 
+                    b.Navigation("SubjectMajors");
+
                     b.Navigation("teacherPositions");
+                });
+
+            modelBuilder.Entity("FitPortal.Models.Domain.Subject", b =>
+                {
+                    b.Navigation("SubjectMajors");
                 });
 
             modelBuilder.Entity("FitPortal.Models.Domain.Teachers", b =>

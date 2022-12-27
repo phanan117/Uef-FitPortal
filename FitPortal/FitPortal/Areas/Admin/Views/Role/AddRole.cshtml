@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
 @using FitPortal
 @using FitPortal.Models
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
@@ -9,13 +7,14 @@
 @{
     Layout = null;
 }
-<form asp-area="Admin" asp-controller="Role" asp-action="AddRole" onsubmit="jQueryAjaxPost(this)" class="form-horizontal form-label-left" method="post">
+<form asp-area="Admin" asp-controller="Role" asp-action="AddRole" onsubmit="return jQueryAjaxPost(this);" class="form-horizontal form-label-left" method="post" autocomplete="off">
 
     <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">Tên vai trò<span class="required" asp-validation-for="RoleName">*</span>
     </label>
     <div class="col-md-6 col-sm-6 col-xs-12">
         <input type="text" asp-for="RoleName"class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.RoleName,"",new { @class = "text-danger" })
     </div>
     </div>
     <div class="ln_solid"></div>
