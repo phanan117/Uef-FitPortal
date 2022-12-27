@@ -1,14 +1,19 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@inject IHttpContextAccessor coxt
+@using Microsoft.AspNetCore.Identity
+@using FitPortal.Models.Domain
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @{
+    var user =await UserManager.FindByNameAsync(User.Identity.Name);
 }
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
-      @RenderSection("typeNotify",false)
+    @RenderSection("typeNotify",false)
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
@@ -16,7 +21,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="/adminCustome/production/images/favicon.ico" type="image/ico" />
 
-    <title>Gentelella Alela! | </title>
+    <title>FitPortal-UEF | </title>
 
     <!-- Bootstrap -->
     <link href="/adminCustome/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -60,11 +65,11 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="@coxt.HttpContext.Session.GetString("user_picture")" alt="..." class="img-circle profile_img">
+                <img src="@user.ProfilePicture" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>@coxt.HttpContext.Session.GetString("user_name")</h2>
+                <h2>@user.Name</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -210,7 +215,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="@coxt.HttpContext.Session.GetString("user_picture")" alt="">@coxt.HttpContext.Session.GetString("user_name")
+                    <img src="@user.ProfilePicture" alt="">@user.Name
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">

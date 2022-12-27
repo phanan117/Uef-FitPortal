@@ -8,5 +8,6 @@
         public string Content { get; set; }
         public string Picture { get; set; }
         public string Describe { get; set; }
+        public int CategoryId { get; set; }
     }
 }
