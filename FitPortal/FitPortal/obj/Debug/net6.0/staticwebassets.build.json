@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "imttiCi/d7Qn0QdM/HLgw+MTENQ+urV9h1GDmb0SLXc=",
+  "Hash": "672iX/5nk62wLmk3CjbFytEUkNlqClNbdupNPRiiinA=",
   "Source": "FitPortal",
   "BasePath": "_content/FitPortal",
   "Mode": "Default",
@@ -73013,6 +73013,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\file\\outline\\812a5cbf-0e57-416e-914f-2210946fe470_testdit.docx",
+      "SourceId": "FitPortal",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\",
+      "BasePath": "_content/FitPortal",
+      "RelativePath": "file/outline/812a5cbf-0e57-416e-914f-2210946fe470_testdit.docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\file\\outline\\812a5cbf-0e57-416e-914f-2210946fe470_testdit.docx"
     },
     {
       "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\fonts\\fontawesome-webfont.eot",

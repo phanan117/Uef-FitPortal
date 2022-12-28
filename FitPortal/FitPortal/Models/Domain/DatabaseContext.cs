@@ -37,5 +37,6 @@ namespace FitPortal.Models.Domain
         public DbSet<Class> Class { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<SubjectMajors> SubjectMajors { get; set; }
+        public DbSet<Outline> Outlines { get; set; }
     }
 }

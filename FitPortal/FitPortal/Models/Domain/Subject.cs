@@ -17,5 +17,6 @@ namespace FitPortal.Models.Domain
         [Required]
         public DateTime LastModify { get; set; }
         public List<SubjectMajors> SubjectMajors { get; set; }
+        public List<Outline> Outlines { get; set; }
     }
 }

@@ -17,12 +17,14 @@ namespace FitPortal.Areas.Admin.Controllers
         private readonly ISubjectRepository subjectRepository;
         private readonly ISpecializationRepository specializationRepository;
         private readonly ISubjectMajorsRepository subjectMajorsRepository;
+        private readonly IOutlineRepository outlineRepository;
         //Constructor
-        public SubjectController(ISubjectRepository subjectRepository, ISpecializationRepository specializationRepository, ISubjectMajorsRepository subjectMajorsRepository)
+        public SubjectController(ISubjectRepository subjectRepository, ISpecializationRepository specializationRepository, ISubjectMajorsRepository subjectMajorsRepository, IOutlineRepository outlineRepository)
         {
             this.subjectRepository = subjectRepository;
             this.specializationRepository = specializationRepository;
             this.subjectMajorsRepository = subjectMajorsRepository;
+            this.outlineRepository = outlineRepository;
         }
         //Get
         [HttpGet]

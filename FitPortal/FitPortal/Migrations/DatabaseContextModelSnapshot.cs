@@ -130,6 +130,34 @@ namespace FitPortal.Migrations
                     b.ToTable("Class");
                 });
 
+            modelBuilder.Entity("FitPortal.Models.Domain.Outline", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("File")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Outlines");
+                });
+
             modelBuilder.Entity("FitPortal.Models.Domain.PostCategory", b =>
                 {
                     b.Property<int>("Id")
@@ -688,6 +716,17 @@ namespace FitPortal.Migrations
                     b.Navigation("Teachers");
                 });
 
+            modelBuilder.Entity("FitPortal.Models.Domain.Outline", b =>
+                {
+                    b.HasOne("FitPortal.Models.Domain.Subject", "Subject")
+                        .WithMany("Outlines")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
             modelBuilder.Entity("FitPortal.Models.Domain.PostInfor", b =>
                 {
                     b.HasOne("FitPortal.Models.Domain.PostCategory", "PostCategory")
@@ -899,6 +938,8 @@ namespace FitPortal.Migrations
 
             modelBuilder.Entity("FitPortal.Models.Domain.Subject", b =>
                 {
+                    b.Navigation("Outlines");
+
                     b.Navigation("SubjectMajors");
                 });
 

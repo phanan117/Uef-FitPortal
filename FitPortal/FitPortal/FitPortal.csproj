@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Data\" />
+    <Folder Include="wwwroot\file\outline\" />
     <Folder Include="wwwroot\Images\post\" />
   </ItemGroup>
 
