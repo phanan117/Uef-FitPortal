@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using FitPortal
+@using FitPortal.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model List<FitPortal.Areas.Admin.Models.ViewResearchViewModel>
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+    string StudentName = (string)ViewBag.StudentName;
+    int StudentId = (int)ViewBag.StudentID;
+}
+<h1>Nghiên cứu khoa của sinh viên: @StudentName</h1>
+<a href="/admin/research/addforstudent?IDStudent=@StudentId" class="btn btn-info">Thêm mới</a>
+    <div class="x_content">
+        @if(TempData["msg"]!=null)
+        {
+            <div class="text-danger">@TempData["msg"]</div>
+        }
+        <table id="datatable" class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Tên đề tài</th>
+                <th>Tên tiếng anh</th>
+                <th>Ngày bắt đầu</th>
+                <th>Ngày kết thúc</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+                @{
+                    if(Model != null)
+                    {
+                        foreach(var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.NameEnglish</td>
+                                <td>@item.DateStart</td>
+                                <td>@item.DateEnd</td>
+                                <td>
+                                    <a href="/admin/research/editforstudent?IDResearch=@item.Id" class="btn btn-round btn-info"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>

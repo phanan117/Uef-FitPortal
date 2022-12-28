@@ -22,7 +22,6 @@ namespace FitPortal.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult ViewAll()
         {
-            
             List<StudentViewModel> model = new List<StudentViewModel>();
             try
             {
