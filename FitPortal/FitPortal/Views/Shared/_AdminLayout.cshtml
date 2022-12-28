@@ -5,9 +5,14 @@
 @using FitPortal.Models.Domain
 
 @inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@inject UserManager<ApplicationUser> userManager
 @{
-    var user =await UserManager.FindByNameAsync(User.Identity.Name);
+    ApplicationUser user = new ApplicationUser();
+    if (SignInManager.IsSignedIn(User))
+    {
+        user =await userManager.FindByNameAsync(User.Identity.Name);
+    }
+    
 }
 
 <!DOCTYPE html>

@@ -37,24 +37,18 @@ namespace FitPortal.Areas.Admin.Controllers
         public async Task<IActionResult> UserRole()
         {
             List<UserRoleViewModel> model = new List<UserRoleViewModel>();
-            using (_userManager)
+            var user = await _userManager.Users.ToListAsync();
+            if (user != null)
             {
-                using (_userManager)
+                foreach (var item in user)
                 {
-                    var user = await _userManager.Users.ToListAsync();
-                    if (user != null)
+                    UserRoleViewModel itemModel = new UserRoleViewModel()
                     {
-                        foreach (var item in user)
-                        {
-                            UserRoleViewModel itemModel = new UserRoleViewModel()
-                            {
-                                UserID = item.Id,
-                                UserName = item.UserName,
-                                Email = item.Email
-                            };
-                            model.Add(itemModel);
-                        }
-                    }
+                        UserID = item.Id,
+                        UserName = item.UserName,
+                        Email = item.Email
+                    };
+                    model.Add(itemModel);
                 }
             }
             return View(model);

@@ -155,7 +155,10 @@ namespace FitPortal.Areas.Admin.Controllers
                     folder += Guid.NewGuid().ToString() + "_" + model.Avatar.FileName;
                     teacher.Avatar = "/" + folder;
                     string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                    await model.Avatar.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                    using (FileStream fs = new FileStream(serverFolder, FileMode.Create))
+                    {
+                        await model.Avatar.CopyToAsync(fs);
+                    }
                 }
                 teacher.TeacherCode = model.TeacherCode;
                 teacher.Name = model.Name;
@@ -211,7 +214,10 @@ namespace FitPortal.Areas.Admin.Controllers
                     folder += Guid.NewGuid().ToString() + "_" + model.Avatar.FileName;
                     teacher.Avatar = "/" + folder;
                     string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                    await model.Avatar.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                    using (FileStream fs = new FileStream(serverFolder, FileMode.Create))
+                    {
+                        await model.Avatar.CopyToAsync(fs);
+                    }
                 }
                 teacher.Address = model.Address;
                 teacher.Name = model.Name;

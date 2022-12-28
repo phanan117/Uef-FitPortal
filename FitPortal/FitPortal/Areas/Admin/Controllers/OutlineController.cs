@@ -86,33 +86,40 @@ namespace FitPortal.Areas.Admin.Controllers
             int id = outline.SubjectId;
             if (outline != null)
             {
-                if (DeleteFile(outline.File) == true)
+                try
                 {
-                    try
+                   var check = DeleteFile(outline.File);
+                    if(check == true)
                     {
-                        var result = outlineRepository.Delete(outline);
-                        if (result)
+                        try
                         {
-                            return RedirectToAction("ViewAll", "Outline", new { IDSubject = id });
+                            var result = outlineRepository.Delete(outline);
+                            if (result)
+                            {
+                                return RedirectToAction("ViewAll", "Outline", new { IDSubject = id });
+                            }
                         }
-                    }catch(Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        return RedirectToAction("Index", "Home", new { area = "" });
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            return RedirectToAction("Index", "Home", new { area = "" });
+                        }
                     }
+                }catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return RedirectToAction("Index", "Home", new { area = "" });
                 }
             }
             return RedirectToAction("ViewAll","Outline",new { IDSubject = id});
         }
         //Fucntion
-        public bool DeleteFile(string path)
+        protected bool DeleteFile(string path)
         {
             string curentImg = "wwwroot/" + path;
-            FileInfo fi = new FileInfo(curentImg);
-            if (fi != null)
+            if (System.IO.File.Exists(curentImg))
             {
                 System.IO.File.Delete(curentImg);
-                fi.Delete();
                 return true;
             }
             return false;
@@ -131,7 +138,10 @@ namespace FitPortal.Areas.Admin.Controllers
                     folder += Guid.NewGuid().ToString() + "_" + model.File.FileName;
                     outline.File = "/" + folder;
                     string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                    await model.File.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                    using (FileStream fs = new FileStream(serverFolder, FileMode.Create))
+                    {
+                        await model.File.CopyToAsync(fs);
+                    }
                     //add
                     outline.Name = model.Name;
                     outline.SubjectId = model.IdSubject;
@@ -169,13 +179,18 @@ namespace FitPortal.Areas.Admin.Controllers
                     outline.Name = model.Name;
                     if(model.File != null)
                     {
-                        if (DeleteFile(outline.File) == true)
+                        var check = DeleteFile(outline.File);
+                        if (check)
                         {
                             string folder = "file/outline/";
                             folder += Guid.NewGuid().ToString() + "_" + model.File.FileName;
                             outline.File = "/" + folder;
                             string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                            await model.File.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                            using(FileStream fs = new FileStream(serverFolder, FileMode.Create))
+                            {
+                                await model.File.CopyToAsync(fs);
+                            }
+                            
                         }
                     }
                     var result = outlineRepository.Update(outline);

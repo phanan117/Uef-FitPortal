@@ -220,30 +220,29 @@ namespace FitPortal.Areas.Admin.Controllers
                             folder += Guid.NewGuid().ToString() + "_" + model.formFile.FileName;
                             research.File = "/" + folder;
                             string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                            await model.formFile.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
-                        }
-                    }
-                    else
-                    {
-                        research.Name = model.Name;
-                        research.NameEnglish = model.NameEnglish;
-                        research.DateStart = model.DateStart;
-                        research.DateEnd = model.DateEnd;
-                        try
-                        {
-                            var result = researchRepository.Update(research);
-                            if (result)
+                            using (FileStream fs = new FileStream(serverFolder, FileMode.Create))
                             {
-                                var sr = await studentResearchRepository.GetAll().Where(sr => sr.ResearchId == model.ResearchId).FirstOrDefaultAsync();
-                                return RedirectToAction("ViewResearch", "Research", new { IDStudent = sr.StudentId });
+                                await model.formFile.CopyToAsync(fs);
                             }
                         }
-                        catch (Exception ex)
+                    }
+                    research.Name = model.Name;
+                    research.NameEnglish = model.NameEnglish;
+                    research.DateStart = model.DateStart;
+                    research.DateEnd = model.DateEnd;
+                    try
+                    {
+                        var result = researchRepository.Update(research);
+                        if (result)
                         {
-                            Console.WriteLine(ex.Message);
-                            return RedirectToAction("Index", "Home", new { area = "" });
+                            var sr = await studentResearchRepository.GetAll().Where(sr => sr.ResearchId == model.ResearchId).FirstOrDefaultAsync();
+                            return RedirectToAction("ViewResearch", "Research", new { IDStudent = sr.StudentId });
                         }
-
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        return RedirectToAction("Index", "Home", new { area = "" });
                     }
                 }
             }

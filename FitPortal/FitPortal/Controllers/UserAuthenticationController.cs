@@ -138,7 +138,7 @@ namespace FitPortal.Controllers
         [HttpGet]
         public async Task<IActionResult> ExternalLoginCallBack(string returnurl=null, string remoteError = null)
         {
-            returnurl = returnurl ?? Url.Content("~/");
+            returnurl = returnurl ?? Url.Content("~/Home/Index");
             if (remoteError != null)
             {
                 ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
