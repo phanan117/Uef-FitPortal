@@ -14,12 +14,14 @@ namespace FitPortal.Controllers
         private readonly DatabaseContext _dbcon;
         private readonly IPostRepository postRepository;
         private readonly ICategoryRepository categoryRepository;
-        public HomeController(ILogger<HomeController> logger, DatabaseContext dbcon, ICategoryRepository categoryRepository,IPostRepository postRepository)
+        private readonly ITeacherRepository teacherRepository;
+        public HomeController(ILogger<HomeController> logger, DatabaseContext dbcon, ICategoryRepository categoryRepository,IPostRepository postRepository, ITeacherRepository teacherRepository)
         {
             this._logger = logger;
             this._dbcon = dbcon;
             this.categoryRepository = categoryRepository;
-            this.postRepository = postRepository;   
+            this.postRepository = postRepository;
+            this.teacherRepository = teacherRepository;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -58,6 +60,35 @@ namespace FitPortal.Controllers
             }
             
             
+        }
+        [HttpGet]
+        public async Task<IActionResult> SearchTeacher() 
+        {
+            try
+            {
+                var teachers = await teacherRepository.GetAll().Where(t => t.IsDeleted == false).ToListAsync();
+                List<SearchTeacherViewModel> model = new List<SearchTeacherViewModel>();
+                foreach(var teacher in teachers)
+                {
+                    SearchTeacherViewModel itemModel = new SearchTeacherViewModel()
+                    {
+                        TeacherId = teacher.Id,
+                        TeacherName = teacher.Name,
+                        PhoneNumber = teacher.PhoneNumber,
+                        Email = teacher.Email,
+                        picture = teacher.Avatar
+                    };
+                    model.Add(itemModel);
+                }
+                var category = await categoryRepository.GetAll().ToListAsync();
+                ViewBag.Category = category;
+                return View(model);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return RedirectToAction("Index", "Home");
+            }    
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

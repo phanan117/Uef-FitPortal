@@ -1,0 +1,53 @@
+﻿@using FitPortal.Models.DTO
+@model List<FitPortal.Models.SearchTeacherViewModel>
+@{
+    ViewData["Title"] = "Giảng viên";
+    ViewData["category"] = ViewBag.Category;
+}
+  <style>
+      .img-post{
+          height: 250px;
+          width: 225;
+          object-fit: cover;
+      }
+      .describe{
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: elliosis;
+      }
+  </style>
+    <!-- post-banner start -->
+    <div class="post-banner-area pd-bottom-55">
+        <div class="container">
+           <div class="recent-news-area pd-top-70">
+                <div class="section-title section-title-3">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h4 class="title">Thông tin giảng viên</h4>
+                        </div>
+                    </div>
+                </div>
+                    @{
+                        foreach(var item in Model)
+                        {
+                            <div class="media-post-wrap-2 media">
+                            <div class="thumb">
+                                <img class="img-post" src="@item.picture" alt="img">
+                            </div>
+                            <div class="media-body">
+                                <h6>@item.TeacherName</h6>
+                                <div class="meta">
+                                    <div class="date">
+                                        Email: @item.Email
+                                    </div>
+                                </div>
+                                <p class="describe">SĐT: @item.PhoneNumber</p>
+                            </div>
+                        </div>
+                        }
+                    }
+            </div>
+        </div>
+    </div>
