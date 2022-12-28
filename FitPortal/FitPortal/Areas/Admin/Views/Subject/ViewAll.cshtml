@@ -54,7 +54,8 @@
                                 <td>@item.SpecializationName</td>
                                 <td><a href="/admin/outline/viewall?IDSubject=@item.SubjectId" class="btn btn-round btn-primary"><i class="fa fa-th-list"></a></td>
                                 <td>
-                                    Xóa sửa
+                                    <a onclick="showInPopup('@Url.Action("EditSubject","Subject",new{IDSubject = item.SubjectId},Context.Request.Scheme)','Sửa môn học')" class="btn btn-round btn-info"><i class="fa fa-edit"></i></a>
+                                    <a href="/admin/subject/deletesubject?IDSubject=@item.SubjectId" class="btn btn-round btn-danger"><i class="fa fa-circle-o-notch"></i></a>
                                 </td>
                             </tr>
                         }

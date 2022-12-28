@@ -1,0 +1,39 @@
+﻿@using FitPortal
+@using FitPortal.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model FitPortal.Areas.Admin.Models.EditSubjectViewModel
+@{
+    Layout = null;
+}
+<form asp-area="Admin" asp-controller="Subject" asp-action="EditSubject" onsubmit="return jQueryAjaxPost(this);" class="form-horizontal form-label-left" method="post">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">Mã môn học:</label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="SubjectCode"class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.SubjectCode,"",new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">Tên môn học:</label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="SubjectName"class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.SubjectName,"",new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">Chuyên ngành:</label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(m => m.MajorId, (IEnumerable<SelectListItem>) ViewBag.Specialization)
+        @Html.ValidationMessageFor(model => model.MajorId,"",new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="ln_solid"></div>
+    <div class="form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+        <button type="submit" class="btn btn-info">Sửa</button>
+    </div>
+    </div>
+</form>

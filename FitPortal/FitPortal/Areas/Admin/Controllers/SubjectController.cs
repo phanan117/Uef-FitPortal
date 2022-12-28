@@ -33,7 +33,7 @@ namespace FitPortal.Areas.Admin.Controllers
             List<SubjectViewModel> model = new List<SubjectViewModel>();
             try
             {
-                var subjects = subjectRepository.GetAll().ToList();
+                var subjects = subjectRepository.GetAll().Where(s => s.IsDeleted == false).ToList();
                 if (subjects.Count > 0)
                 {
                     foreach (var subject in subjects)
@@ -85,9 +85,52 @@ namespace FitPortal.Areas.Admin.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult DeleteSubject(int IDSubject)
+        public async Task<IActionResult> DeleteSubject(int IDSubject)
         {
-            return View();
+            try
+            {
+                var subject = await subjectRepository.GetAll().Where(s => s.Id == IDSubject).FirstOrDefaultAsync();
+                if(subject != null)
+                {
+                    subject.IsDeleted = true;
+                    var result = subjectRepository.Update(subject);
+                    if (result)
+                    {
+                        return RedirectToAction("ViewAll", "Subject");
+                    }
+                }
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> EditSubject(int IDSubject)
+        {
+            try
+            {
+                var subject = await subjectRepository.GetAll().Where(s => s.Id == IDSubject).FirstOrDefaultAsync();
+                var majors = specializationRepository.GetAll().ToList();
+                SelectList selectListItems = new SelectList(majors, "Id", "SpecializationName");
+                ViewBag.Specialization = selectListItems;
+                var subjectMajor = await subjectMajorsRepository.GetAll().Where(sm => sm.SubjectId == IDSubject).FirstOrDefaultAsync();
+                EditSubjectViewModel model = new EditSubjectViewModel()
+                {
+                    Id = subject.Id,
+                    MajorId = subjectMajor.MajorsId,
+                    SubjectCode = subject.SubjectCode,
+                    SubjectName = subject.SubjectName
+                };
+                return View(model);
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+            
         }
         //Post
         [HttpPost]
@@ -141,6 +184,7 @@ namespace FitPortal.Areas.Admin.Controllers
                                 }catch(Exception ex)
                                 {
                                     Console.WriteLine(ex.Message);
+                                    return RedirectToAction("Index", "Home", new { area = "" });
                                 }
                                 
                             }
@@ -164,6 +208,49 @@ namespace FitPortal.Areas.Admin.Controllers
             ViewBag.Specialization = selectListItemsTemp;
             var ketqua = Helper.RenderRazorViewToString(this, "AddSubject", model);
             return Json(new { isValid = false, html = ketqua });
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditSubject(EditSubjectViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var subject = await subjectRepository.GetAll().Where(s => s.Id == model.Id).FirstOrDefaultAsync();
+                if(subject != null)
+                {
+                    var subjectMajor = await subjectMajorsRepository.GetAll().Where(sm => sm.SubjectId == subject.Id).FirstOrDefaultAsync();
+                    if(subjectMajor != null)
+                    {
+                        subjectMajor.MajorsId = model.MajorId;
+                        try
+                        {
+                            subject.SubjectName = model.SubjectName;
+                            subject.SubjectCode = model.SubjectCode;
+                            subject.LastModify = DateTime.Now;
+                            bool result = false;
+                            result = subjectRepository.Update(subject);
+                            result = subjectMajorsRepository.Update(subjectMajor);
+                            if (result)
+                            {
+                                return RedirectToAction("ViwAll", "Subject");
+                            }
+                        }catch(Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            return RedirectToAction("Index", "Home", new { area = "" });
+                        }
+                    }
+                }
+                return View(model);
+            }
+            else
+            {
+                var temp = specializationRepository.GetAll().ToList();
+                SelectList selectListItemsTemp = new SelectList(temp, "Id", "SpecializationName");
+                ViewBag.Specialization = selectListItemsTemp;
+                var ketqua = Helper.RenderRazorViewToString(this, "AddSubject", model);
+                return Json(new { isValid = false, html = ketqua });
+            }
         }
     }
 }

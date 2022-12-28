@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "672iX/5nk62wLmk3CjbFytEUkNlqClNbdupNPRiiinA=",
+  "Hash": "5YDxxyzEKBHY/ytG1vhcpdwtYZF9KLJrHWMNTYwDcDQ=",
   "Source": "FitPortal",
   "BasePath": "_content/FitPortal",
   "Mode": "Default",
@@ -73015,23 +73015,6 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\file\\outline\\812a5cbf-0e57-416e-914f-2210946fe470_testdit.docx",
-      "SourceId": "FitPortal",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\",
-      "BasePath": "_content/FitPortal",
-      "RelativePath": "file/outline/812a5cbf-0e57-416e-914f-2210946fe470_testdit.docx",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\file\\outline\\812a5cbf-0e57-416e-914f-2210946fe470_testdit.docx"
-    },
-    {
       "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\fonts\\fontawesome-webfont.eot",
       "SourceId": "FitPortal",
       "SourceType": "Discovered",
@@ -78436,6 +78419,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Plugin\\ckeditor5\\translations\\zh-cn.js"
+    },
+    {
+      "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\post\\cover\\098bf4b6-d080-4bb9-995b-91940aa17204_d062a23dce665e8cfb7a83a626264edb.jpg",
+      "SourceId": "FitPortal",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\",
+      "BasePath": "_content/FitPortal",
+      "RelativePath": "post/cover/098bf4b6-d080-4bb9-995b-91940aa17204_d062a23dce665e8cfb7a83a626264edb.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\post\\cover\\098bf4b6-d080-4bb9-995b-91940aa17204_d062a23dce665e8cfb7a83a626264edb.jpg"
     },
     {
       "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\post\\cover\\304a0251-1c9d-4132-95e0-25ab83c29dd6_d062a23dce665e8cfb7a83a626264edb.jpg",

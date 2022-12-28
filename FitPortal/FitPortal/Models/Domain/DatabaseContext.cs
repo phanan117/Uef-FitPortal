@@ -24,6 +24,17 @@ namespace FitPortal.Models.Domain
                    .HasOne(sm => sm.Specialization)
                    .WithMany(sm => sm.SubjectMajors)
                    .HasForeignKey(sm => sm.MajorsId);
+            //Many to many research and student
+            builder.Entity<StudentResearch>()
+                   .HasKey(sr => new { sr.StudentId, sr.ResearchId });
+            builder.Entity<StudentResearch>()
+                   .HasOne(sr => sr.Students)
+                   .WithMany(sr => sr.StudentResearches)
+                   .HasForeignKey(sr => sr.StudentId);
+            builder.Entity<StudentResearch>()
+                   .HasOne(sr => sr.Research)
+                   .WithMany(sr => sr.StudentResearches)
+                   .HasForeignKey(sr => sr.ResearchId);
         }
         public DbSet<PostInfor> Posts { get; set; }
         public DbSet<PostCategory> Categories { get; set; }
@@ -38,5 +49,7 @@ namespace FitPortal.Models.Domain
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<SubjectMajors> SubjectMajors { get; set; }
         public DbSet<Outline> Outlines { get; set; }
+        public DbSet<StudentResearch> StudentResearches { get; set; }
+        public DbSet<Research> Research { get; set; }
     }
 }

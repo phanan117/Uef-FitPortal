@@ -79,6 +79,31 @@ namespace FitPortal.Areas.Admin.Controllers
                 return RedirectToAction("ViewAll", "Subject");
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> DeleteOutline(int IDOutline)
+        {
+            var outline =await outlineRepository.GetAll().Where(o => o.Id == IDOutline).FirstOrDefaultAsync();
+            int id = outline.SubjectId;
+            if (outline != null)
+            {
+                if (DeleteFile(outline.File) == true)
+                {
+                    try
+                    {
+                        var result = outlineRepository.Delete(outline);
+                        if (result)
+                        {
+                            return RedirectToAction("ViewAll", "Outline", new { IDSubject = id });
+                        }
+                    }catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        return RedirectToAction("Index", "Home", new { area = "" });
+                    }
+                }
+            }
+            return RedirectToAction("ViewAll","Outline",new { IDSubject = id});
+        }
         //Fucntion
         public bool DeleteFile(string path)
         {
