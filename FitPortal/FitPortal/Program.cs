@@ -46,8 +46,6 @@ builder.Services.AddTransient<ITeacherUserRepository, TeacherUserRepository>();
 builder.Services.AddTransient<ITeacherRepository, TeacherRepository>();
 builder.Services.AddTransient<ISpecializationRepository, SpecializationRepository>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
-
-
 //Build
 var app = builder.Build();
 

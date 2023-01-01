@@ -2,6 +2,8 @@
 using FitPortal.Models.Domain;
 using FitPortal.Models.DTO;
 using FitPortal.Repositories.Abstract;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -15,13 +17,19 @@ namespace FitPortal.Controllers
         private readonly IPostRepository postRepository;
         private readonly ICategoryRepository categoryRepository;
         private readonly ITeacherRepository teacherRepository;
-        public HomeController(ILogger<HomeController> logger, DatabaseContext dbcon, ICategoryRepository categoryRepository,IPostRepository postRepository, ITeacherRepository teacherRepository)
+        private readonly IStudentUserRepository studentUserRepository;
+        private readonly IStudentRepository studentepository;
+        private readonly UserManager<ApplicationUser> userManager;
+        public HomeController(ILogger<HomeController> logger,IStudentRepository studentepository, IStudentUserRepository studentUserRepository, DatabaseContext dbcon, ICategoryRepository categoryRepository,IPostRepository postRepository, ITeacherRepository teacherRepository, UserManager<ApplicationUser> userManager)
         {
             this._logger = logger;
             this._dbcon = dbcon;
             this.categoryRepository = categoryRepository;
             this.postRepository = postRepository;
             this.teacherRepository = teacherRepository;
+            this.userManager = userManager;
+            this.studentUserRepository = studentUserRepository;
+            this.studentepository = studentepository;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -52,6 +60,7 @@ namespace FitPortal.Controllers
                     };
                     model.AddCategory(infoCategory);
                 }
+                ViewBag.Category = categories;
                 return View(model);
             }catch(Exception ex)
             {
@@ -89,6 +98,45 @@ namespace FitPortal.Controllers
                 Console.WriteLine(ex.Message);
                 return RedirectToAction("Index", "Home");
             }    
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> UserProfile()
+        {
+            try
+            {
+                var user =await userManager.FindByNameAsync(User.Identity.Name);
+                if(user != null)
+                {
+                    var userInfo =await studentUserRepository.GetAll().Where(su => su.UserID == user.Id).FirstOrDefaultAsync();
+                    if(userInfo != null)
+                    {
+                        var student = studentepository.GetAll().Where(s => s.Id == userInfo.StudentID).FirstOrDefault(); ;
+                        if(student != null)
+                        {
+                            UserProfileViewModel model = new UserProfileViewModel()
+                            {
+                                UserCode = student.StudentCode,
+                                UserName = student.Name,
+                                DayOfBirth = student.DayOfBirth,
+                                Email = student.Email,
+                                PhoneNumber = student.PhoneNumber,
+                            };
+                            var category = await categoryRepository.GetAll().ToListAsync();
+                            ViewBag.Category = category;
+                            return View(model);
+                        }
+                    }
+                    
+                }
+                return RedirectToAction("Index","Home");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return RedirectToAction("UserAuthentication", "Login");
+            }
+            
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

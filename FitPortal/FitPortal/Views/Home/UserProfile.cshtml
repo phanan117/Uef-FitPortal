@@ -1,0 +1,38 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model FitPortal.Models.UserProfileViewModel
+@{
+}
+<div class="container">
+    <div class="panel panel-midnightblue">
+        @{
+            if(Model != null)
+            {
+                <table class="table table-condensed">
+                    <tbody>
+                        <tr>
+                            <td><h3>@Model.UserName</h3></td>
+                        </tr>
+                        <tr>
+                            <td>Ngày sinh:</td>
+                            <td>@Model.DayOfBirth</td>
+                        </tr>
+                        <tr>
+                            <td>Mã số sinh viên:</td>
+                            <td>@Model.UserCode</td>
+                        </tr>
+                        <tr>
+                            <td>Điện thoại:</td>
+                            <td>@Model.PhoneNumber</td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td>@Model.Email</td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+        }
+    </div>
+</div>
