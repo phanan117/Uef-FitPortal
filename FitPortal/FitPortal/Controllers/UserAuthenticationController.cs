@@ -74,54 +74,63 @@ namespace FitPortal.Controllers
                     Name = model.FullName, 
                     Email = model.Email,
                     UserName = model.Email,
+                    Code = model.AuthenCode,
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true
                 };
-                var result = await userManager.CreateAsync(user);
-                if (result.Succeeded)
+                try
                 {
-                    var teacher = _teacherRepository.GetAll().Where(t => t.TeacherCode == model.AuthenCode).FirstOrDefault();
-                    var student = _studentRepository.GetAll().Where(s => s.StudentCode == model.AuthenCode).FirstOrDefault();
-                    if(student != null)
-                    {
-                        var infoUser = await userManager.FindByNameAsync(model.Email);
-                        StudentUser studentUser = new StudentUser { StudentID=student.Id, UserID=infoUser.Id};
-                        var resultCreate = _studentUserRepository.Create(studentUser);
-                        if(resultCreate == true)
-                        {
-                            if (!await roleManager.RoleExistsAsync("Student"))
-                                await roleManager.CreateAsync(new IdentityRole("Student"));
-                            if (await roleManager.RoleExistsAsync("Student"))
-                            {
-                                await userManager.AddToRoleAsync(user, "Student");
-                            }
-                        }
-                    }
-                    if(teacher != null)
-                    {
-                        var infoUser = await userManager.FindByNameAsync(model.Email);
-                        TeacherUser teacherUser = new TeacherUser { TeacherID = teacher.Id, UserID = infoUser.Id };
-                        var resultCreate = _teacherUserRepository.Create(teacherUser);
-                        if(resultCreate == true)
-                        {
-                            if (!await roleManager.RoleExistsAsync("Teacher"))
-                                await roleManager.CreateAsync(new IdentityRole("Teacher"));
-                            if (await roleManager.RoleExistsAsync("Teacher"))
-                            {
-                                await userManager.AddToRoleAsync(user, "Teacher");
-                            }
-                        }
-                        
-                    }
-                    result = await userManager.AddLoginAsync(user, info);
+                    var result = await userManager.CreateAsync(user);
                     if (result.Succeeded)
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
-                        return LocalRedirect(returnUrl);
+                        var teacher = _teacherRepository.GetAll().Where(t => t.TeacherCode == model.AuthenCode).FirstOrDefault();
+                        var student = _studentRepository.GetAll().Where(s => s.StudentCode == model.AuthenCode).FirstOrDefault();
+                        if (student != null)
+                        {
+                            var infoUser = await userManager.FindByNameAsync(model.Email);
+                            StudentUser studentUser = new StudentUser { StudentID = student.Id, UserID = infoUser.Id };
+                            var resultCreate = _studentUserRepository.Create(studentUser);
+                            if (resultCreate == true)
+                            {
+                                if (!await roleManager.RoleExistsAsync("Student"))
+                                    await roleManager.CreateAsync(new IdentityRole("Student"));
+                                if (await roleManager.RoleExistsAsync("Student"))
+                                {
+                                    await userManager.AddToRoleAsync(user, "Student");
+                                }
+                            }
+                        }
+                        if (teacher != null)
+                        {
+                            var infoUser = await userManager.FindByNameAsync(model.Email);
+                            TeacherUser teacherUser = new TeacherUser { TeacherID = teacher.Id, UserID = infoUser.Id };
+                            var resultCreate = _teacherUserRepository.Create(teacherUser);
+                            if (resultCreate == true)
+                            {
+                                if (!await roleManager.RoleExistsAsync("Teacher"))
+                                    await roleManager.CreateAsync(new IdentityRole("Teacher"));
+                                if (await roleManager.RoleExistsAsync("Teacher"))
+                                {
+                                    await userManager.AddToRoleAsync(user, "Teacher");
+                                }
+                            }
+
+                        }
+                        result = await userManager.AddLoginAsync(user, info);
+                        if (result.Succeeded)
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+                            return LocalRedirect(returnUrl);
+                        }
                     }
+                    ModelState.AddModelError("Email", "đã tồn tại!");
                 }
-                ModelState.AddModelError("Email", "đã tồn tại!");
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return RedirectToAction("UserAuthentication", "Login");
+                }
             }
             ViewData["ReturnUrl"] = returnUrl;
             return View(model);

@@ -17,10 +17,11 @@ namespace FitPortal.Controllers
         private readonly IPostRepository postRepository;
         private readonly ICategoryRepository categoryRepository;
         private readonly ITeacherRepository teacherRepository;
+        private readonly ITeacherUserRepository teacherUserRepository;
         private readonly IStudentUserRepository studentUserRepository;
         private readonly IStudentRepository studentepository;
         private readonly UserManager<ApplicationUser> userManager;
-        public HomeController(ILogger<HomeController> logger,IStudentRepository studentepository, IStudentUserRepository studentUserRepository, DatabaseContext dbcon, ICategoryRepository categoryRepository,IPostRepository postRepository, ITeacherRepository teacherRepository, UserManager<ApplicationUser> userManager)
+        public HomeController(ILogger<HomeController> logger, ITeacherUserRepository teacherUserRepository, IStudentRepository studentepository, IStudentUserRepository studentUserRepository, DatabaseContext dbcon, ICategoryRepository categoryRepository,IPostRepository postRepository, ITeacherRepository teacherRepository, UserManager<ApplicationUser> userManager)
         {
             this._logger = logger;
             this._dbcon = dbcon;
@@ -30,6 +31,7 @@ namespace FitPortal.Controllers
             this.userManager = userManager;
             this.studentUserRepository = studentUserRepository;
             this.studentepository = studentepository;
+            this.teacherUserRepository = teacherUserRepository;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -125,6 +127,28 @@ namespace FitPortal.Controllers
                             var category = await categoryRepository.GetAll().ToListAsync();
                             ViewBag.Category = category;
                             return View(model);
+                        }
+                    }
+                    else
+                    {
+                        var teacherInfo =await teacherUserRepository.GetAll().Where(tu => tu.UserID == user.Id).FirstOrDefaultAsync();
+                        if(teacherInfo != null)
+                        {
+                            var teacher = teacherRepository.GetAll().Where(t => t.Id == teacherInfo.TeacherID).FirstOrDefault();
+                            if(teacher != null)
+                            {
+                                UserProfileViewModel model = new UserProfileViewModel()
+                                {
+                                    UserCode = teacher.TeacherCode,
+                                    UserName = teacher.Name,
+                                    DayOfBirth = teacher.DayOfBirth,
+                                    Email = teacher.Email,
+                                    PhoneNumber = teacher.PhoneNumber,
+                                };
+                                var category = await categoryRepository.GetAll().ToListAsync();
+                                ViewBag.Category = category;
+                                return View(model);
+                            }
                         }
                     }
                     

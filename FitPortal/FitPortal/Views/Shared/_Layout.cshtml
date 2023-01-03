@@ -142,6 +142,7 @@
                                 {
                                     var user =await UserManager.FindByNameAsync(User.Identity.Name);
                                     var role =await UserManager.GetRolesAsync(user);
+                                    int check = 0;
                                     foreach (var item in role)
                                     {
                                         if (string.Compare(item, "Student")==0)
@@ -154,11 +155,21 @@
                                                 </ul>
                                             </li>
                                         }
+                                        if (string.Compare(item, "SuperAdmin") ==0 || string.Compare(item, "Admin")==0)
+                                        {
+                                            if(check == 0)
+                                            {
+                                                <li>
+                                                <a href="/admin">Trang admin</a>
+                                                </li>
+                                            }
+                                            check += 1;
+                                        }
                                     }
                                 }
                                 
                             }
-                        <li><a href="contact.html.htm">Contact</a></li>
+                        <li><a href="https://www.facebook.com/PhanAn.DEV">Liên hệ</a></li>
                     </ul>
                 </div>
                 <div class="nav-right-part nav-right-part-desktop">

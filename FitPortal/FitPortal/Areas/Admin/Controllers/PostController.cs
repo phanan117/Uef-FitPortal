@@ -1,6 +1,7 @@
 ﻿using Dotnet6MvcLogin.Models;
 using FitPortal.Areas.Admin.Models;
 using FitPortal.Models.Domain;
+using FitPortal.Repositories.Abstract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,19 +12,23 @@ using System.Collections.Generic;
 namespace FitPortal.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class PostController : Controller
     {
         private readonly DatabaseContext dbcon;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly UserManager<ApplicationUser> _userManager;
-        public PostController(DatabaseContext dbcon, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor contextAccessor, UserManager<ApplicationUser> userManager)
+        private readonly IPostRepository postRepository;
+        private readonly ICategoryRepository categoryRepository;
+        public PostController(DatabaseContext dbcon, ICategoryRepository categoryRepository, IPostRepository postRepository, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor contextAccessor, UserManager<ApplicationUser> userManager)
         {
             this.dbcon = dbcon;
             this._webHostEnvironment = webHostEnvironment;
             this._contextAccessor = contextAccessor;
             this._userManager = userManager;
+            this.postRepository = postRepository;
+            this.categoryRepository = categoryRepository;
         }
         [HttpGet]
         public async Task<IActionResult> ManagePost()
@@ -55,6 +60,7 @@ namespace FitPortal.Areas.Admin.Controllers
             ViewBag.listInfor = infor;
             return View();
         }
+        [HttpGet]
         public IActionResult AddPost()
         {
             List<PostCategory> listCategory = dbcon.Categories.ToList();
@@ -70,9 +76,116 @@ namespace FitPortal.Areas.Admin.Controllers
             return View();
         }
         [HttpGet]
+        public IActionResult EditCategory(int IDCategory)
+        {
+            var category = categoryRepository.GetAll().Where(c => c.Id == IDCategory).FirstOrDefault();
+            var model = new EditCategoryViewModel()
+            {
+                CategoryName = category.CategoryName,
+                CategoryId = category.Id
+            };
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeleteCategory(int IDCategory)
+        {
+            var post =await postRepository.GetAll().Where(p => p.CategoryID == IDCategory).ToListAsync();
+            if(post.Count > 0)
+            {
+                TempData["msg"] = "Danh mục đang tồn tại bài viết không thể xóa!";
+                return RedirectToAction("ManageCategory","Post");
+            }
+            else
+            {
+                var category = categoryRepository.GetAll().Where(c => c.Id == IDCategory).FirstOrDefault();
+                try
+                {
+                    categoryRepository.Delete(category);
+                    return RedirectToAction("ManageCategory", "Post");
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return RedirectToAction("Index", "AdminHome");
+                }
+            }
+        }
+        [HttpGet]
         public IActionResult AddCategory()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult EditCategory(EditCategoryViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var category = categoryRepository.GetAll().Where(c => c.Id == model.CategoryId).FirstOrDefault();
+                category.CategoryName = model.CategoryName;
+                categoryRepository.Update(category);
+                return RedirectToAction("ManagePost", "Post");
+            }
+            else
+            {
+                return View(model);
+            }
+            
+        }
+        [HttpGet]
+        public async Task<IActionResult> EditPost(int IDPost)
+        {
+            var postInfor =await postRepository.GetAll().Where(p => p.Id == IDPost).FirstOrDefaultAsync();
+            EditPostViewModel model = new EditPostViewModel()
+            {
+                PostName = postInfor.PostName,
+                CategoryID = postInfor.CategoryID,
+                Content = postInfor.Content,
+                Describe = postInfor.Describe,
+                PostId = postInfor.Id
+            };
+            List<PostCategory> listCategory = dbcon.Categories.ToList();
+            SelectList selectListItems = new SelectList(listCategory, "Id", "CategoryName");
+            ViewBag.CategoryList = selectListItems;
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPost(EditPostViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var post = await postRepository.GetAll().Where(p => p.Id == model.PostId).FirstOrDefaultAsync();
+                    if (model.Picture != null)
+                    {
+                        string folder = "post/cover/";
+                        folder += Guid.NewGuid().ToString() + "_" + model.Picture.FileName;
+                        post.Picture = "/" + folder;
+                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+                        using (FileStream fs = new FileStream(serverFolder, FileMode.Create))
+                        {
+                            await model.Picture.CopyToAsync(fs);
+                        }
+                    }
+                    post.PostName = model.PostName;
+                    post.CategoryID = model.CategoryID;
+                    post.Content = model.Content;
+                    post.IsDisplay = false;
+                    post.Describe = model.Describe;
+                    postRepository.Update(post);
+                    return RedirectToAction("ManagePost", "Post");
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return RedirectToAction("Index", "AdminHome");
+                }
+            }
+            else
+            {
+                return View(model);
+            }
         }
         [HttpPost]
         public async Task<IActionResult> AddCategory(PostCategoryViewModel model)
@@ -99,7 +212,10 @@ namespace FitPortal.Areas.Admin.Controllers
                     folder += Guid.NewGuid().ToString() + "_" + model.Picture.FileName;
                     post.Picture = "/" + folder;
                     string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                    await model.Picture.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                    using (FileStream fs = new FileStream(serverFolder, FileMode.Create))
+                    {
+                        await model.Picture.CopyToAsync(fs);
+                    }
                 }
                 else
                 {
@@ -116,10 +232,16 @@ namespace FitPortal.Areas.Admin.Controllers
                 post.Describe = model.Describe;
                 await dbcon.Posts.AddAsync(post);
                 await dbcon.SaveChangesAsync();
+                return RedirectToAction("ManagePost","Post");
             }
-            return RedirectToAction("ManagePost","Post");
+            else
+            {
+                List<PostCategory> listCategory = dbcon.Categories.ToList();
+                SelectList selectListItems = new SelectList(listCategory, "Id", "CategoryName");
+                ViewBag.CategoryList = selectListItems;
+                return View(model);
+            }
         }
-        
         [HttpGet]
         public async Task<IActionResult> DeletePost(int id)
         {

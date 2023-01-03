@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "k9ja96ynERcXd7DzFoDB9CtxJZDAz9nognrHpfAoJ9k=",
+  "Hash": "fMt4WWofFb3elhIqkeVUjKhNz8yl1W5JgqmKwNxBDeI=",
   "Source": "FitPortal",
   "BasePath": "_content/FitPortal",
   "Mode": "Default",
@@ -78521,6 +78521,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Plugin\\ckeditor5\\translations\\zh-cn.js"
+    },
+    {
+      "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\post\\cover\\041597bf-d1fd-46b6-ba1f-55a2e697b831_ueflogo.png",
+      "SourceId": "FitPortal",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\",
+      "BasePath": "_content/FitPortal",
+      "RelativePath": "post/cover/041597bf-d1fd-46b6-ba1f-55a2e697b831_ueflogo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\post\\cover\\041597bf-d1fd-46b6-ba1f-55a2e697b831_ueflogo.png"
     },
     {
       "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\post\\cover\\098bf4b6-d080-4bb9-995b-91940aa17204_d062a23dce665e8cfb7a83a626264edb.jpg",

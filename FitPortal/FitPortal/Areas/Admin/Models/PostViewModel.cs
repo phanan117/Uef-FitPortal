@@ -13,6 +13,7 @@ namespace FitPortal.Areas.Admin.Models
 
         [Required(ErrorMessage = "Vui lòng điền nội dung bản tin!")]
         public string Content { get; set; }
+        [Required(ErrorMessage = "Vui lòng chọn ngày tạo!")]
         public DateTime DateCreated { get; set; }
 
         [Required(ErrorMessage = "Vui lòng thêm hình ảnh người dùng!")]

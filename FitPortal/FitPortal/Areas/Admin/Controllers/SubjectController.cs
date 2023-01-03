@@ -11,7 +11,7 @@ using static FitPortal.Areas.Admin.HtmlHelper.Helper;
 namespace FitPortal.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class SubjectController : Controller
     {
         private readonly ISubjectRepository subjectRepository;

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FitPortal.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class AdminHomeController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

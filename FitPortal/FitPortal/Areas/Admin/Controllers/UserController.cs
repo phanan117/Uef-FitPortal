@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FitPortal.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class UserController : Controller
     {
         private readonly IUserAuthenticationService _authService;

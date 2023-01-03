@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using FitPortal
+@using FitPortal.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model FitPortal.Areas.Admin.Models.EditCategoryViewModel
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<form asp-area="Admin" asp-controller="Post" asp-action="EditCategory"  class="form-horizontal form-label-left" method="post">
+    @Html.HiddenFor(model => model.CategoryId)
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">Tên danh mục <span class="required" asp-validation-for="CategoryName">*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="CategoryName"class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+    </div>
+    </div>
+    
+    <div class="ln_solid"></div>
+    <div class="form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+        <button type="submit" class="btn btn-info"> Sửa </button>
+        <a type="button" asp-area="Admin" asp-controller="Post" asp-action="ManageCategory" class="btn btn-info">
+        Trở về
+        </a>
+    </div>
+    </div>
+</form>
