@@ -73,6 +73,37 @@ namespace FitPortal.Controllers
             
         }
         [HttpGet]
+        public async Task<IActionResult> Search(string ps)
+        {
+            var posts =await postRepository.GetAll().Where(p => p.PostName.Contains(ps)).ToListAsync();
+            if(posts.Count < 1)
+            {
+                var categories = await categoryRepository.GetAll().ToListAsync();
+                ViewBag.Category = categories;
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                List<EventInformation> model = new List<EventInformation>();
+                foreach (var post in posts)
+                {
+                    EventInformation inforEvent = new EventInformation();
+                    inforEvent.Id = post.Id;
+                    inforEvent.Title = post.PostName;
+                    inforEvent.CreateTime = post.DateCreated;
+                    inforEvent.Content = post.Content;
+                    inforEvent.Picture = post.Picture;
+                    inforEvent.Describe = post.Describe;
+                    inforEvent.CategoryId = post.CategoryID;
+                    model.Add(inforEvent);
+                }
+                var category = await categoryRepository.GetAll().ToListAsync();
+                ViewBag.Category = category;
+                return View(model);
+            }
+            
+        }
+        [HttpGet]
         public async Task<IActionResult> SearchTeacher() 
         {
             try

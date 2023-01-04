@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "fMt4WWofFb3elhIqkeVUjKhNz8yl1W5JgqmKwNxBDeI=",
+  "Hash": "erUma6K19FhZ7JMO08ky47kklkI/qIkcfQxniECMni0=",
   "Source": "FitPortal",
   "BasePath": "_content/FitPortal",
   "Mode": "Default",
@@ -73321,6 +73321,23 @@
       "OriginalItemSpec": "wwwroot\\fonts\\line-awesome-1.eot"
     },
     {
+      "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\Images\\post\\01339fe8-53f7-412d-b9d5-f01af639b2c7.jpg",
+      "SourceId": "FitPortal",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\",
+      "BasePath": "_content/FitPortal",
+      "RelativePath": "Images/post/01339fe8-53f7-412d-b9d5-f01af639b2c7.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\post\\01339fe8-53f7-412d-b9d5-f01af639b2c7.jpg"
+    },
+    {
       "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\Images\\post\\1e6db419-8743-448e-846d-e5f64fcc375d.jpg",
       "SourceId": "FitPortal",
       "SourceType": "Discovered",
@@ -78606,6 +78623,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\post\\cover\\6a87f069-aed6-4151-8ac3-bf04db9d18a9_d062a23dce665e8cfb7a83a626264edb.jpg"
+    },
+    {
+      "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\post\\cover\\6cd7effa-9dda-42e9-b93f-bae6ae4e0e3b_ueflogo.png",
+      "SourceId": "FitPortal",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\",
+      "BasePath": "_content/FitPortal",
+      "RelativePath": "post/cover/6cd7effa-9dda-42e9-b93f-bae6ae4e0e3b_ueflogo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\post\\cover\\6cd7effa-9dda-42e9-b93f-bae6ae4e0e3b_ueflogo.png"
     },
     {
       "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\post\\cover\\8b48a3d7-e05e-4f53-83cd-bd73634c76d8_công-nghệ-thông-tin-4_0.jpg",
