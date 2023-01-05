@@ -59,6 +59,28 @@ namespace FitPortal.Areas.Admin.Controllers
         }
         //Lấy hết giảng viên đang công tác để chọn trưởng ngành khi muôn sửa đổi
         [HttpGet]
+        public IActionResult DeleteSpecialization(int IDSpecialization)
+        {
+            var specialization = _specializationRepository.GetAll().Where(p => p.Id == IDSpecialization).FirstOrDefault();
+            if(specialization != null)
+            {
+                try
+                {
+                    _specializationRepository.Delete(specialization);
+                    return RedirectToAction("ViewAll", "Specialization");
+                }catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return RedirectToAction("Index", "AdminHome");
+                }
+                
+            }
+            else
+            {
+                return RedirectToAction("ViewAll", "Specialization");
+            }
+        }
+        [HttpGet]
         public IActionResult EditSpecialization(int IDSpecialization)
         {
             var specialization = _specializationRepository.FindById(IDSpecialization);

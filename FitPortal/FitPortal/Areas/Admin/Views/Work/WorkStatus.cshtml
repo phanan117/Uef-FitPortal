@@ -9,7 +9,7 @@
 @{
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
-<h1>Lịch công tác</h1>
+<h3>Phân công</h3>
 <!--Popup start-->
 <div class="modal" tabindex="-1" id="form-modal">
   <div class="modal-dialog">
@@ -48,7 +48,14 @@
                                 <td>@item.DateEnd</td>
                                 <td>@(@item.IsTaked ? "Đã phân công":"Chưa phân công")</td>
                                 <td>
+                                @if(item.IsTaked == true)
+                                {
+                                    <span>###</span>
+                                }
+                                @if(item.IsTaked == false)
+                                {
                                     <a onclick="showInPopup('@Url.Action("Assignment","Work",new{IDWork=item.Id},Context.Request.Scheme)','Thêm vai trò cho người dùng')" class="btn btn-info">Phân công</a>
+                                }
                                 </td>
                             </tr>
                     }

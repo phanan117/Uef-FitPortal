@@ -10,7 +10,7 @@
 @{
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
-<h1>Quản vai trò của hệ thống</h1>
+<h3>Quản vai trò của hệ thống</h3>
 <a onclick="showInPopup('@Url.Action("AddRole","Role",new {area = "Admin"},Context.Request.Scheme)','Thêm mới vai trò')" class="btn btn-info">Thêm mới vai trò</a>
 <!--Popup start-->
 <div class="modal" tabindex="-1" id="form-modal">

@@ -11,7 +11,7 @@
     string StudentName = (string)ViewBag.StudentName;
     int StudentId = (int)ViewBag.StudentID;
 }
-<h1>Nghiên cứu khoa của sinh viên: @StudentName</h1>
+<h3>Nghiên cứu khoa của sinh viên: @StudentName</h3>
 <a href="/admin/research/addforstudent?IDStudent=@StudentId" class="btn btn-info">Thêm mới</a>
     <div class="x_content">
         @if(TempData["msg"]!=null)

@@ -12,7 +12,7 @@
     string userID = (string)ViewBag.UserID;
     string userName = (string)ViewBag.UserName;
 }
-<h1>Vai trò của @(userName) trên trang</h1>
+<h3>Vai trò của @(userName) trên trang</h3>
 <a onclick="showInPopup('@Url.Action("AddRoleToUser","Role",new{ID=userID},Context.Request.Scheme)','Thêm vai trò cho người dùng')" class="btn btn-info">Thêm vai trò</a>
 <!--Popup start-->
 <div class="modal" tabindex="-1" id="form-modal">

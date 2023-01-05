@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "erUma6K19FhZ7JMO08ky47kklkI/qIkcfQxniECMni0=",
+  "Hash": "qMKcSf/PvW1hqhNfgGmDImoFSz7uVUPJiC/FypGJG5k=",
   "Source": "FitPortal",
   "BasePath": "_content/FitPortal",
   "Mode": "Default",
@@ -73013,6 +73013,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\file\\outline\\74628289-a0f2-4e10-99a6-2c1445d7110f_testadd.docx",
+      "SourceId": "FitPortal",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\",
+      "BasePath": "_content/FitPortal",
+      "RelativePath": "file/outline/74628289-a0f2-4e10-99a6-2c1445d7110f_testadd.docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\file\\outline\\74628289-a0f2-4e10-99a6-2c1445d7110f_testadd.docx"
     },
     {
       "Identity": "D:\\TaiLieu\\KLTN\\Uef-FitPortal\\FitPortal\\FitPortal\\wwwroot\\file\\research\\32089d39-d16a-4309-9989-83f5ca712cd8_testadd.docx",

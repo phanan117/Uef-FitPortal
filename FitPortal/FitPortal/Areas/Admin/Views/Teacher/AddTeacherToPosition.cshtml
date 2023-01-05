@@ -11,10 +11,21 @@
     int teacherID = ViewBag.TeacherID;
 }
 <form onsubmit="jQueryAjaxPost(this)" asp-area="Admin" asp-controller="Teacher" asp-action="AddTeacherToPosition" class="form-horizontal form-label-left" method="post">
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">ID<span class="required">*</span>
+    </label>
     <div class="col-md-6 col-sm-6 col-xs-12">
-        <input asp-for="TeacherId" value="@teacherID" readonly/>
-        @Html.DropDownListFor(m => m.SpecializationId, (IEnumerable<SelectListItem>) ViewBag.Specialization, new { @class = "col-md-6 col-sm-6 col-xs-12" })
+        <input asp-for="TeacherId" value="@teacherID" class="form-control col-md-7 col-xs-12" readonly />
     </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">Chuyên ngành<span class="required">*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(m => m.SpecializationId, (IEnumerable<SelectListItem>) ViewBag.Specialization, new { @class = "form-control col-md-7 col-xs-12" })
+    </div>
+    </div>
+    
     <div class="ln_solid"></div>
     <div class="form-group">
     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

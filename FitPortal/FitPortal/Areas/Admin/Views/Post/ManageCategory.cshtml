@@ -9,7 +9,7 @@
     Layout = "/Views/Shared/_AdminLayout.cshtml";
     List<FitPortal.Models.Domain.PostCategory> listCategory = (List<FitPortal.Models.Domain.PostCategory>)ViewBag.Category;
 }     
-<h1>Quản lý thể loại</h1>
+<h3>Quản lý thể loại</h3>
 <a type="button" asp-area="Admin" asp-controller="Post" asp-action="AddCategory" class="btn btn-info"> Thêm Mới 
 </a>
 @if(TempData["msg"]!=null)

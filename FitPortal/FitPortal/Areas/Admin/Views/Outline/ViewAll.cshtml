@@ -11,7 +11,7 @@
     int IDSubject = (int)ViewBag.IDSubject;
 }
 
-<h2>Quản lý đề cương</h2>
+<h3>Quản lý đề cương</h3>
     <div class="x_content">
         @if(TempData["msg"]!=null)
         {
@@ -22,7 +22,7 @@
             <tr>
                 <th>Tên đề cương</th>
                 <th>File</th>
-                <th><a href="/admin/outline/addoutline?IDSubject=@IDSubject" class="btn btn-round btn-info">Thêm mới môn học</a></th>
+                <th><a href="/admin/outline/addoutline?IDSubject=@IDSubject" class="btn btn-round btn-info">Thêm mới đề cương</a></th>
                 
             </tr>
             </thead>
