@@ -1,10 +1,12 @@
 ﻿using FitPortal.Models.DTO;
 using FitPortal.Repositories.Abstract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitPortal.Controllers
 {
+    [Authorize]
     public class ViewPostController : Controller
     {
         private readonly IPostRepository postRepository;

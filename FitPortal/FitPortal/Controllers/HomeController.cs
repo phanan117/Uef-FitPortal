@@ -1,4 +1,5 @@
-﻿using FitPortal.Models;
+﻿using FitPortal.Areas.Admin.Models;
+using FitPortal.Models;
 using FitPortal.Models.Domain;
 using FitPortal.Models.DTO;
 using FitPortal.Repositories.Abstract;
@@ -10,6 +11,7 @@ using System.Diagnostics;
 
 namespace FitPortal.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -21,7 +23,9 @@ namespace FitPortal.Controllers
         private readonly IStudentUserRepository studentUserRepository;
         private readonly IStudentRepository studentepository;
         private readonly UserManager<ApplicationUser> userManager;
-        public HomeController(ILogger<HomeController> logger, ITeacherUserRepository teacherUserRepository, IStudentRepository studentepository, IStudentUserRepository studentUserRepository, DatabaseContext dbcon, ICategoryRepository categoryRepository,IPostRepository postRepository, ITeacherRepository teacherRepository, UserManager<ApplicationUser> userManager)
+        private readonly ITeacherWorkRepository teacherWorkRepository;
+        private readonly IWorkRepository workRepository;
+        public HomeController(ILogger<HomeController> logger, IWorkRepository workRepository, ITeacherWorkRepository teacherWorkRepository, ITeacherUserRepository teacherUserRepository, IStudentRepository studentepository, IStudentUserRepository studentUserRepository, DatabaseContext dbcon, ICategoryRepository categoryRepository,IPostRepository postRepository, ITeacherRepository teacherRepository, UserManager<ApplicationUser> userManager)
         {
             this._logger = logger;
             this._dbcon = dbcon;
@@ -32,6 +36,8 @@ namespace FitPortal.Controllers
             this.studentUserRepository = studentUserRepository;
             this.studentepository = studentepository;
             this.teacherUserRepository = teacherUserRepository;
+            this.teacherWorkRepository = teacherWorkRepository;
+            this.workRepository = workRepository;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -176,6 +182,33 @@ namespace FitPortal.Controllers
                                     Email = teacher.Email,
                                     PhoneNumber = teacher.PhoneNumber,
                                 };
+                                //
+                                var teacherWorks = teacherWorkRepository.GetAll().Where(t => t.TeachersId == teacherInfo.TeacherID).ToList();
+                                List<WorkingScheduleViewModel> wmodel = new List<WorkingScheduleViewModel>();
+                                foreach (var teachersWork in teacherWorks)
+                                {
+                                    var work = workRepository.GetAll().Where(w => w.Id == teachersWork.WorksId).ToList();
+                                    if (work != null)
+                                    {
+                                        foreach (var item in work)
+                                        {
+                                            WorkingScheduleViewModel itemModel = new WorkingScheduleViewModel()
+                                            {
+                                                WorkName = item.Name,
+                                                StartDate = item.DateStart,
+                                                EndDate = item.DateEnd,
+                                                Address = item.Address
+                                            };
+                                            wmodel.Add(itemModel);
+                                        }
+                                        ViewBag.Work = wmodel;
+                                    }
+                                    else
+                                    {
+                                        ViewBag.Work = null;
+                                    }
+                                }
+                                    //
                                 var category = await categoryRepository.GetAll().ToListAsync();
                                 ViewBag.Category = category;
                                 return View(model);
