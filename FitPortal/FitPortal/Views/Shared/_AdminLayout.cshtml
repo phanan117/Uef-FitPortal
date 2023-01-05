@@ -5,9 +5,14 @@
 @using FitPortal.Models.Domain
 
 @inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@inject UserManager<ApplicationUser> userManager
 @{
-    var user =await UserManager.FindByNameAsync(User.Identity.Name);
+    ApplicationUser user = new ApplicationUser();
+    if (SignInManager.IsSignedIn(User))
+    {
+        user =await userManager.FindByNameAsync(User.Identity.Name);
+    }
+    
 }
 
 <!DOCTYPE html>
@@ -57,7 +62,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Fitportal-UEF!</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -86,21 +91,18 @@
                       <li><a asp-area="Admin" asp-controller="AdminHome" asp-action="Index">Trang chủ</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-edit"></i> Quản lý vai trò <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-edit"></i> User và Role <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a asp-area="Admin" asp-controller="Role" asp-action="ViewAll">Danh sách role</a></li>
                       <li><a asp-area="Admin" asp-controller="Role" asp-action="UserRole">Vai trò người dùng</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-edit"></i>Quản lý user <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a asp-area="Admin" asp-controller="User" asp-action="Account">Danh sách user</a></li>
                       <li><a asp-area="Admin" asp-controller="User" asp-action="Registration">Đăng ký mới</a></li>
                     </ul>
                   </li>
+     
                   <li><a><i class="fa fa-desktop"></i>Bài viết<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a asp-area="Admin" asp-controller="Post" asp-action="ManagePost">Danh sách</a></li>
+                      <li><a asp-area="Admin" asp-controller="Post" asp-action="ManagePost"> Danh sách</a></li>
+                      <li><a asp-area="Admin" asp-controller="Post" asp-action="ManageCategory"> Danh mục</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i>Giảng viên<span class="fa fa-chevron-down"></span></a>
@@ -112,7 +114,7 @@
                   <li><a><i class="fa fa-clone"></i>Sinh viên <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a asp-area="Admin" asp-controller="Student" asp-action="ViewAll">Danh sách</a></li>
-                      <li><a asp-area="Admin" asp-controller="Student" asp-action="Graduating">Đã tốt nghiệp</a></li>
+                      <li><a asp-area="Admin" asp-controller="Research" asp-action="Student">NCKH</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-table"></i> Chuyên ngành <span class="fa fa-chevron-down"></span></a>
@@ -137,48 +139,6 @@
                       <li><a asp-area="Admin" asp-controller="Work" asp-action="TeacherAssign">Lịch giảng viên</a></li>
                     </ul>
                   </li>
-                </ul>
-              </div>
-              <div class="menu_section">
-                <h3>Live On</h3>
-                <ul class="nav side-menu">
-                  <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="e_commerce.html">E-commerce</a></li>
-                      <li><a href="projects.html">Projects</a></li>
-                      <li><a href="project_detail.html">Project Detail</a></li>
-                      <li><a href="contacts.html">Contacts</a></li>
-                      <li><a href="profile.html">Profile</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="page_403.html">403 Error</a></li>
-                      <li><a href="page_404.html">404 Error</a></li>
-                      <li><a href="page_500.html">500 Error</a></li>
-                      <li><a href="plain_page.html">Plain Page</a></li>
-                      <li><a href="login.html">Login Page</a></li>
-                      <li><a href="pricing_tables.html">Pricing Tables</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                        <li><a href="#level1_1">Level One</a>
-                        <li><a>Level One<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="level2.html">Level Two</a>
-                            </li>
-                            <li><a href="#level2_1">Level Two</a>
-                            </li>
-                            <li><a href="#level2_2">Level Two</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a href="#level1_2">Level One</a>
-                        </li>
-                    </ul>
-                  </li>                  
-                  <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
                 </ul>
               </div>
 
@@ -219,15 +179,8 @@
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="javascript:;"> Profile</a></li>
-                    <li>
-                      <a href="javascript:;">
-                        <span class="badge bg-red pull-right">50%</span>
-                        <span>Settings</span>
-                      </a>
-                    </li>
-                    <li><a href="javascript:;">Help</a></li>
-                    <li><a asp-area="Admin" asp-controller="User" asp-action="Logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li><a href="/Home/Index"> Trang chủ</a></li>
+                    <li><a asp-area="Admin" asp-controller="User" asp-action="Logout"><i class="fa fa-sign-out pull-right"></i> Đăng xuất</a></li>
                   </ul>
                 </li>
 

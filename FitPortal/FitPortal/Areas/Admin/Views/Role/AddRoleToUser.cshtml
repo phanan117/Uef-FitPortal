@@ -10,9 +10,19 @@
     string userID = (string)ViewBag.UserID;
 }
 <form asp-area="Admin" asp-controller="Role" asp-action="AddRoleToUser" onsubmit="jQueryAjaxPost(this)" class="form-horizontal form-label-left" method="post">
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">Mã user<span class="required" asp-validation-for="RoleName">*</span>
+    </label>
     <div class="col-md-6 col-sm-6 col-xs-12">
         <input asp-for="UserID" value="@userID" readonly/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">Tên vai trò<span class="required" asp-validation-for="RoleName">*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.DropDownListFor(m => m.RoleName, (IEnumerable<SelectListItem>) ViewBag.Role, new { @class = "col-md-6 col-sm-6 col-xs-12" })
+    </div>
     </div>
     <div class="ln_solid"></div>
     <div class="form-group">

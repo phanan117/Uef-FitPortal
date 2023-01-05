@@ -14,8 +14,10 @@ namespace FitPortal.Models.Domain
         public string SubjectName { get; set; }
         [Required]
         public DateTime CreatedDate { get; set; }
+        public bool? IsDeleted { get; set; }
         [Required]
         public DateTime LastModify { get; set; }
         public List<SubjectMajors> SubjectMajors { get; set; }
+        public List<Outline> Outlines { get; set; }
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace FitPortal.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class WorkController : Controller
     {
         private readonly IWorkRepository workRepository;
@@ -44,6 +44,22 @@ namespace FitPortal.Areas.Admin.Controllers
         public IActionResult AddWork()
         {
             return View();
+        }
+        [HttpGet]
+        public IActionResult EditWork(int IDWork)
+        {
+            var work = workRepository.GetAll().Where(w => w.Id == IDWork).FirstOrDefault();
+            EditWorkViewModel model = new EditWorkViewModel();
+            if (work != null)
+            {
+                model.Id = work.Id;
+                model.Name = work.Name;
+                model.Address = work.Address;
+                model.DateEnd = work.DateEnd;
+                model.DateStart = work.DateStart;
+                model.Description = work.Description;
+            }
+            return View(model);
         }
         [HttpGet]
         public IActionResult DetailWork(int IDWork)
@@ -150,12 +166,12 @@ namespace FitPortal.Areas.Admin.Controllers
                 var result = teacherWorkRepository.Create(teacherWork);
                 if(result)
                 {
-                    var fixList = teacherWorkRepository.GetAll().ToList();
+                    var fixList = teacherWorkRepository.GetAll().Where(t => t.WorksId == model.IdWork).ToList();
                     if (fixList.Count > 1)
                     {
                         foreach(var item in fixList)
                         {
-                            var fix = teacherWorkRepository.GetAll().Where(t => t.TeachersId == model.IDTeacher).FirstOrDefault();
+                            var fix = teacherWorkRepository.GetAll().Where(t => t.WorksId == model.IdWork).FirstOrDefault();
                             if(fix != null) teacherWorkRepository.Delete(fix);
                             break;
                         }
@@ -206,6 +222,34 @@ namespace FitPortal.Areas.Admin.Controllers
                 {
                     return RedirectToAction("ViewAll","Work");
                 }
+            }
+            else
+            {
+                return View(model);
+            }
+            return RedirectToAction("ViewAll", "Work");
+        }
+        [HttpPost]
+        public IActionResult EditWork(EditWorkViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var work = workRepository.GetAll().Where(w => w.Id == model.Id).FirstOrDefault();
+                if(work != null)
+                {
+                    work.Name = model.Name;
+                    work.Description = model.Description;
+                    work.Address = model.Address;
+                    work.DateStart = model.DateStart;
+                    work.DateEnd = model.DateEnd;
+                    work.DateCreate = DateTime.Now;
+                    work.LastMofify = DateTime.Now;
+                    var result = workRepository.Update(work);
+                    if (result)
+                    {
+                        return RedirectToAction("ViewAll", "Work");
+                    }
+                } 
             }
             else
             {

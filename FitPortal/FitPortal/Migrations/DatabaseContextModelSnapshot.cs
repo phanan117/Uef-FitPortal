@@ -130,6 +130,34 @@ namespace FitPortal.Migrations
                     b.ToTable("Class");
                 });
 
+            modelBuilder.Entity("FitPortal.Models.Domain.Outline", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("File")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Outlines");
+                });
+
             modelBuilder.Entity("FitPortal.Models.Domain.PostCategory", b =>
                 {
                     b.Property<int>("Id")
@@ -197,6 +225,37 @@ namespace FitPortal.Migrations
                     b.ToTable("Posts");
                 });
 
+            modelBuilder.Entity("FitPortal.Models.Domain.Research", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("File")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameEnglish")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Research");
+                });
+
             modelBuilder.Entity("FitPortal.Models.Domain.Specialization", b =>
                 {
                     b.Property<int>("Id")
@@ -226,6 +285,21 @@ namespace FitPortal.Migrations
                     b.HasIndex("ManagerID");
 
                     b.ToTable("Specializations");
+                });
+
+            modelBuilder.Entity("FitPortal.Models.Domain.StudentResearch", b =>
+                {
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResearchId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentId", "ResearchId");
+
+                    b.HasIndex("ResearchId");
+
+                    b.ToTable("StudentResearches");
                 });
 
             modelBuilder.Entity("FitPortal.Models.Domain.StudentUser", b =>
@@ -322,6 +396,9 @@ namespace FitPortal.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("LastModify")
                         .HasColumnType("datetime2");
@@ -688,6 +765,17 @@ namespace FitPortal.Migrations
                     b.Navigation("Teachers");
                 });
 
+            modelBuilder.Entity("FitPortal.Models.Domain.Outline", b =>
+                {
+                    b.HasOne("FitPortal.Models.Domain.Subject", "Subject")
+                        .WithMany("Outlines")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
             modelBuilder.Entity("FitPortal.Models.Domain.PostInfor", b =>
                 {
                     b.HasOne("FitPortal.Models.Domain.PostCategory", "PostCategory")
@@ -714,6 +802,25 @@ namespace FitPortal.Migrations
                         .HasForeignKey("ManagerID");
 
                     b.Navigation("Teachers");
+                });
+
+            modelBuilder.Entity("FitPortal.Models.Domain.StudentResearch", b =>
+                {
+                    b.HasOne("FitPortal.Models.Domain.Research", "Research")
+                        .WithMany("StudentResearches")
+                        .HasForeignKey("ResearchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FitPortal.Models.Domain.Students", "Students")
+                        .WithMany("StudentResearches")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Research");
+
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("FitPortal.Models.Domain.StudentUser", b =>
@@ -888,6 +995,11 @@ namespace FitPortal.Migrations
                     b.Navigation("posstInfors");
                 });
 
+            modelBuilder.Entity("FitPortal.Models.Domain.Research", b =>
+                {
+                    b.Navigation("StudentResearches");
+                });
+
             modelBuilder.Entity("FitPortal.Models.Domain.Specialization", b =>
                 {
                     b.Navigation("Classes");
@@ -897,8 +1009,15 @@ namespace FitPortal.Migrations
                     b.Navigation("teacherPositions");
                 });
 
+            modelBuilder.Entity("FitPortal.Models.Domain.Students", b =>
+                {
+                    b.Navigation("StudentResearches");
+                });
+
             modelBuilder.Entity("FitPortal.Models.Domain.Subject", b =>
                 {
+                    b.Navigation("Outlines");
+
                     b.Navigation("SubjectMajors");
                 });
 

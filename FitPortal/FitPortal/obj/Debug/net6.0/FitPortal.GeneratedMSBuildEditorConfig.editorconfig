@@ -35,6 +35,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ2xhc3NcVmlld0FsbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Outline/AddOutline.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcT3V0bGluZVxBZGRPdXRsaW5lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Outline/EditOutline.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcT3V0bGluZVxFZGl0T3V0bGluZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Outline/ViewAll.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcT3V0bGluZVxWaWV3QWxsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Post/AddCategory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUG9zdFxBZGRDYXRlZ29yeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -43,12 +55,36 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUG9zdFxBZGRQb3N0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Post/EditCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUG9zdFxFZGl0Q2F0ZWdvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Post/EditPost.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUG9zdFxFZGl0UG9zdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Post/ManageCategory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUG9zdFxNYW5hZ2VDYXRlZ29yeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Post/ManagePost.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUG9zdFxNYW5hZ2VQb3N0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Research/AddForStudent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUmVzZWFyY2hcQWRkRm9yU3R1ZGVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Research/EditForStudent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUmVzZWFyY2hcRWRpdEZvclN0dWRlbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Research/Student.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUmVzZWFyY2hcU3R1ZGVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Research/ViewResearch.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUmVzZWFyY2hcVmlld1Jlc2VhcmNoLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Role/AddRole.cshtml]
@@ -111,6 +147,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU3ViamVjdFxBZGRTdWJqZWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Subject/EditSubject.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU3ViamVjdFxFZGl0U3ViamVjdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Subject/ViewAll.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU3ViamVjdFxWaWV3QWxsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -155,6 +195,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcV29ya1xEZXRhaWxXb3JrLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Work/EditWork.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcV29ya1xFZGl0V29yay5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Areas/Admin/Views/Work/TeacherAssign.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcV29ya1xUZWFjaGVyQXNzaWduLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -173,6 +217,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Views/Home/Search.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTZWFyY2guY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Views/Home/SearchTeacher.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTZWFyY2hUZWFjaGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Views/Home/UserProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxVc2VyUHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TaiLieu/KLTN/Uef-FitPortal/FitPortal/FitPortal/Views/Shared/Error.cshtml]

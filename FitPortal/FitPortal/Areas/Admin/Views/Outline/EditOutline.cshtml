@@ -1,0 +1,33 @@
+﻿@using FitPortal
+@using FitPortal.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model FitPortal.Areas.Admin.Models.EditOutlineViewModel
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<form asp-area="Admin" asp-controller="Outline" asp-action="EditOutline" enctype="multipart/form-data" class="form-horizontal form-label-left" method="post">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.IdOutline)
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên đề cương:</label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="text" asp-for="Name"class="form-control col-md-7 col-xs-12">
+        @Html.ValidationMessageFor(model => model.Name,"",new { @class = "text-danger" })
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Tập tin:</label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input type="file" asp-for="File"  class="custom-file-input">
+        @Html.ValidationMessageFor(model => model.File,"",new { @class = "text-danger" })
+    </div>
+    </div>
+    
+    <div class="ln_solid"></div>
+    <div class="form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+        <button type="submit" class="btn btn-info">Thêm mới</button>
+    </div>
+    </div>
+</form>

@@ -29,6 +29,9 @@ builder.Services.AddAuthentication()
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(30));
 //Inject
+builder.Services.AddTransient<IStudentResearchRepository, StudentResearchRepository>();
+builder.Services.AddTransient<IResearchRepository, ResearchRepository>();
+builder.Services.AddTransient<IOutlineRepository, OutlineRepository>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<ISubjectMajorsRepository, SubjectMajorsRepository>();
 builder.Services.AddTransient<ISubjectRepository, SubjectRepository>();
@@ -43,8 +46,6 @@ builder.Services.AddTransient<ITeacherUserRepository, TeacherUserRepository>();
 builder.Services.AddTransient<ITeacherRepository, TeacherRepository>();
 builder.Services.AddTransient<ISpecializationRepository, SpecializationRepository>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
-
-
 //Build
 var app = builder.Build();
 
@@ -71,6 +72,6 @@ app.UseEndpoints(endpoints =>
 });
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=UserAuthentication}/{action=Login}/{id?}");
 
 app.Run();

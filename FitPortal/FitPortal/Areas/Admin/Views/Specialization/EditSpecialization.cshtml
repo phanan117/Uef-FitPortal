@@ -5,7 +5,7 @@
 @{
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
-<h1>Thêm mới chuyên ngành</h1>
+<h3>Sủa thông tin</h3>
 <form asp-area="Admin" asp-controller="Specialization" asp-action="EditSpecialization" class="form-horizontal form-label-left" method="post">
     <div class="x_content">
     @if (TempData["msg"] != null)
@@ -50,7 +50,7 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">Thể loại<span class="required" >*</span>
     </label>
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(m => m.ManagerID, (IEnumerable<SelectListItem>) ViewBag.Teacher, new { @class = "col-md-6 col-sm-6 col-xs-12" })
+        @Html.DropDownListFor(m => m.ManagerID, (IEnumerable<SelectListItem>) ViewBag.Teacher, new { @class = "form-control col-md-7 col-xs-12" })
     </div>
     </div>
     <div class="ln_solid"></div>

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FitPortal.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class SpecializationController : Controller
     {
         private readonly ISpecializationRepository _specializationRepository;
@@ -48,6 +48,7 @@ namespace FitPortal.Areas.Admin.Controllers
             }
             return View(model);
         }
+        //Lấy hết giảng viên đang công tác để chọn trưởng ngành
         [HttpGet]
         public IActionResult AddSpecialization()
         {
@@ -55,6 +56,29 @@ namespace FitPortal.Areas.Admin.Controllers
             SelectList selectListItems = new SelectList(teacher, "Id", "Name");
             ViewBag.Teacher = selectListItems;
             return View();
+        }
+        //Lấy hết giảng viên đang công tác để chọn trưởng ngành khi muôn sửa đổi
+        [HttpGet]
+        public IActionResult DeleteSpecialization(int IDSpecialization)
+        {
+            var specialization = _specializationRepository.GetAll().Where(p => p.Id == IDSpecialization).FirstOrDefault();
+            if(specialization != null)
+            {
+                try
+                {
+                    _specializationRepository.Delete(specialization);
+                    return RedirectToAction("ViewAll", "Specialization");
+                }catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return RedirectToAction("Index", "AdminHome");
+                }
+                
+            }
+            else
+            {
+                return RedirectToAction("ViewAll", "Specialization");
+            }
         }
         [HttpGet]
         public IActionResult EditSpecialization(int IDSpecialization)

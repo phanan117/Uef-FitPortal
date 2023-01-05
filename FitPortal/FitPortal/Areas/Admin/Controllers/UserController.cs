@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FitPortal.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class UserController : Controller
     {
         private readonly IUserAuthenticationService _authService;
@@ -27,6 +27,7 @@ namespace FitPortal.Areas.Admin.Controllers
         {
             return View();
         }
+        //Đăng ký cho admin
         [HttpPost]
         public async Task<IActionResult> Registration(AdminAccountRegistraion model)
         {
@@ -48,7 +49,7 @@ namespace FitPortal.Areas.Admin.Controllers
         public async Task<IActionResult> Logout()
         {
             await this._authService.LogoutAsync();
-            return RedirectToAction("Index","Home",new {area=""});
+            return RedirectToAction("Login", "UserAuthentication", new {area=""});
         }
     }
 }

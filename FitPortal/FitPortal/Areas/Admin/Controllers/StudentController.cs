@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace FitPortal.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class StudentController : Controller
     {
         private readonly IStudentRepository studentRepository;
@@ -22,7 +22,6 @@ namespace FitPortal.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult ViewAll()
         {
-            
             List<StudentViewModel> model = new List<StudentViewModel>();
             try
             {

@@ -37,9 +37,9 @@
     </div>
     <!-- search popup area start -->
     <div class="search-popup" id="search-popup">
-        <form action="index.html" class="search-form">
+        <form action="search" class="search-form">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search.....">
+                <input name="ps" id="ps" type="text" class="form-control" placeholder="Search.....">
             </div>
             <button type="submit" class="submit-btn"><i class="fa fa-search"></i></button>
         </form>
@@ -83,7 +83,7 @@
             <div class="row">
                 <div class="col-md-4 align-self-center">
                     <div class="logo text-md-left text-center">
-                        <a class="main-logo" href="~/"><img height="120" src="/img/mainlogo.png" alt="img"></a>
+                        <a class="main-logo" href="/home/index"><img height="120" src="/img/mainlogo.png" alt="img"></a>
                     </div>
                 </div>
                 <div class="col-md-8 text-md-right text-center">
@@ -142,6 +142,7 @@
                                 {
                                     var user =await UserManager.FindByNameAsync(User.Identity.Name);
                                     var role =await UserManager.GetRolesAsync(user);
+                                    int check = 0;
                                     foreach (var item in role)
                                     {
                                         if (string.Compare(item, "Student")==0)
@@ -149,7 +150,28 @@
                                             <li class="menu-item-has-children current-menu-item">
                                                 <a href="#">Tra cứu</a>
                                                 <ul class="sub-menu">
-                                                    <li><a href="blog.html.htm">Thông tin giảng viên</a></li>
+                                                    <li><a href="/home/searchteacher">Thông tin giảng viên</a></li>
+                                                    <li><a href="/home/userprofile">Thông tin cá nhân</a></li>
+                                                </ul>
+                                            </li>
+                                        }
+                                        if (string.Compare(item, "SuperAdmin") ==0 || string.Compare(item, "Admin")==0)
+                                        {
+                                            if(check == 0)
+                                            {
+                                                <li>
+                                                <a href="/admin">Trang admin</a>
+                                                </li>
+                                            }
+                                            check += 1;
+                                        }
+                                        if (string.Compare(item, "Teacher")==0)
+                                        {
+                                            <li class="menu-item-has-children current-menu-item">
+                                                <a href="#">Tra cứu</a>
+                                                <ul class="sub-menu">
+                                                    <li><a href="/home/searchteacher">Thông tin giảng viên</a></li>
+                                                    <li><a href="/home/userprofile">Thông tin cá nhân</a></li>
                                                 </ul>
                                             </li>
                                         }
@@ -157,17 +179,7 @@
                                 }
                                 
                             }
-                        <li class="menu-item-has-children current-menu-item">
-                            <a href="#">Blog</a>
-                            <ul class="sub-menu">
-                                <li><a href="blog.html.htm">Blog</a></li>
-                                <li><a href="blog-category.html.htm">Blog Category</a></li>
-                                <li><a href="blog-gallery.html.htm">Blog Gallery</a></li>
-                                <li><a href="blog-list.html.htm">Blog List</a></li>
-                                <li><a href="blog-details.html.htm">Blog Details</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="contact.html.htm">Contact</a></li>
+                        <li><a href="https://www.facebook.com/PhanAn.DEV">Liên hệ</a></li>
                     </ul>
                 </div>
                 <div class="nav-right-part nav-right-part-desktop">

@@ -9,20 +9,24 @@
     Layout = "/Views/Shared/_AdminLayout.cshtml";
     List<FitPortal.Models.Domain.PostCategory> listCategory = (List<FitPortal.Models.Domain.PostCategory>)ViewBag.Category;
 }     
-<h1>Quản lý thể loại</h1>
-<a type="button" asp-area="Admin" asp-controller="Post" asp-action="AddCategory">
-    <button type="button" class="btn btn-info">Thêm mới</button>
+<h3>Quản lý thể loại</h3>
+<a type="button" asp-area="Admin" asp-controller="Post" asp-action="AddCategory" class="btn btn-info"> Thêm Mới 
 </a>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>STT</th>
-        <th>Tên thể loại</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-        @{
+@if(TempData["msg"]!=null)
+{
+    <div class="text-danger">@TempData["msg"]</div>
+}
+<div class="x_content">
+    <table id="datatable" class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên thể loại</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            @{
             int i = 0;
             foreach(var item in listCategory)
                 {
@@ -30,10 +34,14 @@
                     <tr>
                     <th scope="row">@i</th>
                     <td>@item.CategoryName</td>
-                    <td>#</td>
+                    <td>
+                        <a href="/Admin/Post/EditCategory?IDCategory=@item.Id" class="btn btn-round btn-info"><i class="fa fa-edit"></i></a>
+                        <a href="/Admin/Post/DeleteCategory?IDCategory=@item.Id" class="btn btn-round btn-danger"><i class="fa fa-circle-o-notch"></i></a>
+                    </td>
                     </tr>
             }
-        }
-    </tbody>
-</table>
+        }         
+        </tbody>
+    </table>
+    </div>
                   

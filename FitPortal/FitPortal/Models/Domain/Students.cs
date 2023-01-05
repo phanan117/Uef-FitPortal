@@ -36,5 +36,6 @@ namespace FitPortal.Models.Domain
         public int? ClassID { get; set; }
         [ForeignKey("ClassID")]
         public Class? Class { get; set; }
+        public List<StudentResearch> StudentResearches { get; set; }
     }
 }
