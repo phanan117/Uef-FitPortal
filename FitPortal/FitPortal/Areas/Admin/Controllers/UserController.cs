@@ -27,6 +27,7 @@ namespace FitPortal.Areas.Admin.Controllers
         {
             return View();
         }
+        //Đăng ký cho admin
         [HttpPost]
         public async Task<IActionResult> Registration(AdminAccountRegistraion model)
         {
@@ -48,7 +49,7 @@ namespace FitPortal.Areas.Admin.Controllers
         public async Task<IActionResult> Logout()
         {
             await this._authService.LogoutAsync();
-            return RedirectToAction("Index","Home",new {area=""});
+            return RedirectToAction("Login", "UserAuthentication", new {area=""});
         }
     }
 }

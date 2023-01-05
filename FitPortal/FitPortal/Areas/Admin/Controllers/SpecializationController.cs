@@ -48,6 +48,7 @@ namespace FitPortal.Areas.Admin.Controllers
             }
             return View(model);
         }
+        //Lấy hết giảng viên đang công tác để chọn trưởng ngành
         [HttpGet]
         public IActionResult AddSpecialization()
         {
@@ -56,6 +57,7 @@ namespace FitPortal.Areas.Admin.Controllers
             ViewBag.Teacher = selectListItems;
             return View();
         }
+        //Lấy hết giảng viên đang công tác để chọn trưởng ngành khi muôn sửa đổi
         [HttpGet]
         public IActionResult EditSpecialization(int IDSpecialization)
         {

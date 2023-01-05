@@ -39,13 +39,14 @@ namespace FitPortal.Controllers
             this.teacherWorkRepository = teacherWorkRepository;
             this.workRepository = workRepository;
         }
+        //Show new post
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             HomeViewModel model = new HomeViewModel();
             try
             {
-                var posts = await postRepository.GetAll().Where(p => p.IsDisplay == true).Take(4).ToListAsync();
+                var posts = await postRepository.GetAll().Where(p => p.IsDisplay == true).Take(3).OrderBy(p => p.DateCreated).ToListAsync();
                 var categories = await categoryRepository.GetAll().ToListAsync();
                 foreach (var post in posts)
                 {
@@ -139,7 +140,6 @@ namespace FitPortal.Controllers
             }    
         }
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> UserProfile()
         {
             try
@@ -182,7 +182,7 @@ namespace FitPortal.Controllers
                                     Email = teacher.Email,
                                     PhoneNumber = teacher.PhoneNumber,
                                 };
-                                //
+                                //Get working schedule
                                 var teacherWorks = teacherWorkRepository.GetAll().Where(t => t.TeachersId == teacherInfo.TeacherID).ToList();
                                 List<WorkingScheduleViewModel> wmodel = new List<WorkingScheduleViewModel>();
                                 foreach (var teachersWork in teacherWorks)
@@ -208,7 +208,7 @@ namespace FitPortal.Controllers
                                         ViewBag.Work = null;
                                     }
                                 }
-                                    //
+                                //
                                 var category = await categoryRepository.GetAll().ToListAsync();
                                 ViewBag.Category = category;
                                 return View(model);

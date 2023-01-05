@@ -38,7 +38,7 @@ namespace FitPortal.Controllers
             return View();
         }
 
-       
+        //Đăng nhập của admin giảng viên và sinh viên sử lý bằng Repository UserAuthenticationService
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)
         {
@@ -56,6 +56,7 @@ namespace FitPortal.Controllers
             }
         }
         //Check studen or teacher code (first login with google)
+        //Login google có kiểm tra đuôi UEF
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -135,6 +136,7 @@ namespace FitPortal.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View(model);
         }
+        //
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -184,20 +186,20 @@ namespace FitPortal.Controllers
             }
         }
         
-        public IActionResult Registration()
-        {
-            return View();
-        }
+        //public IActionResult Registration()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> Registration(RegistrationModel model)
-        {
-            if(!ModelState.IsValid) { return View(model); }
-            model.Role = "Admin";
-            var result = await this._authService.RegisterAsync(model);
-            TempData["msg"] = result.Message;
-            return RedirectToAction(nameof(Registration));
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> Registration(RegistrationModel model)
+        //{
+        //    if(!ModelState.IsValid) { return View(model); }
+        //    model.Role = "Admin";
+        //    var result = await this._authService.RegisterAsync(model);
+        //    TempData["msg"] = result.Message;
+        //    return RedirectToAction(nameof(Registration));
+        //}
 
         [Authorize]
         public async Task<IActionResult> Logout()
@@ -207,22 +209,22 @@ namespace FitPortal.Controllers
         }
         
 
-        [Authorize]
-        public IActionResult ChangePassword()
-        {
-            return View();
-        }
+        //[Authorize]
+        //public IActionResult ChangePassword()
+        //{
+        //    return View();
+        //}
 
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult>ChangePassword(ChangePasswordModel model)
-        {
-            if (!ModelState.IsValid)
-              return View(model);
-            var result = await _authService.ChangePasswordAsync(model, User.Identity.Name);
-            TempData["msg"] = result.Message;
-            return RedirectToAction(nameof(ChangePassword));
-        }
+        //[Authorize]
+        //[HttpPost]
+        //public async Task<IActionResult>ChangePassword(ChangePasswordModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //      return View(model);
+        //    var result = await _authService.ChangePasswordAsync(model, User.Identity.Name);
+        //    TempData["msg"] = result.Message;
+        //    return RedirectToAction(nameof(ChangePassword));
+        //}
 
     }
 }

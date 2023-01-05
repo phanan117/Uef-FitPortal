@@ -27,15 +27,15 @@ namespace FitPortal.Areas.Admin.Controllers
             this._dbcon = databaseContext;
         }
         
-        //Lay danh sach giang vien chua ve huu
+        //Lay danh sach giang vien
         [HttpGet]
         public IActionResult ViewAll()
         {
-            List<Teachers> list = _teacherRepository.GetAll().ToList();
-            return View(list);
+            List<Teachers> model = _teacherRepository.GetAll().ToList();
+            return View(model);
         }
 
-
+        //Trả về view
         [HttpGet]
         public IActionResult AddTeacher()
         {
@@ -91,13 +91,12 @@ namespace FitPortal.Areas.Admin.Controllers
             }
             return View(model);
         }
-
-
         [HttpGet] 
         public async Task<IActionResult> AddTeacherToPosition(int IDTeacher)
         {
             var specialization = await _SpecializationRepository.GetAll().ToListAsync();
             SelectList selectListItems = new SelectList(specialization,"Id","SpecializationName");
+            //Truyền ID để biết được đang update cho Teacher nào
             ViewBag.TeacherID = IDTeacher;
             ViewBag.Specialization = selectListItems;
             return View();
@@ -118,7 +117,7 @@ namespace FitPortal.Areas.Admin.Controllers
                 Email=teacher.Email,
                 Identification=teacher.Identification
             };
-            //luu hinh anh bang cach lay duong dan
+            //Dùng viewbag để lấy đường dẫn hình ảnh
             ViewBag.Avatar=teacher.Avatar;
             return View(model);
         }
@@ -149,6 +148,7 @@ namespace FitPortal.Areas.Admin.Controllers
             var teacher = await _teacherRepository.GetAll().Where(t => t.Id == model.ID).FirstOrDefaultAsync();
             if (avatar != null)
             {
+                //Nếu có thay đổi hình ảnh thì tìm hình ảnh cũ và xóa
                 if (DeleteImg(teacher.Avatar) == true)
                 {
                     string folder = "Images/Teacher/";
@@ -169,7 +169,16 @@ namespace FitPortal.Areas.Admin.Controllers
                 teacher.Email = model.Email;
                 teacher.Identification = model.Identification;
                 teacher.LastUpdatedDate = DateTime.Now;
-                var result = _teacherRepository.Update(teacher);
+                var result = false;
+                try
+                {
+                    result = _teacherRepository.Update(teacher);
+                }catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return RedirectToAction("Index", "Home", new { area = "" });
+                }
+                
                 if (result)
                 {
                     return RedirectToAction("ViewAll", "Teacher");
@@ -201,6 +210,7 @@ namespace FitPortal.Areas.Admin.Controllers
                 }
             }
         }
+        //Tạo mới đối tượng teacher lưu vào csdl
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddTeacher(TeacherViewModel model)
